@@ -22,7 +22,7 @@ public class entry : MonoBehaviour
 
         if (entry_on)
         {
-            Debug.Log("입구등장");
+           // Debug.Log("입구등장");
             y_pos += speed * Time.deltaTime;
             if (transform.position.y >= 0.0f)
             { 

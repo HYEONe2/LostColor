@@ -5,7 +5,8 @@ using UnityEngine;
 public class FallParticleTrigger : MonoBehaviour
 {
     public CameraManager CameraMgrScript;
-    public MovingTree MovingTree;
+    public MovingTree RightTree;
+    public MovingTree LeftTree;
 
     // Start is called before the first frame update
     void Start()
@@ -29,7 +30,8 @@ public class FallParticleTrigger : MonoBehaviour
             Entry.entry_on = true;
 
             CameraMgrScript.ShakingCameraOn();
-            //MovingTree.Move_Tree(5f);
+            RightTree.entry_on = true;
+            LeftTree.entry_on = true;
         }
     }
 }
