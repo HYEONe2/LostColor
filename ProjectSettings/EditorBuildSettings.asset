@@ -11,4 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/My_AssetResources/LowPoly Environment Pack/Demo/Demo 2.unity
     guid: 1728c33fb4b47e245a0598bcb1f88c83
+  - enabled: 1
+    path: Assets/My_Scenes/MainStage.unity
+    guid: d614403c85f7fca47a44bf54bb46fb94
+  - enabled: 1
+    path: Assets/My_Scenes/Stage_1.unity
+    guid: 1eb9a36ba7b368e43aa26a83237ddde5
   m_configObjects: {}

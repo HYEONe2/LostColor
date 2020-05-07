@@ -21,7 +21,7 @@ public class FallStageTrigger : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            SceneManager.LoadScene("Demo 2");
+            SceneManager.LoadScene("Stage_1");
         }
     }
 }

@@ -8,14 +8,14 @@ public class CameraManager : MonoBehaviour
     public GameObject ShakingCamera;
     public ShakingCamera ShakeCameraScript;
 
-    public float MaxTime;
-    public float Magnitude;
+    public float MaxTime = 5f;
+    public float Magnitude = 10f;
 
     // Start is called before the first frame update
     void Start()
     {
-        MaxTime = 5f;
-        Magnitude = 10f;
+       // MaxTime = 5f;
+        //Magnitude = 10f;
 
         MainCameraOn();
     }
