@@ -25,12 +25,10 @@ public class MovingTree : MonoBehaviour
         {
             if (IsRight)
             {
-                Debug.Log("오른쪽" + x_pos);
                 x_pos += speed * Time.deltaTime;
                 if (transform.position.z >= 2.0f)
                 {
                     x_pos = 0.0f;
-                    Debug.Log("오른쪽끝" + x_pos);
                 }
             }
             else if (!IsRight)
