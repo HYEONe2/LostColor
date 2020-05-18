@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Tree
   - Entry
+  - FxTemporaire
   layers:
   - Default
   - TransparentFX
