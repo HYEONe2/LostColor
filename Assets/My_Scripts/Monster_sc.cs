@@ -51,11 +51,26 @@ public class Monster_sc : MonoBehaviour
             yield return new WaitForSeconds(0.2f);
             float dist = Vector3.Distance(target.transform.position, tr.position);
 
-            if(dist <= attackDist)
+            if (dist <= attackDist)
             {
-                curState = CurrentState.attck_wind;
+                switch (curState)
+                {
+                    case CurrentState.attack_poison:
+                        curState = CurrentState.attck_wind;
+                        break;
+                    case CurrentState.attck_wind:
+                        curState = CurrentState.attack_nut;
+                        break;
+                    case CurrentState.attack_nut:
+                        curState = CurrentState.attack_poison;
+                        break;
+                    default:
+                        curState = CurrentState.attack_poison;
+                        break;
+                }
+
             }
-            else if(dist <= traceDist)
+            else if(dist >= traceDist|| dist > attackDist)
             {
                 curState = CurrentState.walk;
             }
@@ -76,15 +91,34 @@ public class Monster_sc : MonoBehaviour
                     nav.Stop();
                     m_animator.SetBool("Walk", false);
                     m_animator.SetBool("WindAttack", false);
+                    m_animator.SetBool("PoisonAttack", false);
+                    m_animator.SetBool("NutAttack", false);
                     break;
                 case CurrentState.walk:
                     nav.destination = target.transform.position;
                     nav.Resume();
                     m_animator.SetBool("Walk", true);
+                    m_animator.SetBool("WindAttack", false);
+                    m_animator.SetBool("PoisonAttack", false);
+                    m_animator.SetBool("NutAttack", false);
                     break;
                 case CurrentState.attck_wind:
                     m_animator.SetBool("Walk", false);
+                    m_animator.SetBool("PoisonAttack", false);
+                    m_animator.SetBool("NutAttack", false);
                     m_animator.SetBool("WindAttack", true);
+                    break;
+                case CurrentState.attack_poison:
+                    m_animator.SetBool("Walk", false);
+                    m_animator.SetBool("WindAttack", false);
+                    m_animator.SetBool("NutAttack", false);
+                    m_animator.SetBool("PoisonAttack", true);
+                    break;
+                case CurrentState.attack_nut:
+                    m_animator.SetBool("Walk", false);
+                    m_animator.SetBool("WindAttack", false);
+                    m_animator.SetBool("PoisonAttack", false);
+                    m_animator.SetBool("NutAttack", true);
                     break;
             }
 
@@ -92,37 +126,4 @@ public class Monster_sc : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    //void Update()
-    //{
-    //    float dis = Vector3.Distance(nav.destination, transform.position);
-
-    //    if (nav.destination != target.transform.position)
-    //    {
-    //        nav.SetDestination(target.transform.position);
-    //        m_animator.SetBool("Walk", true);
-
-    //    }
-    //    else
-    //    {
-    //        nav.SetDestination(transform.position);
-    //        m_animator.SetBool("Walk", false);
-
-    //    }
-
-    //}
-
-    void walk() {
-
-        float dis = Vector3.Distance(nav.destination, transform.position);
-
-        if (dis < 10.0f)
-
-        {
-            m_animator.SetFloat("MoveSpeed",3.5f);
-        }
-
-        else
-            m_animator.SetFloat("MoveSpeed", 0.0f);
-    }
 }
