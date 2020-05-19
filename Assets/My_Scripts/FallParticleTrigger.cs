@@ -8,6 +8,8 @@ public class FallParticleTrigger : MonoBehaviour
     public MovingTree RightTree;
     public MovingTree LeftTree;
 
+    private bool isUsed = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +24,7 @@ public class FallParticleTrigger : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (!isUsed && other.gameObject.CompareTag("Player"))
         {
             Debug.Log("FallParticleTrigger & Player");
 
@@ -32,6 +34,8 @@ public class FallParticleTrigger : MonoBehaviour
             CameraMgrScript.ShakingCameraOn();
             RightTree.entry_on = true;
             LeftTree.entry_on = true;
+
+            isUsed = true;
         }
     }
 }
