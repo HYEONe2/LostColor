@@ -9,10 +9,15 @@ public class Monster_sc : MonoBehaviour
     [SerializeField] private Rigidbody m_rigidBody;
     [SerializeField] private Transform tr;
     [SerializeField] private GameObject target;
+    [SerializeField] private Transform weapon;
+    [SerializeField] private GameObject bullet;
     [SerializeField] private NavMeshAgent nav;
+ 
 
     public enum CurrentState {idle, walk, attck_wind, attack_poison, attack_nut, hit, dead };
-    public CurrentState curState = CurrentState.idle;
+    public CurrentState curState = CurrentState.dead;
+    public CurrentState nextState = CurrentState.idle;
+
 
     public float traceDist = 10.0f;
     public float attackDist = 3.2f;
@@ -45,47 +50,53 @@ public class Monster_sc : MonoBehaviour
     }
 
    IEnumerator CheackState()
-    {
-        while(!isDead)
-        {
-            yield return new WaitForSeconds(0.2f);
-            float dist = Vector3.Distance(target.transform.position, tr.position);
+    { 
+       while (!isDead && (curState != nextState))
+       {
+           yield return new WaitForSeconds(0.2f);
 
-            if (dist <= attackDist)
-            {
-                switch (curState)
-                {
-                    case CurrentState.attack_poison:
-                        curState = CurrentState.attck_wind;
-                        break;
-                    case CurrentState.attck_wind:
-                        curState = CurrentState.attack_nut;
-                        break;
-                    case CurrentState.attack_nut:
-                        curState = CurrentState.attack_poison;
-                        break;
-                    default:
-                        curState = CurrentState.attack_poison;
-                        break;
-                }
+           float dist = Vector3.Distance(target.transform.position, tr.position);
+           //curState = nextState;
 
-            }
-            else if(dist >= traceDist|| dist > attackDist)
-            {
-                curState = CurrentState.walk;
-            }
-            else
-            {
-                curState = CurrentState.idle;
-            }
-        }
+           if (dist <= attackDist)
+           {
+               switch (nextState)
+               {
+                   case CurrentState.attack_poison:
+                       nextState = CurrentState.attck_wind;
+                       break;
+                   case CurrentState.attck_wind:
+                       nextState = CurrentState.attack_nut;
+                       Instantiate(bullet, weapon.transform.position, transform.rotation); // 타이밍 조절해줘야함
+                       break;
+                   case CurrentState.attack_nut:
+                       nextState = CurrentState.attack_poison;
+                       break;
+                   default:
+                       nextState = CurrentState.attack_poison;
+                       break;
+               }
+
+           }
+
+           else if (dist >= traceDist || dist > attackDist)
+           {
+               nextState = CurrentState.walk;
+           }
+
+           else
+           {
+               nextState = CurrentState.idle;
+           }
+
+       }
     }
 
     IEnumerator CheckStateForAction()
     {
         while (!isDead)
         {
-            switch (curState)
+            switch (nextState)
             {
                 case CurrentState.idle:
                     nav.Stop();
