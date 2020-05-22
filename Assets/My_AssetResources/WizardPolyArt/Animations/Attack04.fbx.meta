@@ -476,11 +476,17 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 1
-        functionName: SetMainAttackFalse
+      - time: 0.42662117
+        functionName: CreateOrb
         data: 
-        objectReferenceParameter: {fileID: 11500000, guid: caa180a486738a141b0d9c19b0b5670b,
-          type: 3}
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 1
+        functionName: SetAttackFalse
+        data: 
+        objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0

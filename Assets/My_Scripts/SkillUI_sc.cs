@@ -5,17 +5,44 @@ using UnityEngine.EventSystems;
 
 public class SkillUI_sc : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
+    enum SKILL { SKILL_MAIN, SKILL_ORB, SKILL_SHIELD, SKILL_END};
+    private SKILL eSKill;
+    public int skillNum;
+
     public Player_sc playerScript;
+
     RectTransform m_rectMainSkill;
     float m_fRadius;
+
+    RectTransform m_rectOrbSkill;
+    float m_fOrbRadius;
+
+    RectTransform m_rectShieldSkill;
+    float m_fShieldRadius;
 
     bool m_bTouch = false;
     
     // Start is called before the first frame update
     void Start()
     {
-        m_rectMainSkill = transform.Find("MainAttack").GetComponent<RectTransform>();
-        m_fRadius = m_rectMainSkill.rect.width * 0.5f;
+        switch(skillNum)
+        {
+            case 0:
+                eSKill = SKILL.SKILL_MAIN;
+                m_rectMainSkill = transform.Find("../MainAttack").GetComponent<RectTransform>();
+                m_fRadius = m_rectMainSkill.rect.width * 0.5f;
+                break;
+            case 1:
+                eSKill = SKILL.SKILL_ORB;
+                m_rectOrbSkill = transform.Find("../OrbAttack").GetComponent<RectTransform>();
+                m_fOrbRadius = m_rectOrbSkill.rect.width * 0.5f;
+                break;
+            case 2:
+                eSKill = SKILL.SKILL_SHIELD;
+                m_rectShieldSkill = transform.Find("../ShieldAttack").GetComponent<RectTransform>();
+                m_fShieldRadius = m_rectShieldSkill.rect.width * 0.5f;
+                break;
+        }
     }
 
     // Update is called once per frame
@@ -23,27 +50,24 @@ public class SkillUI_sc : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoi
     {
         if (m_bTouch)
         {
-            Debug.Log("WORKING");
-            playerScript.MainAttack();
+            switch(eSKill)
+            {
+                case SKILL.SKILL_MAIN:
+                    playerScript.MainAttack();
+                    break;
+                case SKILL.SKILL_ORB:
+                    playerScript.OrbAttack();
+                    break;
+                case SKILL.SKILL_SHIELD:
+                    playerScript.ShieldAttack();
+                    break;
+            }
         }
     }
 
     void OnTouch(Vector2 vecTouch)
     {
-        //Vector2 vec = new Vector2(vecTouch.x - m_rectBack.position.x, vecTouch.y - m_rectBack.position.y);
 
-        //// vec값을 m_fRadius 이상이 되지 않도록 합니다.
-        //vec = Vector2.ClampMagnitude(vec, m_fRadius);
-        //m_rectJoystick.localPosition = vec;
-
-        //// 조이스틱 배경과 조이스틱과의 거리 비율로 이동합니다.
-        //m_fSqr = (m_rectBack.position - m_rectJoystick.position).sqrMagnitude / (m_fRadius * m_fRadius);
-
-        //// 터치위치 정규화
-        //Vector2 vecNormal = vec.normalized;
-
-        //m_vecMove = new Vector3(vecNormal.x * m_fSpeed * Time.deltaTime * m_fSqr, 0f, vecNormal.y * m_fSpeed * Time.deltaTime * m_fSqr);
-        //m_playerTrans.eulerAngles = new Vector3(0f, Mathf.Atan2(vecNormal.x, vecNormal.y) * Mathf.Rad2Deg, 0f);
     }
 
     public void OnDrag(PointerEventData eventData)

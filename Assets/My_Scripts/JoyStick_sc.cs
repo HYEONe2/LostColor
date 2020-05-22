@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 public class JoyStick_sc : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
-    [SerializeField] private Animator m_animator;
+    private Animator m_animator;
 
     RectTransform m_rectBack;
     RectTransform m_rectJoystick;
@@ -25,6 +25,7 @@ public class JoyStick_sc : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
         m_rectBack = transform.Find("JoyStickBack").GetComponent<RectTransform>();
         m_rectJoystick = transform.Find("JoyStickBack/JoyStick").GetComponent<RectTransform>();
 
+        m_animator = GameObject.Find("Player").GetComponent<Animator>();
         m_playerTrans = GameObject.Find("Player").transform;
 
         // JoystickBackground의 반지름입니다.
@@ -55,9 +56,11 @@ public class JoyStick_sc : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
 
         // 터치위치 정규화
         Vector2 vecNormal = vec.normalized;
+        Vector2 vecDir = (m_rectBack.position - m_rectJoystick.position).normalized;
 
         m_vecMove = new Vector3(vecNormal.x * m_fSpeed * Time.deltaTime * m_fSqr, 0f, vecNormal.y * m_fSpeed * Time.deltaTime * m_fSqr);
-        m_playerTrans.eulerAngles = new Vector3(0f, Mathf.Atan2(vecNormal.x, vecNormal.y) * Mathf.Rad2Deg, 0f);
+        //m_playerTrans.eulerAngles += new Vector3(0f, Mathf.Atan2(vecNormal.x, vecNormal.y) * Mathf.Rad2Deg * Time.deltaTime, 0f);
+        m_playerTrans.forward = new Vector3(-vecDir.x, 0, -vecDir.y);
     }
 
     public void OnDrag(PointerEventData eventData)
