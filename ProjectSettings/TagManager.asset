@@ -9,6 +9,7 @@ TagManager:
   - FxTemporaire
   - Shield
   - Boss
+  - PlayerWeapon
   layers:
   - Default
   - TransparentFX
