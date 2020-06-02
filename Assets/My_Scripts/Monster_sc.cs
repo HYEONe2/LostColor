@@ -167,7 +167,7 @@ public class Monster_sc : MonoBehaviour
             m_animator.SetBool("NutAttack", false);
             m_animator.SetBool("NutAttack", false);
             m_animator.SetBool("Hit", true);
-            iHp--; Debug.Log(iHp);
+            iHp--; /*Debug.Log(iHp);*/
             if(iHp<0)
             {
                 m_animator.SetBool("Death", true);

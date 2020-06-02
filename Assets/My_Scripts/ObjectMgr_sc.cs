@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class ObjectMgr_sc : MonoBehaviour
 {
+    public static ObjectMgr_sc Instance;
+
     public enum OBJECT { OBJ_PLAYER, OBJ_BOSS, OBJ_SHIELD, OBJ_END};
 
-    int iCnt;
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -22,8 +27,6 @@ public class ObjectMgr_sc : MonoBehaviour
 
     public int CountOfObject(OBJECT eObject)
     {
-        iCnt = 0;
-
         switch(eObject)
         {
             case OBJECT.OBJ_PLAYER:
@@ -31,8 +34,7 @@ public class ObjectMgr_sc : MonoBehaviour
             case OBJECT.OBJ_BOSS:
                 return 1;
             case OBJECT.OBJ_SHIELD:
-                iCnt = GameObject.FindGameObjectsWithTag("Shield").Length;
-                return iCnt;
+                return GameObject.FindGameObjectsWithTag("Shield").Length;
             case OBJECT.OBJ_END:
                 break;
         }

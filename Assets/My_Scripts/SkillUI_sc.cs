@@ -10,6 +10,7 @@ public class SkillUI_sc : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoi
     public int skillNum;
 
     public Player_sc playerScript;
+    static List<GameObject> shieldGaugeList = new List<GameObject>();
 
     RectTransform m_rectMainSkill;
     float m_fRadius;
@@ -42,6 +43,13 @@ public class SkillUI_sc : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoi
                 m_rectShieldSkill = transform.Find("../ShieldAttack").GetComponent<RectTransform>();
                 m_fShieldRadius = m_rectShieldSkill.rect.width * 0.5f;
                 break;
+        }
+
+        if (shieldGaugeList.Count == 0)
+        {
+            shieldGaugeList.Add(GameObject.Find("ShieldGauge1"));
+            shieldGaugeList.Add(GameObject.Find("ShieldGauge2"));
+            shieldGaugeList.Add(GameObject.Find("ShieldGauge3"));
         }
     }
 
@@ -85,5 +93,61 @@ public class SkillUI_sc : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoi
     public void OnPointerUp(PointerEventData eventData)
     {
         m_bTouch = false;
+    }
+
+    public static void TurnOffShieldGauge(int offCnt)
+    {
+        switch (offCnt)
+        {
+            case 1:
+                shieldGaugeList[0].SetActive(false);
+                break;
+            case 2:
+                shieldGaugeList[0].SetActive(false);
+                shieldGaugeList[1].SetActive(false);
+                break;
+            case 3:
+                shieldGaugeList[0].SetActive(false);
+                shieldGaugeList[1].SetActive(false);
+                shieldGaugeList[2].SetActive(false);
+                break;
+        }
+    }
+
+    public static void TurnOnShieldGauge()
+    {
+        if (!shieldGaugeList[0].activeSelf)
+            shieldGaugeList[0].SetActive(true);
+        else if (!shieldGaugeList[1].activeSelf)
+            shieldGaugeList[1].SetActive(true);
+        else if (!shieldGaugeList[2].activeSelf)
+            shieldGaugeList[2].SetActive(true);
+    }
+
+    public static bool AllShieldOn()
+    {
+        if (shieldGaugeList[2] == null)
+        {
+            shieldGaugeList[0]= (GameObject.Find("ShieldGauge1"));
+            shieldGaugeList[1] = (GameObject.Find("ShieldGauge2"));
+            shieldGaugeList[2] = (GameObject.Find("ShieldGauge3"));
+        }
+
+        if (shieldGaugeList[2].activeSelf)
+            return true;
+
+        return false;
+    }
+
+    public static int GetShieldGaugeCnt()
+    {
+        int Cnt = 0;
+        for (int i = 0; i < 3; ++i)
+        {
+            if (shieldGaugeList[i].activeSelf)
+                ++Cnt;
+        }
+
+        return Cnt;
     }
 }

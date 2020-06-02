@@ -10,6 +10,7 @@ TagManager:
   - Shield
   - Boss
   - PlayerWeapon
+  - MonsterWeapon
   layers:
   - Default
   - TransparentFX

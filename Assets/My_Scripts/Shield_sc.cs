@@ -34,4 +34,5 @@ public class Shield_sc : MonoBehaviour
         if (other.gameObject.CompareTag("Boss"))
             Destroy(gameObject);
     }
+
 }

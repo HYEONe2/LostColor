@@ -3,14 +3,15 @@ using System.Collections.Generic;
 
 public class Player_sc : MonoBehaviour
 {
-    [SerializeField] private float m_moveSpeed = 5f;
-    [SerializeField] private float m_turnSpeed = 180f;
-    [SerializeField] private float m_jumpForce = 100f;
+    /*[SerializeField]*/ private float m_moveSpeed = 5f;
+    /*[SerializeField]*/ private float m_turnSpeed = 180f;
+    /*[SerializeField]*/ private float m_jumpForce = 100f;
 
     private Animator m_animator;
     private Rigidbody m_rigidBody;
     private Transform tr;
     private Transform BossTrans;
+    public static int m_Hp = 10;
 
     private readonly float m_walkScale = 0.33f;
     private readonly float m_backwardsWalkScale = 0.16f;
@@ -27,15 +28,14 @@ public class Player_sc : MonoBehaviour
     private float r = 0f;
 
     private List<Collider> m_collisions = new List<Collider>();
+    public static List<GameObject> shieldGaugeList = new List<GameObject>();
 
-    public GameObject Orb;
-    public GameObject Shield;
-
-    bool bOrbOnce = false;    // 행동따라 Orb 생성 제어
+    //bool bOrbOnce = false;    // 행동따라 Orb 생성 제어
     bool bShieldOnce = false;   // 쉴드 생성 제어
 
     // 시간따라 Orb 생성 제어
     bool bOrbCreate = false;
+    bool bOrbOnce = false;
     float fOrbCheckTime = 0;
 
     private Transform MainCameraPos;
@@ -108,13 +108,15 @@ public class Player_sc : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.I))
+        if(m_Hp <= 0)
         {
-            CheckSkillCount();
+            m_animator.SetBool("Die", true);
+            return;
         }
 
         if (bOrbCreate)
             fOrbCheckTime += Time.deltaTime;
+
         if (fOrbCheckTime > 10.0f)
         {
             bOrbCreate = false;
@@ -134,6 +136,9 @@ public class Player_sc : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (m_Hp <= 0 || m_animator.GetBool("Die") || m_animator.GetBool("Damaged"))
+            return;
+
         m_animator.SetBool("Grounded", m_isGrounded);
 
         DirectUpdate();
@@ -192,13 +197,9 @@ public class Player_sc : MonoBehaviour
     {
         float dist = (tr.position - BossTrans.position).magnitude;
         if (dist < 5.0f)
-        {
             m_animator.SetBool("MainAtt", true);
-        }
         else
-        {
             m_animator.SetBool("LMainAtt", true);
-        }
     }
 
     void SetAttackFalse()
@@ -208,11 +209,15 @@ public class Player_sc : MonoBehaviour
         // LMainAtt : MainAtt & OrbAtt 공유
         bOrbOnce = false;
         m_animator.SetBool("LMainAtt", false);
+        m_animator.SetBool("Damaged", false);
     }
 
     public void ShieldAttack()
     {
-        if (CheckSkillCount() == 3)
+        int skillCnt = ObjectMgr_sc.Instance.CountOfObject(ObjectMgr_sc.OBJECT.OBJ_SHIELD);
+        int ShieldGaugeCnt = SkillUI_sc.GetShieldGaugeCnt();
+
+        if (skillCnt == 3 || ShieldGaugeCnt == 0)
             return;
 
         bShieldOnce = false;
@@ -224,13 +229,10 @@ public class Player_sc : MonoBehaviour
         if (bShieldOnce)
             return;
 
+        SkillMgr_Sc.Instance.CreateShield();
+
         bShieldOnce = true;
         m_animator.SetBool("ShieldAtt", false);
-
-        Vector3 OriginPos = tr.transform.position;
-        Instantiate(Shield, new Vector3(OriginPos.x, OriginPos.y + 1.0f, OriginPos.z + 1.0f), Quaternion.identity);
-        Instantiate(Shield, new Vector3(OriginPos.x + 1.0f, OriginPos.y + 1.0f, OriginPos.z - 0.5f), Quaternion.identity);
-        Instantiate(Shield, new Vector3(OriginPos.x - 1.0f, OriginPos.y + 1.0f, OriginPos.z - 0.5f), Quaternion.identity);
     }
 
     public void OrbAttack()
@@ -247,17 +249,25 @@ public class Player_sc : MonoBehaviour
         if (!bOrbOnce || bOrbCreate)
             return;
 
-        Vector3 OriginPos = gameObject.transform.position;
-        Vector3 dir = GameObject.Find("MainCamera").transform.forward;
-        Instantiate(Orb, new Vector3(OriginPos.x + dir.x, OriginPos.y + 1.5f, OriginPos.z + dir.z), Quaternion.identity);
+        SkillMgr_Sc.Instance.CreateOrb();
 
         bOrbCreate = true;
     }
 
-    int CheckSkillCount()
+    private void OnTriggerEnter(Collider other)
     {
-        int iCnt = ObjMgrScript.CountOfObject(ObjectMgr_sc.OBJECT.OBJ_SHIELD);
+        if (other.gameObject.CompareTag("Boss")
+            || other.gameObject.CompareTag("MonsterWeapon"))
+        {
+            int ShieldCnt = ObjectMgr_sc.Instance.CountOfObject(ObjectMgr_sc.OBJECT.OBJ_SHIELD);
+            if (ShieldCnt != 0)
+            {
+                Destroy(shieldGaugeList[--ShieldCnt]);
+                return;
+            }
 
-        return iCnt;
+            m_animator.SetBool("Damaged", true);
+            m_Hp -= 1;
+        }
     }
 }

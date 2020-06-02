@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Orb_sc : MonoBehaviour
 {
-    GameObject Player;
-    Vector3 PlayerPos;
+    private GameObject Player;
+    private Vector3 PlayerPos;
 
-    Vector3 CameraDir;
-    float fSpeed = 10;
+    private Vector3 CameraDir;
+    private float fSpeed = 10;
 
     bool bReturn = false;
     int iDamage = 5;
