@@ -6,6 +6,7 @@ public class CameraManager : MonoBehaviour
 {
     public GameObject MainCamera;
     public GameObject ShakingCamera;
+    public GameObject ShakingCamera2;
     public ShakingCamera ShakeCameraScript;
 
     public float MaxTime = 5f;
@@ -28,19 +29,33 @@ public class CameraManager : MonoBehaviour
 
         if (Input.GetKey("2"))
             ShakingCameraOn();
+
+        if (Input.GetKey("3"))
+            ShakingCamera2On();
     }
 
     public void MainCameraOn()
     {
         MainCamera.GetComponent<Camera>().enabled = true;
         ShakingCamera.GetComponent<Camera>().enabled = false;
+        ShakingCamera2.GetComponent<Camera>().enabled = false;
     }
 
     public void ShakingCameraOn()
     {
         MainCamera.GetComponent<Camera>().enabled = false;
         ShakingCamera.GetComponent<Camera>().enabled = true;
+        ShakingCamera2.GetComponent<Camera>().enabled = false;
 
         StartCoroutine(ShakeCameraScript.Shake(MaxTime,Magnitude));
+    }
+
+    public void ShakingCamera2On()
+    {
+        MainCamera.GetComponent<Camera>().enabled = false;
+        ShakingCamera.GetComponent<Camera>().enabled = false;
+        ShakingCamera2.GetComponent<Camera>().enabled = true;
+
+        StartCoroutine(ShakeCameraScript.Shake(MaxTime, Magnitude));
     }
 }

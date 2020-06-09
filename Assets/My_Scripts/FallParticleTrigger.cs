@@ -5,8 +5,9 @@ using UnityEngine;
 public class FallParticleTrigger : MonoBehaviour
 {
     public CameraManager CameraMgrScript;
-    public MovingTree RightTree;
-    public MovingTree LeftTree;
+    public GameObject RightTree;
+    public GameObject LeftTree;
+    public GameObject Entry;
 
     private bool isUsed = false;
 
@@ -28,12 +29,15 @@ public class FallParticleTrigger : MonoBehaviour
         {
             Debug.Log("FallParticleTrigger & Player");
 
-            entry Entry = GameObject.Find("Entry").GetComponent<entry>();
-            Entry.entry_on = true;
+            entry Entryclass = Entry.GetComponent<entry>();
+            Entryclass.entry_on = true;
 
             CameraMgrScript.ShakingCameraOn();
-            RightTree.entry_on = true;
-            LeftTree.entry_on = true;
+            MovingTree Rtreeclass = RightTree.GetComponent<MovingTree>();
+            MovingTree Ltreeclass = LeftTree.GetComponent<MovingTree>();
+
+            Rtreeclass.entry_on = true;
+            Ltreeclass.entry_on = true;
 
             isUsed = true;
         }

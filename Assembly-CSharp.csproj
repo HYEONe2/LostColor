@@ -71,6 +71,8 @@
      <Compile Include="Assets\My_AssetResources\BOXOPHOBIC\Utils\Scripts\StyledMono\StyledMonoHideScriptField.cs" />
      <Compile Include="Assets\My_Scripts\CameraManager.cs" />
      <Compile Include="Assets\My_Scripts\FallParticleTrigger.cs" />
+     <Compile Include="Assets\My_Scripts\FallPaticleTrigger_stage2.cs" />
+     <Compile Include="Assets\My_Scripts\FallStage2Trigger.cs" />
      <Compile Include="Assets\My_Scripts\FallStageTrigger.cs" />
      <Compile Include="Assets\My_Scripts\JoyStick_sc.cs" />
      <Compile Include="Assets\My_Scripts\LodingSceneManager_sc.cs" />
