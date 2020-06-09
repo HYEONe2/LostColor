@@ -82,7 +82,7 @@ public class Monster_sc : MonoBehaviour
                     case CurrentState.attck_wind:
                         if (m_animator.GetBool("WindAttack"))
                         {
-                            Instantiate(wind, weapon.transform.position, transform.rotation); // 타이밍 조절해줘야함                           
+                            Instantiate(wind, wind.transform.position, wind.transform.rotation); // 타이밍 조절해줘야함                           
                         }
                         break;
                     case CurrentState.attack_nut:
