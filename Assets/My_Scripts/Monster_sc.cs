@@ -18,9 +18,10 @@ public class Monster_sc : MonoBehaviour
     [SerializeField] private NavMeshAgent nav;
 
 
-    public enum CurrentState { idle, walk, attck_wind, attack_poison, attack_nut, hit, dead };
-    public CurrentState curState = CurrentState.dead;
+    public enum CurrentState { idle, walk, attck_wind, attack_poison, attack_nut, hit, dead, end };
+    public CurrentState curState = CurrentState.end;
     public CurrentState nextState = CurrentState.idle;
+    private Stage_Manager triggerObj;
 
 
     public float traceDist = 10.0f;
@@ -28,6 +29,11 @@ public class Monster_sc : MonoBehaviour
     private bool isDead = false;
     public static int iHp = 10;
     //private bool bIsAttack = false;
+
+    // 시간따라 Orb 생성 제어
+    bool bPoisonCreate = false;
+    bool bPoisonOnce = false;
+
 
     public void Initialize(GameObject character)
     {
@@ -50,9 +56,18 @@ public class Monster_sc : MonoBehaviour
         StartCoroutine(this.CheckStateForAction());
     }
 
-    void Update()
+    private void Update()
     {
-
+        if (iHp < 0) //몬스터 사망
+        {
+            nextState = CurrentState.dead;
+            m_animator.SetBool("Death", true);
+            isDead = true;
+            triggerObj = (Stage_Manager)FindObjectOfType(typeof(Stage_Manager));
+            triggerObj.stage1_open = false;
+            triggerObj.stage2_open = true;
+            LodingSceneManager_sc.LoadScene("MainStage"); //확인용 씬전환 나중에 스킬선택후 전환으로 수정
+        }
     }
 
     IEnumerator CheackState()
@@ -74,14 +89,15 @@ public class Monster_sc : MonoBehaviour
                 switch (nextState)
                 {
                     case CurrentState.attack_poison:
-                        if (m_animator.GetBool("PoisonAttack"))
-                        {
-                            Instantiate(posion, weapon.transform.position, transform.rotation); // 타이밍 조절해줘야함                           
-                        }
+                        //if (m_animator.GetBool("PoisonAttack"))
+                        //{
+                            //Instantiate(posion, weapon.transform.position, transform.rotation); // 타이밍 조절해줘야함                           
+                        //}
                         break;
                     case CurrentState.attck_wind:
                         if (m_animator.GetBool("WindAttack"))
                         {
+                            bPoisonCreate = false;
                             Instantiate(wind, wind.transform.position, wind.transform.rotation); // 타이밍 조절해줘야함                           
                         }
                         break;
@@ -168,10 +184,18 @@ public class Monster_sc : MonoBehaviour
             m_animator.SetBool("NutAttack", false);
             m_animator.SetBool("Hit", true);
             iHp--; /*Debug.Log(iHp);*/
-            if(iHp<0)
-            {
-                m_animator.SetBool("Death", true);
-            }
+
+
         }
+    }
+
+    public void CreatePoison()
+    {
+        if (bPoisonCreate)
+            return;
+
+        Instantiate(posion, weapon.transform.position, transform.rotation);
+
+        bPoisonCreate = true;
     }
 }

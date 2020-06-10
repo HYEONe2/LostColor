@@ -33,7 +33,7 @@ public class LodingSceneManager_sc : MonoBehaviour
         AsyncOperation oper = SceneManager.LoadSceneAsync(nextScene);
 
         oper.allowSceneActivation = false;
-        //allowSceneActivation 이 true가 되는 순간이 바로 다음 씬으로 넘어가는 시점입니다.
+        //allowSceneActivation 이 true가 되는 순간이 바로 다음 씬으로 넘어가는 시점
 
         float timer = 0.0f;
         while (!oper.isDone)
@@ -49,7 +49,7 @@ public class LodingSceneManager_sc : MonoBehaviour
                 if (progressBar.fillAmount == 1.0f && timer > 2.0f)
                 {     
                     loadingText.SetActive(true);
-                    if (Input.GetMouseButton(0))
+                   // if (Input.GetMouseButton(0))
                         oper.allowSceneActivation = true;
                 }
             }

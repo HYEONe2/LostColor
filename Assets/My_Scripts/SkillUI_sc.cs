@@ -26,7 +26,9 @@ public class SkillUI_sc : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoi
     // Start is called before the first frame update
     void Start()
     {
-        switch(skillNum)
+        playerScript = (Player_sc)FindObjectOfType(typeof(Player_sc));
+
+        switch (skillNum)
         {
             case 0:
                 eSKill = SKILL.SKILL_MAIN;

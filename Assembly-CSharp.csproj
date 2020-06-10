@@ -88,6 +88,7 @@
      <Compile Include="Assets\My_Scripts\Shield_sc.cs" />
      <Compile Include="Assets\My_Scripts\SkillMgr_Sc.cs" />
      <Compile Include="Assets\My_Scripts\SkillUI_sc.cs" />
+     <Compile Include="Assets\My_Scripts\Stage_Manager.cs" />
      <Compile Include="Assets\My_Scripts\Wind_sc.cs" />
      <Compile Include="Assets\My_Scripts\entry.cs" />
      <Compile Include="Assets\My_Scripts\player_camera.cs" />

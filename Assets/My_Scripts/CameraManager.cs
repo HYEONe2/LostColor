@@ -8,6 +8,8 @@ public class CameraManager : MonoBehaviour
     public GameObject ShakingCamera;
     public GameObject ShakingCamera2;
     public ShakingCamera ShakeCameraScript;
+    public ShakingCamera ShakeCameraScript2;
+
 
     public float MaxTime = 5f;
     public float Magnitude = 10f;
@@ -56,6 +58,6 @@ public class CameraManager : MonoBehaviour
         ShakingCamera.GetComponent<Camera>().enabled = false;
         ShakingCamera2.GetComponent<Camera>().enabled = true;
 
-        StartCoroutine(ShakeCameraScript.Shake(MaxTime, Magnitude));
+        StartCoroutine(ShakeCameraScript2.Shake(MaxTime, Magnitude));
     }
 }

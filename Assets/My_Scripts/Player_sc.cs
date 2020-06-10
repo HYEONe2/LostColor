@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
+
 
 public class Player_sc : MonoBehaviour
 {
@@ -11,7 +13,7 @@ public class Player_sc : MonoBehaviour
     private Rigidbody m_rigidBody;
     private Transform tr;
     private Transform BossTrans;
-    public static int m_Hp = 10;
+    public static int m_Hp = 1;
 
     private readonly float m_walkScale = 0.33f;
     private readonly float m_backwardsWalkScale = 0.16f;
@@ -37,6 +39,11 @@ public class Player_sc : MonoBehaviour
     bool bOrbCreate = false;
     bool bOrbOnce = false;
     float fOrbCheckTime = 0;
+
+    //죽은 후 시간 지나고 씬 전환
+    float fDeadCheckTime = 0;
+
+    bool bPosInit = false;
 
     private Transform MainCameraPos;
     private ObjectMgr_sc ObjMgrScript;
@@ -108,10 +115,23 @@ public class Player_sc : MonoBehaviour
 
     private void Update()
     {
-        if(m_Hp <= 0)
+        if (SceneManager.GetActiveScene().name == "Stage_1")
+            Stage_1_PosInit();
+        if (SceneManager.GetActiveScene().name == "MainStage")
+            Stage_2_PosInit();
+
+        if (m_Hp <= 0)
         {
             m_animator.SetBool("Die", true);
-            return;
+            fDeadCheckTime+= Time.deltaTime; ;
+           
+        }
+        if (fDeadCheckTime > 3.0f)
+        {
+            fDeadCheckTime = 0.0f;
+            m_Hp = 10;
+            LodingSceneManager_sc.LoadScene("MainStage");
+            //return;
         }
 
         if (bOrbCreate)
@@ -268,6 +288,25 @@ public class Player_sc : MonoBehaviour
 
             m_animator.SetBool("Damaged", true);
             m_Hp -= 1;
+        }
+    }
+
+    private void Stage_1_PosInit()
+    {
+        if (!bPosInit)
+        {
+            transform.position = new Vector3(14.347f, 0.34f, -0.066f);
+            bPosInit = true;
+        }
+    }
+    private void Stage_2_PosInit()
+    {
+        if (bPosInit)
+        {
+            transform.position = new Vector3(-19.0f, 0.0f, 20.0f);
+            Debug.Log("die :" + m_animator.GetBool("Die"));
+            m_animator.SetBool("Die", false);
+            bPosInit = false;
         }
     }
 }

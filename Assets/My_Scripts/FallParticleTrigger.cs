@@ -11,6 +11,7 @@ public class FallParticleTrigger : MonoBehaviour
 
     private bool isUsed = false;
 
+
     // Start is called before the first frame update
     void Start()
     {
