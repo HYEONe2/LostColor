@@ -5,45 +5,45 @@ using UnityEngine.EventSystems;
 
 public class SkillUI_sc : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
-    enum SKILL { SKILL_MAIN, SKILL_ORB, SKILL_SHIELD, SKILL_END};
-    private SKILL eSKill;
-    public int skillNum;
+    public enum SKILL { SKILL_MAIN, SKILL_ORB, SKILL_SHIELD, SKILL_FIRST, SKILL_SECOND, SKILL_THIRD, SKILL_END};
+    public SKILL eSKill;
 
-    public Player_sc playerScript;
+    Player_sc playerScript;
     static List<GameObject> shieldGaugeList = new List<GameObject>();
 
-    RectTransform m_rectMainSkill;
-    float m_fRadius;
-
-    RectTransform m_rectOrbSkill;
-    float m_fOrbRadius;
-
-    RectTransform m_rectShieldSkill;
-    float m_fShieldRadius;
+    RectTransform[] m_rectSkill = new RectTransform[6];
+    float[] m_fRadius = new float[6];
 
     bool m_bTouch = false;
     
     // Start is called before the first frame update
     void Start()
     {
-        playerScript = (Player_sc)FindObjectOfType(typeof(Player_sc));
-
-        switch (skillNum)
+        switch(eSKill)
         {
-            case 0:
-                eSKill = SKILL.SKILL_MAIN;
-                m_rectMainSkill = transform.Find("../MainAttack").GetComponent<RectTransform>();
-                m_fRadius = m_rectMainSkill.rect.width * 0.5f;
+            case SKILL.SKILL_MAIN:
+                m_rectSkill[0] = transform.Find("../MainAttack").GetComponent<RectTransform>();
+                m_fRadius[0] = m_rectSkill[0].rect.width * 0.5f;
                 break;
-            case 1:
-                eSKill = SKILL.SKILL_ORB;
-                m_rectOrbSkill = transform.Find("../OrbAttack").GetComponent<RectTransform>();
-                m_fOrbRadius = m_rectOrbSkill.rect.width * 0.5f;
+            case SKILL.SKILL_ORB:
+                m_rectSkill[1] = transform.Find("../OrbAttack").GetComponent<RectTransform>();
+                m_fRadius[1] = m_rectSkill[1].rect.width * 0.5f;
                 break;
-            case 2:
-                eSKill = SKILL.SKILL_SHIELD;
-                m_rectShieldSkill = transform.Find("../ShieldAttack").GetComponent<RectTransform>();
-                m_fShieldRadius = m_rectShieldSkill.rect.width * 0.5f;
+            case SKILL.SKILL_SHIELD:
+                m_rectSkill[2] = transform.Find("../ShieldAttack").GetComponent<RectTransform>();
+                m_fRadius[2] = m_rectSkill[2].rect.width * 0.5f;
+                break;
+            case SKILL.SKILL_FIRST:
+                m_rectSkill[3] = transform.Find("../FirstAttack").GetComponent<RectTransform>();
+                m_fRadius[3] = m_rectSkill[3].rect.width * 0.5f;
+                break;
+            case SKILL.SKILL_SECOND:
+                m_rectSkill[4] = transform.Find("../SecondAttack").GetComponent<RectTransform>();
+                m_fRadius[4] = m_rectSkill[4].rect.width * 0.5f;
+                break;
+            case SKILL.SKILL_THIRD:
+                m_rectSkill[5] = transform.Find("../ThirdAttack").GetComponent<RectTransform>();
+                m_fRadius[5] = m_rectSkill[5].rect.width * 0.5f;
                 break;
         }
 
@@ -53,6 +53,8 @@ public class SkillUI_sc : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoi
             shieldGaugeList.Add(GameObject.Find("ShieldGauge2"));
             shieldGaugeList.Add(GameObject.Find("ShieldGauge3"));
         }
+
+        playerScript = GameObject.Find("Player").GetComponent<Player_sc>();
     }
 
     // Update is called once per frame
@@ -70,6 +72,15 @@ public class SkillUI_sc : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoi
                     break;
                 case SKILL.SKILL_SHIELD:
                     playerScript.ShieldAttack();
+                    break;
+                case SKILL.SKILL_FIRST:
+                    playerScript.FirstAttack();
+                    break;
+                case SKILL.SKILL_SECOND:
+                    playerScript.SecondAttack();
+                    break;
+                case SKILL.SKILL_THIRD:
+                    playerScript.ThirdAttack();
                     break;
             }
         }

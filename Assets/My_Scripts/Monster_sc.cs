@@ -58,7 +58,7 @@ public class Monster_sc : MonoBehaviour
 
     private void Update()
     {
-        if (iHp < 0) //몬스터 사망
+        if (iHp <= 0) //몬스터 사망
         {
             nextState = CurrentState.dead;
             m_animator.SetBool("Death", true);
@@ -66,7 +66,6 @@ public class Monster_sc : MonoBehaviour
             triggerObj = (Stage_Manager)FindObjectOfType(typeof(Stage_Manager));
             triggerObj.stage1_open = false;
             triggerObj.stage2_open = true;
-            LodingSceneManager_sc.LoadScene("MainStage"); //확인용 씬전환 나중에 스킬선택후 전환으로 수정
         }
     }
 

@@ -12,10 +12,12 @@ public class SkillMgr_Sc : MonoBehaviour
 
     [SerializeField] private GameObject Orb;
     [SerializeField] private GameObject Shield;
+    [SerializeField] private GameObject Wind;
+    [SerializeField] private GameObject Poison;
+    [SerializeField] private GameObject Nut;
 
     private float CheckShieldTime = 0;
     private bool ShieldOn = false;
-
 
     private void Awake()
     {
@@ -84,9 +86,9 @@ public class SkillMgr_Sc : MonoBehaviour
         PlayerPos = PlayerTrans.position;
         if (ShieldMake == 3)
         {
-            Player_sc.shieldGaugeList.Add(Instantiate(Shield, new Vector3(PlayerPos.x, PlayerPos.y + 1.0f, PlayerPos.z + 1.0f), Quaternion.identity));
-            Player_sc.shieldGaugeList.Add(Instantiate(Shield, new Vector3(PlayerPos.x + 1.0f, PlayerPos.y + 1.0f, PlayerPos.z - 0.5f), Quaternion.identity));
-            Player_sc.shieldGaugeList.Add(Instantiate(Shield, new Vector3(PlayerPos.x - 1.0f, PlayerPos.y + 1.0f, PlayerPos.z - 0.5f), Quaternion.identity));
+            Player_sc.m_ShieldGaugeList.Add(Instantiate(Shield, new Vector3(PlayerPos.x, PlayerPos.y + 1.0f, PlayerPos.z + 1.0f), Quaternion.identity));
+            Player_sc.m_ShieldGaugeList.Add(Instantiate(Shield, new Vector3(PlayerPos.x + 1.0f, PlayerPos.y + 1.0f, PlayerPos.z - 0.5f), Quaternion.identity));
+            Player_sc.m_ShieldGaugeList.Add(Instantiate(Shield, new Vector3(PlayerPos.x - 1.0f, PlayerPos.y + 1.0f, PlayerPos.z - 0.5f), Quaternion.identity));
 
             SkillUI_sc.TurnOffShieldGauge(3);
         }
@@ -95,16 +97,16 @@ public class SkillMgr_Sc : MonoBehaviour
             if(ShieldCnt == 0)
             {
                 ShieldObj = Instantiate(Shield, new Vector3(PlayerPos.x, PlayerPos.y + 1.0f, PlayerPos.z + 1.0f), Quaternion.identity);
-                Player_sc.shieldGaugeList[0] = ShieldObj;
+                Player_sc.m_ShieldGaugeList[0] = ShieldObj;
                 ShieldObj = Instantiate(Shield, new Vector3(PlayerPos.x + 1.0f, PlayerPos.y + 1.0f, PlayerPos.z - 0.5f), Quaternion.identity);
-                Player_sc.shieldGaugeList[1] = ShieldObj;
+                Player_sc.m_ShieldGaugeList[1] = ShieldObj;
             }
             else if(ShieldCnt == 1)
             {
                 ShieldObj = Instantiate(Shield, new Vector3(PlayerPos.x + 1.0f, PlayerPos.y + 1.0f, PlayerPos.z - 0.5f), Quaternion.identity);
-                Player_sc.shieldGaugeList[1] = ShieldObj;
+                Player_sc.m_ShieldGaugeList[1] = ShieldObj;
                 ShieldObj = Instantiate(Shield, new Vector3(PlayerPos.x - 1.0f, PlayerPos.y + 1.0f, PlayerPos.z - 0.5f), Quaternion.identity);
-                Player_sc.shieldGaugeList[2] = ShieldObj;
+                Player_sc.m_ShieldGaugeList[2] = ShieldObj;
             }
 
             SkillUI_sc.TurnOffShieldGauge(2);
@@ -114,17 +116,17 @@ public class SkillMgr_Sc : MonoBehaviour
             if (ShieldCnt == 0)
             {
                 ShieldObj = Instantiate(Shield, new Vector3(PlayerPos.x, PlayerPos.y + 1.0f, PlayerPos.z + 1.0f), Quaternion.identity);
-                Player_sc.shieldGaugeList[0] = ShieldObj;
+                Player_sc.m_ShieldGaugeList[0] = ShieldObj;
             }
             else if(ShieldCnt == 1)
             {
                 ShieldObj = Instantiate(Shield, new Vector3(PlayerPos.x + 1.0f, PlayerPos.y + 1.0f, PlayerPos.z - 0.5f), Quaternion.identity);
-                Player_sc.shieldGaugeList[1] = ShieldObj;
+                Player_sc.m_ShieldGaugeList[1] = ShieldObj;
             }
             else if(ShieldCnt == 2)
             {
                 ShieldObj = Instantiate(Shield, new Vector3(PlayerPos.x - 1.0f, PlayerPos.y + 1.0f, PlayerPos.z - 0.5f), Quaternion.identity);
-                Player_sc.shieldGaugeList[2] = ShieldObj;
+                Player_sc.m_ShieldGaugeList[2] = ShieldObj;
             }
 
             SkillUI_sc.TurnOffShieldGauge(1);
@@ -133,6 +135,33 @@ public class SkillMgr_Sc : MonoBehaviour
         ShieldOn = true;
     }
 
+    public void CreateWind()
+    {
+        GameObject WindOrb;
+        PlayerPos = PlayerTrans.position;
+
+        Vector3 dir = GameObject.Find("MainCamera").transform.forward;
+        //WindOrb = Instantiate(Wind, new Vector3(PlayerPos.x + dir.x, PlayerPos.y + 1.5f, PlayerPos.z + dir.z), Quaternion.identity);
+        WindOrb = Instantiate(Wind, Wind.transform.position, Wind.transform.rotation);                         
+
+        WindOrb.GetComponent<Wind_sc>().m_bPlayerUse = true;
+    }
+
+    public void CreatePoison()
+    {
+        GameObject PoisonObj;
+        PlayerPos = PlayerTrans.position;
+
+        Vector3 dir = GameObject.Find("MainCamera").transform.forward;
+        PoisonObj = Instantiate(Poison, new Vector3(PlayerPos.x + dir.x, PlayerPos.y + 1.5f, PlayerPos.z + dir.z), Quaternion.identity);
+
+        PoisonObj.GetComponent<Monster_Bullet_sc>().m_bPlayerUse = true;
+    }
+
+    public void CreateNut()
+    {
+        //Instantiate();
+    }
 
     private void Shield_Update()
     {

@@ -2,18 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
-
 public class Player_sc : MonoBehaviour
 {
-    /*[SerializeField]*/ private float m_moveSpeed = 5f;
-    /*[SerializeField]*/ private float m_turnSpeed = 180f;
-    /*[SerializeField]*/ private float m_jumpForce = 100f;
+    private float m_moveSpeed = 5f;
+    private float m_turnSpeed = 180f;
+    private float m_jumpForce = 100f;
 
     private Animator m_animator;
     private Rigidbody m_rigidBody;
     private Transform tr;
     private Transform BossTrans;
-    public static int m_Hp = 1;
+    public static int m_Hp = 10;
 
     private readonly float m_walkScale = 0.33f;
     private readonly float m_backwardsWalkScale = 0.16f;
@@ -30,7 +29,7 @@ public class Player_sc : MonoBehaviour
     private float r = 0f;
 
     private List<Collider> m_collisions = new List<Collider>();
-    public static List<GameObject> shieldGaugeList = new List<GameObject>();
+    public static List<GameObject> m_ShieldGaugeList = new List<GameObject>();
 
     //bool bOrbOnce = false;    // 행동따라 Orb 생성 제어
     bool bShieldOnce = false;   // 쉴드 생성 제어
@@ -39,6 +38,7 @@ public class Player_sc : MonoBehaviour
     bool bOrbCreate = false;
     bool bOrbOnce = false;
     float fOrbCheckTime = 0;
+    bool[] m_bSkillOnce = new bool[3];
 
     //죽은 후 시간 지나고 씬 전환
     float fDeadCheckTime = 0;
@@ -48,7 +48,25 @@ public class Player_sc : MonoBehaviour
     private Transform MainCameraPos;
     private ObjectMgr_sc ObjMgrScript;
 
+    public enum SKILL { SKILL_WIND, SKILL_POISON, SKILL_NUT, SKILL_END };
+    public SKILL[] m_eSkill = new SKILL[3];
+
+    public SKILL GetSkill(int iScene)
+    {
+        return m_eSkill[iScene];
+    }
+
+    public void SetSkill(int iScene, SKILL eSkill)
+    {
+        m_eSkill[iScene] = eSkill;
+    }
+
     void Awake()
+    {
+        Initialize();
+    }
+
+    private void Initialize()
     {
         if (!m_animator) { m_animator = gameObject.GetComponent<Animator>(); }
         if (!m_rigidBody) { m_rigidBody = gameObject.GetComponent<Rigidbody>(); }
@@ -56,6 +74,12 @@ public class Player_sc : MonoBehaviour
         if (!BossTrans) { BossTrans = GameObject.Find("BossMonster").transform; }
         if (!MainCameraPos) { MainCameraPos = GameObject.Find("MainCamera").transform; }
         if (!ObjMgrScript) { ObjMgrScript = GameObject.Find("ObjectManager").GetComponent<ObjectMgr_sc>(); }
+
+        for (int i = 0; i < 3; ++i)
+        {
+            m_eSkill[i] = SKILL.SKILL_END;
+            m_bSkillOnce[i] = false;
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -123,15 +147,14 @@ public class Player_sc : MonoBehaviour
         if (m_Hp <= 0)
         {
             m_animator.SetBool("Die", true);
-            fDeadCheckTime+= Time.deltaTime; ;
-           
+            fDeadCheckTime += Time.deltaTime;
         }
+
         if (fDeadCheckTime > 3.0f)
         {
             fDeadCheckTime = 0.0f;
             m_Hp = 10;
-            LodingSceneManager_sc.LoadScene("MainStage");
-            //return;
+            return;
         }
 
         if (bOrbCreate)
@@ -142,16 +165,6 @@ public class Player_sc : MonoBehaviour
             bOrbCreate = false;
             fOrbCheckTime = 0;
         }
-
-        //if(Input.GetKeyDown(KeyCode.O))
-        //{
-
-        //}
-
-        //if (Input.GetKeyDown(KeyCode.P))
-        //{
-
-        //}
     }
 
     void FixedUpdate()
@@ -215,6 +228,9 @@ public class Player_sc : MonoBehaviour
 
     public void MainAttack()
     {
+        if (!tr)
+            Initialize();
+
         float dist = (tr.position - BossTrans.position).magnitude;
         if (dist < 5.0f)
             m_animator.SetBool("MainAtt", true);
@@ -227,9 +243,12 @@ public class Player_sc : MonoBehaviour
         m_animator.SetBool("MainAtt", false);
 
         // LMainAtt : MainAtt & OrbAtt 공유
-        bOrbOnce = false;
         m_animator.SetBool("LMainAtt", false);
         m_animator.SetBool("Damaged", false);
+
+        bOrbOnce = false;
+        for (int i = 0; i < 3; ++i)
+            m_bSkillOnce[i] = false;
     }
 
     public void ShieldAttack()
@@ -274,6 +293,46 @@ public class Player_sc : MonoBehaviour
         bOrbCreate = true;
     }
 
+    public void FirstAttack()
+    {
+        if (m_bSkillOnce[0])
+            return;
+
+        switch (m_eSkill[0])
+        {
+            case SKILL.SKILL_WIND:
+                {
+                    m_animator.SetBool("LMainAtt", true);
+                    SkillMgr_Sc.Instance.CreateWind();
+                }
+                break;
+            case SKILL.SKILL_POISON:
+                {
+                    m_animator.SetBool("LMainAtt", true);
+                    SkillMgr_Sc.Instance.CreatePoison();
+                }
+                break;
+            case SKILL.SKILL_NUT:
+                {
+                    m_animator.SetBool("LMainAtt", true);
+                    SkillMgr_Sc.Instance.CreateNut();
+                }
+                break;
+        }
+
+        m_bSkillOnce[0] = true;
+    }
+
+    public void SecondAttack()
+    {
+        Debug.Log("2");
+    }
+
+    public void ThirdAttack()
+    {
+        Debug.Log("3");
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Boss")
@@ -282,7 +341,7 @@ public class Player_sc : MonoBehaviour
             int ShieldCnt = ObjectMgr_sc.Instance.CountOfObject(ObjectMgr_sc.OBJECT.OBJ_SHIELD);
             if (ShieldCnt != 0)
             {
-                Destroy(shieldGaugeList[--ShieldCnt]);
+                Destroy(m_ShieldGaugeList[--ShieldCnt]);
                 return;
             }
 
@@ -304,7 +363,7 @@ public class Player_sc : MonoBehaviour
         if (bPosInit)
         {
             transform.position = new Vector3(-19.0f, 0.0f, 20.0f);
-            Debug.Log("die :" + m_animator.GetBool("Die"));
+            //Debug.Log("die :" + m_animator.GetBool("Die"));
             m_animator.SetBool("Die", false);
             bPosInit = false;
         }
