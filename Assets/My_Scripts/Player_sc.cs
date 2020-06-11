@@ -12,7 +12,7 @@ public class Player_sc : MonoBehaviour
     private Rigidbody m_rigidBody;
     private Transform tr;
     private Transform BossTrans;
-    public static int m_Hp = 10;
+    public static int m_Hp = 100;
 
     private readonly float m_walkScale = 0.33f;
     private readonly float m_backwardsWalkScale = 0.16f;
@@ -154,6 +154,7 @@ public class Player_sc : MonoBehaviour
         {
             fDeadCheckTime = 0.0f;
             m_Hp = 10;
+            LodingSceneManager_sc.LoadScene("MainStage");
             return;
         }
 

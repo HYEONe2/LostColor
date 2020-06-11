@@ -88,10 +88,10 @@ public class Monster_sc : MonoBehaviour
                 switch (nextState)
                 {
                     case CurrentState.attack_poison:
-                        //if (m_animator.GetBool("PoisonAttack"))
-                        //{
-                            //Instantiate(posion, weapon.transform.position, transform.rotation); // 타이밍 조절해줘야함                           
-                        //}
+                        if (m_animator.GetBool("PoisonAttack"))
+                        {
+                            Instantiate(posion, weapon.transform.position, transform.rotation); // 타이밍 조절해줘야함                           
+                        }
                         break;
                     case CurrentState.attck_wind:
                         if (m_animator.GetBool("WindAttack"))
@@ -101,6 +101,10 @@ public class Monster_sc : MonoBehaviour
                         }
                         break;
                     case CurrentState.attack_nut:
+                        if (m_animator.GetBool("NutAttack"))
+                        {
+                            Instantiate(nut, weapon.transform.position, transform.rotation); // 타이밍 조절해줘야함                           
+                        }
                         break;
                     default:
                         break;

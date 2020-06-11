@@ -10,6 +10,7 @@ public class Stage_Manager : MonoBehaviour
 
     public GameObject paticle1;
     public GameObject paticle2;
+    [SerializeField] private GameObject Player;
 
     public bool stage1_open = true;
     public bool stage2_open = false;
@@ -43,6 +44,7 @@ public class Stage_Manager : MonoBehaviour
     private void Awake()
     {
         var objs = FindObjectsOfType<Stage_Manager>();
+        Player = GameObject.Find("Player");
         if (objs.Length != 1)
         {
             Destroy(gameObject);
@@ -65,10 +67,17 @@ public class Stage_Manager : MonoBehaviour
             if (!stage2_open)
                 paticle2.SetActive(false);
         }
-        else
+        if(SceneManager.GetActiveScene().name == "Loading_Scene")
         {
+           // Player.SetActive(false);
             paticle1.SetActive(false);
             paticle2.SetActive(false);
+        }
+        else
+        {
+            //Player.SetActive(true);
+            //paticle1.SetActive(false);
+            //paticle2.SetActive(false);       
         }
     }
 

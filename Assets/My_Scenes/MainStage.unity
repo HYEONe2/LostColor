@@ -2144,7 +2144,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &244126017
 PrefabInstance:
@@ -5609,7 +5609,7 @@ PrefabInstance:
     - target: {fileID: 2751745111424484727, guid: 8de3eca6187c35c40853cc41c8be3286,
         type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 2751745111424484727, guid: 8de3eca6187c35c40853cc41c8be3286,
         type: 3}
@@ -9957,6 +9957,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1361727617}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1376747526 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1248815240492774, guid: ccd8c3b89aa02e943a08ab9238a8a70c,
+    type: 3}
+  m_PrefabInstance: {fileID: 2032784100}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1377812892
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14145,7 +14151,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 2032784100}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1376747526}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: caa180a486738a141b0d9c19b0b5670b, type: 3}
@@ -15137,6 +15143,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 1335278543749856, guid: ccd8c3b89aa02e943a08ab9238a8a70c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4463868907105534, guid: ccd8c3b89aa02e943a08ab9238a8a70c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 32.490604
@@ -15180,6 +15190,11 @@ PrefabInstance:
     - target: {fileID: 4463868907105534, guid: ccd8c3b89aa02e943a08ab9238a8a70c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 95538263452871118, guid: ccd8c3b89aa02e943a08ab9238a8a70c,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ccd8c3b89aa02e943a08ab9238a8a70c, type: 3}
@@ -15808,6 +15823,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   paticle1: {fileID: 1121533358}
   paticle2: {fileID: 666872297}
+  Player: {fileID: 1376747526}
   stage1_open: 1
   stage2_open: 0
 --- !u!1001 &2103802084
