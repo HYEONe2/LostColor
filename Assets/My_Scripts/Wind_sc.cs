@@ -15,7 +15,7 @@ public class Wind_sc : MonoBehaviour
     void Start()
     {
         ps = GetComponent<ParticleSystem>();
-        Destroy(gameObject, 3);
+        Destroy(gameObject, 2);
 
         Player = GameObject.Find("Player");
         CameraDir = GameObject.Find("MainCamera").transform.forward;

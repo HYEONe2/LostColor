@@ -32,7 +32,10 @@ public class Monster_sc : MonoBehaviour
 
     // 시간따라 Orb 생성 제어
     bool bPoisonCreate = false;
-    bool bPoisonOnce = false;
+    bool bWindCreate = false;
+    bool bNutCreate = false;
+
+
 
 
     public void Initialize(GameObject character)
@@ -66,6 +69,7 @@ public class Monster_sc : MonoBehaviour
             triggerObj = (Stage_Manager)FindObjectOfType(typeof(Stage_Manager));
             triggerObj.stage1_open = false;
             triggerObj.stage2_open = true;
+            curState = nextState;
         }
     }
 
@@ -83,33 +87,7 @@ public class Monster_sc : MonoBehaviour
 
             if (dist <= attackDist&& (curState != nextState))
             {
-                curState = nextState;
-                nextState = (CurrentState)Random.Range(2, 5);
-                switch (nextState)
-                {
-                    case CurrentState.attack_poison:
-                        if (m_animator.GetBool("PoisonAttack"))
-                        {
-                            Instantiate(posion, weapon.transform.position, transform.rotation); // 타이밍 조절해줘야함                           
-                        }
-                        break;
-                    case CurrentState.attck_wind:
-                        if (m_animator.GetBool("WindAttack"))
-                        {
-                            bPoisonCreate = false;
-                            Instantiate(wind, wind.transform.position, wind.transform.rotation); // 타이밍 조절해줘야함                           
-                        }
-                        break;
-                    case CurrentState.attack_nut:
-                        if (m_animator.GetBool("NutAttack"))
-                        {
-                            Instantiate(nut, weapon.transform.position, transform.rotation); // 타이밍 조절해줘야함                           
-                        }
-                        break;
-                    default:
-                        break;
-                }
-
+                nextState = (CurrentState)Random.Range(2, 5);             
             }
 
             else if (dist >= traceDist || dist > attackDist)
@@ -196,9 +174,42 @@ public class Monster_sc : MonoBehaviour
     {
         if (bPoisonCreate)
             return;
-
+        Debug.Log("독 공격");                        
         Instantiate(posion, weapon.transform.position, transform.rotation);
 
         bPoisonCreate = true;
+    }
+    public void FalsePoison()
+    {
+        if (bPoisonCreate)
+            bPoisonCreate = false;
+    }
+    public void CreateWind()
+    {
+        if (bWindCreate)
+            return;
+        Debug.Log("바람 공격");
+        Instantiate(wind, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y+1.4f, gameObject.transform.position.z), gameObject.transform.rotation); // 타이밍 조절해줘야함   
+
+        bWindCreate = true;
+    }
+    public void FalseWind()
+    {
+        if (bWindCreate)
+            bWindCreate = false;
+    }
+    public void CreateNut()
+    {
+        if (bNutCreate)
+            return;
+        Debug.Log("밤송이 공격");
+        Instantiate(nut, weapon.transform.position, transform.rotation); // 타이밍 조절해줘야함    
+
+        bNutCreate = true;
+    }
+    public void FalseNut()
+    {
+        if (bNutCreate)
+            bNutCreate = false;
     }
 }

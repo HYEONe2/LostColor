@@ -56,7 +56,7 @@ public class CanvasMgr_sc : MonoBehaviour
             }
         }
 
-        if (monsterScript.curState == Monster_sc.CurrentState.dead)
+        if (monsterScript.nextState == Monster_sc.CurrentState.dead)
         {
             if (!m_bDestroy && m_fCheckTime >= 4.0f)
             {
