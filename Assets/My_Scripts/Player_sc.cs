@@ -141,8 +141,10 @@ public class Player_sc : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name == "Stage_1")
             Stage_1_PosInit();
-        if (SceneManager.GetActiveScene().name == "MainStage")
+        if (SceneManager.GetActiveScene().name == "Stage_2")
             Stage_2_PosInit();
+        if (SceneManager.GetActiveScene().name == "MainStage")
+            Stage_Main_PosInit();
 
         if (m_Hp <= 0)
         {
@@ -360,6 +362,14 @@ public class Player_sc : MonoBehaviour
         }
     }
     private void Stage_2_PosInit()
+    {
+        if (!bPosInit)
+        {
+            transform.position = new Vector3(9.84f, 0.34f, -13.97f);
+            bPosInit = true;
+        }
+    }
+    private void Stage_Main_PosInit()
     {
         if (bPosInit)
         {
