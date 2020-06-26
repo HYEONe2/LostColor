@@ -166,7 +166,7 @@ public class Stage2Monster_sc : MonoBehaviour
             m_animator.SetBool("Attack2", false);
             m_animator.SetBool("Attack3", false);
             m_animator.SetBool("Hit", true);
-            iHp--; /*Debug.Log(iHp);*/
+            iHp--; Debug.Log(iHp);
 
 
         }

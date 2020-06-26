@@ -20,7 +20,7 @@ public class LodingSceneManager_sc : MonoBehaviour
         StartCoroutine(LoadScene());
         loadingText.SetActive(false);
 
-        CameraManager = GameObject.Find("CameraManager").GetComponent<CameraManager>();
+        //CameraManager = GameObject.Find("CameraManager").GetComponent<CameraManager>();
     }
 
     public static void LoadScene(string sceneName)
