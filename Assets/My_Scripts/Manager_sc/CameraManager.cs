@@ -4,21 +4,32 @@ using UnityEngine;
 
 public class CameraManager : MonoBehaviour
 {
-    public GameObject MainCamera;
-    public GameObject ShakingCamera;
-    public GameObject ShakingCamera2;
-    public ShakingCamera ShakeCameraScript;
-    public ShakingCamera ShakeCameraScript2;
+    private GameObject MainCamera;
+    private GameObject ShakingCamera;
+    private GameObject ShakingCamera2;
+    private GameObject ClearCamera1;
 
+    private ShakingCamera ShakeCameraSc;
+    private ShakingCamera ShakeCameraSc2;
+    private ClearCamera_sc ClearCameraSc1;
 
-    public float MaxTime = 5f;
+    public float ShakeMaxTime = 5f;
+    public float ClearMaxTime = 3f;
     public float Magnitude = 10f;
 
     // Start is called before the first frame update
     void Start()
     {
-       // MaxTime = 5f;
+        // MaxTime = 5f;
         //Magnitude = 10f;
+        MainCamera = GameObject.Find("MainCamera");
+        ShakingCamera = GameObject.Find("Shaking Camera");
+        ShakingCamera2 = GameObject.Find("Shaking Camera2");
+        ClearCamera1 = GameObject.Find("ClearCamera1");
+
+        ShakeCameraSc = ShakingCamera.GetComponent<ShakingCamera>();
+        ShakeCameraSc2 = ShakingCamera2.GetComponent<ShakingCamera>();
+        ClearCameraSc1 = ClearCamera1.GetComponent<ClearCamera_sc>();
 
         MainCameraOn();
     }
@@ -34,6 +45,9 @@ public class CameraManager : MonoBehaviour
 
         if (Input.GetKey("3"))
             ShakingCamera2On();
+
+        if (Input.GetKey("4"))
+            ClearCameraOn();
     }
 
     public void MainCameraOn()
@@ -41,6 +55,7 @@ public class CameraManager : MonoBehaviour
         MainCamera.GetComponent<Camera>().enabled = true;
         ShakingCamera.GetComponent<Camera>().enabled = false;
         ShakingCamera2.GetComponent<Camera>().enabled = false;
+        ClearCamera1.GetComponent<Camera>().enabled = false;
     }
 
     public void ShakingCameraOn()
@@ -48,8 +63,9 @@ public class CameraManager : MonoBehaviour
         MainCamera.GetComponent<Camera>().enabled = false;
         ShakingCamera.GetComponent<Camera>().enabled = true;
         ShakingCamera2.GetComponent<Camera>().enabled = false;
+        ClearCamera1.GetComponent<Camera>().enabled = false;
 
-        StartCoroutine(ShakeCameraScript.Shake(MaxTime,Magnitude));
+        StartCoroutine(ShakeCameraSc.Shake(ShakeMaxTime, Magnitude));
     }
 
     public void ShakingCamera2On()
@@ -57,7 +73,18 @@ public class CameraManager : MonoBehaviour
         MainCamera.GetComponent<Camera>().enabled = false;
         ShakingCamera.GetComponent<Camera>().enabled = false;
         ShakingCamera2.GetComponent<Camera>().enabled = true;
+        ClearCamera1.GetComponent<Camera>().enabled = false;
 
-        StartCoroutine(ShakeCameraScript2.Shake(MaxTime, Magnitude));
+        StartCoroutine(ShakeCameraSc2.Shake(ShakeMaxTime, Magnitude));
+    }
+
+    public void ClearCameraOn()
+    {
+        MainCamera.GetComponent<Camera>().enabled = false;
+        ShakingCamera.GetComponent<Camera>().enabled = false;
+        ShakingCamera2.GetComponent<Camera>().enabled = false;
+        ClearCamera1.GetComponent<Camera>().enabled = true;
+
+        StartCoroutine(ClearCameraSc1.Clear(ClearMaxTime, Magnitude));
     }
 }

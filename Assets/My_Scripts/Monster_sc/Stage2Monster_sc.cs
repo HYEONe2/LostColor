@@ -84,7 +84,7 @@ public class Stage2Monster_sc : MonoBehaviour
             //    curState = nextState; //현재 스테이트키 바꿔줌
 
             float dist = Vector3.Distance(target.transform.position, tr.position);
-            Debug.Log(dist);
+            //Debug.Log(dist);
             if (dist <= 3.0f)
                 nextState = CurrentState.attack_2;
 
@@ -176,7 +176,7 @@ public class Stage2Monster_sc : MonoBehaviour
     {
         if (bRockCreate)
             return;
-        Debug.Log("돌 공격");
+        //Debug.Log("돌 공격");
         Instantiate(rock, new Vector3(gameObject.transform.position.x - 2.0f, gameObject.transform.position.y, gameObject.transform.position.z), gameObject.transform.rotation);
         RockAttack_sc.bIsMove = true;
         bRockCreate = true;
@@ -196,7 +196,7 @@ public class Stage2Monster_sc : MonoBehaviour
     {
         if (bCloudCreate)
             return;
-        Debug.Log("구름 공격");
+        //Debug.Log("구름 공격");
         Instantiate(cloud, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 10.0f, gameObject.transform.position.z), gameObject.transform.rotation);
     }
 

@@ -23,13 +23,13 @@ public class RockAttack_sc : MonoBehaviour
     {
         if (!bIsMove)
         {
-            Debug.Log("발사");
+            //Debug.Log("발사");
             transform.position = Vector3.MoveTowards(transform.position, TargetPos, 1.0f);
             transform.Rotate(new Vector3(0, 0, 3));
         }
         else
         {
-            Debug.Log("이동");
+            //Debug.Log("이동");
             transform.position = MonsterHand.transform.position;
         }
     }

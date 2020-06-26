@@ -5,6 +5,7 @@ using UnityEngine;
 public class CanvasMgr_sc : MonoBehaviour
 {
     [SerializeField] private Monster_sc monsterScript;
+    [SerializeField] private Stage2Monster_sc monster2Script;
 
     GameObject JoystickCanvas;
     GameObject SkillCanvas;
@@ -20,6 +21,9 @@ public class CanvasMgr_sc : MonoBehaviour
     static float m_fCheckTime = 0;
     static float m_fTurnStage = 0;
 
+    enum STAGE { STAGE_1, STAGE_2, STAGE_3,STAGE_END};
+    private STAGE eStage = STAGE.STAGE_END;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,6 +37,11 @@ public class CanvasMgr_sc : MonoBehaviour
 
         for(int i=0;i<3; ++i)
             m_bIsTurn[i] = false;
+
+        if (monsterScript != null)
+            eStage = STAGE.STAGE_1;
+        else if (monster2Script != null)
+            eStage = STAGE.STAGE_2;
     }
 
     // Update is called once per frame
@@ -56,20 +65,20 @@ public class CanvasMgr_sc : MonoBehaviour
             }
         }
 
-        if (monsterScript.nextState == Monster_sc.CurrentState.dead)
+        switch (eStage)
         {
-            if (!m_bDestroy && m_fCheckTime >= 4.0f)
-            {
-                JoystickCanvas.SetActive(false);
-                SkillCanvas.SetActive(false);
-                CardCanvas.gameObject.SetActive(true);
-
-                m_bDestroy = true;
-            }
-
-            m_fCheckTime += Time.deltaTime;
+            case STAGE.STAGE_1:
+                if (monsterScript.nextState == Monster_sc.CurrentState.dead)
+                    CheckTimeForCanvas();
+                break;
+            case STAGE.STAGE_2:
+                if (monster2Script.nextState == Stage2Monster_sc.CurrentState.dead)
+                    CheckTimeForCanvas();
+                break;
+            case STAGE.STAGE_3:
+                break;
         }
-
+        
         if (m_bIsClicked && CardCanvas.gameObject.activeSelf)
         {
             CheckCard();
@@ -94,5 +103,19 @@ public class CanvasMgr_sc : MonoBehaviour
         m_bReset = true;
         m_bIsClicked = false;
         m_fCheckTime = 0;
+    }
+
+    void CheckTimeForCanvas()
+    {
+        if (!m_bDestroy && m_fCheckTime >= 4.0f)
+        {
+            JoystickCanvas.SetActive(false);
+            SkillCanvas.SetActive(false);
+            CardCanvas.gameObject.SetActive(true);
+
+            m_bDestroy = true;
+        }
+
+        m_fCheckTime += Time.deltaTime;
     }
 }

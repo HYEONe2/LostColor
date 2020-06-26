@@ -37,6 +37,7 @@ public class JoyStick_sc : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
     {
         if (m_bTouch)
         {
+            Debug.Log("LEKFJLEKJ");
             m_playerTrans.position += m_vecMove;
 
             m_animator.SetFloat("MoveSpeed", m_fSqr);

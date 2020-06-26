@@ -12,12 +12,15 @@ public class LodingSceneManager_sc : MonoBehaviour
 
     [SerializeField]
     Image progressBar;
-  
+
+    CameraManager CameraManager;
 
     private void Start()
     {
         StartCoroutine(LoadScene());
         loadingText.SetActive(false);
+
+        CameraManager = GameObject.Find("CameraManager").GetComponent<CameraManager>();
     }
 
     public static void LoadScene(string sceneName)
@@ -51,6 +54,9 @@ public class LodingSceneManager_sc : MonoBehaviour
                     loadingText.SetActive(true);
                    // if (Input.GetMouseButton(0))
                         oper.allowSceneActivation = true;
+
+                    //if(nextScene == "MainStage")
+                    //    CameraManager.ClearCameraOn();
                 }
             }
             else
