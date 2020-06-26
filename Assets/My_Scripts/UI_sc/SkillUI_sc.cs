@@ -62,7 +62,7 @@ public class SkillUI_sc : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoi
     {
         if (m_bTouch)
         {
-            switch(eSKill)
+            switch (eSKill)
             {
                 case SKILL.SKILL_MAIN:
                     playerScript.MainAttack();

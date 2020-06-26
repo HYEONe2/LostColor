@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ColorChange_sc : MonoBehaviour
 {
@@ -11,7 +12,6 @@ public class ColorChange_sc : MonoBehaviour
     public STAGE CheckStage = STAGE.STAGE_END;
 
     private GameObject ClearCamera1;
-    private bool m_bCanChange = false;
 
     private Transform[] m_transformArr;
     private STAGE m_Stage = STAGE.STAGE_END;
@@ -20,11 +20,14 @@ public class ColorChange_sc : MonoBehaviour
     private float m_fTime = 0f;
     private float m_fChangeTime = 0.5f;
 
+    private string SceneName= "";
+    private bool[] m_StageChecked = new bool[3];
+
     // Start is called before the first frame update
     void Start()
     {
         ClearCamera1 = GameObject.Find("ClearCamera1");
-        m_fChangeTime = Random.Range(1, 5) * 0.2f;
+        m_fChangeTime = Random.Range(1, 5) * 0.25f;
 
         if (IsParent)
         {
@@ -36,23 +39,69 @@ public class ColorChange_sc : MonoBehaviour
                 m_transformArr[i++] = mr;
             }
         }
+
+        for (int i = 0; i < 3; ++i)
+            m_StageChecked[i] = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("1"))
-            m_Stage = STAGE.STAGE_1;
-        if (Input.GetKeyDown("2"))
-            m_Stage = STAGE.STAGE_2;
-        if (Input.GetKeyDown("3"))
-            m_Stage = STAGE.STAGE_3;
+        //if (Input.GetKeyDown("1"))
+        //    m_Stage = STAGE.STAGE_1;
+        //if (Input.GetKeyDown("2"))
+        //    m_Stage = STAGE.STAGE_2;
+        //if (Input.GetKeyDown("3"))
+        //    m_Stage = STAGE.STAGE_3;
 
         m_Stage = STAGE.STAGE_2;
+
+        if (CheckScene())
+            return;
 
         if (ClearCamera1.GetComponent<Camera>().enabled == false)
             return;
 
+        ChangeColor();
+    }
+
+    bool CheckScene()
+    {
+        SceneName = SceneManager.GetActiveScene().name;
+
+        if (SceneName == "MainStage")
+            return false;
+        else if (SceneName == "Stage_1")
+        {
+            m_StageChecked[0] = true;
+            m_StageChecked[1] = false;
+            m_StageChecked[2] = false;
+        }
+        else if (SceneName == "Stage_2")
+        {
+            m_StageChecked[0] = false;
+            m_StageChecked[1] = true;
+            m_StageChecked[2] = false;
+        }
+        else if (SceneName == "Stage_3")
+        {
+            m_StageChecked[0] = false;
+            m_StageChecked[1] = false;
+            m_StageChecked[2] = true;
+        }
+
+        if (m_StageChecked[0])
+            m_Stage = STAGE.STAGE_1;
+        else if (m_StageChecked[1])
+            m_Stage = STAGE.STAGE_2;
+        else if (m_StageChecked[2])
+            m_Stage = STAGE.STAGE_3;
+
+        return true;
+    }
+
+    void ChangeColor()
+    {
         if (m_Stage == CheckStage && TargetInScreen_Direction())
         {
             if (IsParent)
@@ -78,8 +127,7 @@ public class ColorChange_sc : MonoBehaviour
         }
     }
 
-
-    public bool TargetInScreen_Direction()
+    bool TargetInScreen_Direction()
     {
         // 카메라를 기준으로 타겟의 로컬 좌표를 구한다.
         Vector3 localTargetPos = ClearCamera1.transform.InverseTransformPoint(transform.position);

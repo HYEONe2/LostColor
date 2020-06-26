@@ -6,7 +6,7 @@ public class Player_sc : MonoBehaviour
 {
     private float m_moveSpeed = 5f;
     private float m_turnSpeed = 180f;
-    private float m_jumpForce = 100f;
+    [SerializeField] private float m_jumpForce = 100f;
 
     private Animator m_animator;
     private Rigidbody m_rigidBody;

@@ -48,7 +48,6 @@ public class CardUI_sc : MonoBehaviour, IPointerDownHandler
             }
             else
             {
-                Debug.Log(m_fCheckTime);
                 if (m_fCheckTime >= 2.0f)
                 {
                     CanvasMgr_sc.SetCanvasReset();
