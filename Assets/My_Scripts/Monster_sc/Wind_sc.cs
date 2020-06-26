@@ -24,17 +24,12 @@ public class Wind_sc : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log(gameObject.transform.position.x + "  " + gameObject.transform.position.z);
+        if (m_bPlayerUse)
+        {
+            Vector3 vPlayerTrans = Player.transform.position;
+            Vector3 dir = GameObject.Find("MainCamera").transform.forward;
 
-        //if (m_bPlayerUse)
-        //{
-        //    Vector3 vPlayerTrans = Player.transform.position;
-        //    float fDist = (vPlayerTrans - gameObject.transform.position).magnitude;
-
-        //    if (fDist > 10.0f)
-        //        Destroy(gameObject);
-
-        //    gameObject.transform.position += CameraDir * Time.deltaTime * fSpeed;
-        //}
+            transform.position = new Vector3(vPlayerTrans.x + dir.x, vPlayerTrans.y + 1.4f, vPlayerTrans.z + dir.z);
+        }
     }
 }

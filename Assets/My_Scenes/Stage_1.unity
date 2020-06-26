@@ -2446,6 +2446,8 @@ MonoBehaviour:
   Wind: {fileID: 8328917787101457721, guid: 00d295607c726704fb90321e6ba75aec, type: 3}
   Poison: {fileID: 1661582078456886541, guid: ece0ef9a932b4994db1f1cdb2f79cf66, type: 3}
   Nut: {fileID: 2688439759020598191, guid: 4df1564c632a3d545afaf78c4b9a19bc, type: 3}
+  Rock: {fileID: 5298590762127773683, guid: cad9f745870d9f448bf225d2a253d382, type: 3}
+  Cloud: {fileID: 1146932368203680071, guid: 06581d1157ccfd54fa2e93c525916e0e, type: 3}
 --- !u!4 &745067677
 Transform:
   m_ObjectHideFlags: 0

@@ -7,25 +7,54 @@ public class CloudAttack_sc : MonoBehaviour
     GameObject Target;
     Vector3 TargetPos;
 
+    public bool m_bPlayerUse = false;
+    private GameObject Monster;
+
     // Start is called before the first frame update
     void Start()
     {
         Target = GameObject.Find("Player");
         TargetPos = new Vector3 (Target.transform.position.x, Target.transform.position.y+5.0f, Target.transform.position.z);
         Destroy(gameObject, 2.5f);
+
+        if(m_bPlayerUse)
+        {
+            Monster = GameObject.Find("Polyart_Golem");
+            if (Monster)
+                TargetPos = new Vector3(Monster.transform.position.x, Monster.transform.position.y + 7.0f, Monster.transform.position.z);
+            else
+                transform.position = TargetPos;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
         //Vector3 vPlayerTrans = Target.transform.position;
-
         //TargetPos.y += 1.0f;
+        if (m_bPlayerUse)
+        {
+            if (!Monster)
+            {
+                Vector3 dir = GameObject.Find("MainCamera").transform.forward;
+                gameObject.transform.position += dir * Time.deltaTime * 10f;
+            }
+            else
+            {
+                float fDist = (TargetPos - gameObject.transform.position).magnitude;
 
-        float fDist = (TargetPos - gameObject.transform.position).magnitude;
+                Vector3 vDir = (TargetPos - gameObject.transform.position).normalized;
+                if (fDist > 1)
+                    gameObject.transform.position += vDir * Time.deltaTime * 11.0f;
+            }
+        }
+        else
+        {
+            float fDist = (TargetPos - gameObject.transform.position).magnitude;
 
-        Vector3 vDir = (TargetPos - gameObject.transform.position).normalized;
-        if (fDist > 1)
-            gameObject.transform.position += vDir * Time.deltaTime * 11.0f;
+            Vector3 vDir = (TargetPos - gameObject.transform.position).normalized;
+            if (fDist > 1)
+                gameObject.transform.position += vDir * Time.deltaTime * 11.0f;
+        }
     }
 }

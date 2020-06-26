@@ -80,15 +80,12 @@ public class CardUI_sc : MonoBehaviour, IPointerDownHandler
                 switch (eSkill)
                 {
                     case SKILL.SKILL_1:
-                        Debug.Log("1");
                         playerScript.SetSkill(0, Player_sc.SKILL.SKILL_WIND);
                         break;
                     case SKILL.SKILL_2:
-                        Debug.Log("2");
                         playerScript.SetSkill(0, Player_sc.SKILL.SKILL_POISON);
                         break;
                     case SKILL.SKILL_3:
-                        Debug.Log("3");
                         playerScript.SetSkill(0, Player_sc.SKILL.SKILL_NUT);
                         break;
                     default:
@@ -100,10 +97,13 @@ public class CardUI_sc : MonoBehaviour, IPointerDownHandler
                 switch (eSkill)
                 {
                     case SKILL.SKILL_1:
+                        playerScript.SetSkill(1, Player_sc.SKILL.SKILL_ROCK);
                         break;
                     case SKILL.SKILL_2:
+                        playerScript.SetSkill(1, Player_sc.SKILL.SKILL_CLOUD);
                         break;
                     case SKILL.SKILL_3:
+                        playerScript.SetSkill(1, Player_sc.SKILL.SKILL_NUT);
                         break;
                     default:
                         break;

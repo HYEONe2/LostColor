@@ -7,7 +7,11 @@ public class RockAttack_sc : MonoBehaviour
     GameObject Target;
     GameObject MonsterHand;
     Vector3 TargetPos;
+
     public static bool bIsMove = true;
+    public bool m_bPlayerUse = false;
+
+    private GameObject Monster;
 
     // Start is called before the first frame update
     void Start()
@@ -16,21 +20,44 @@ public class RockAttack_sc : MonoBehaviour
         MonsterHand = GameObject.Find("Index_Proximal_R");
         TargetPos = Target.transform.position;
         Destroy(gameObject, 4);
+
+        if (m_bPlayerUse)
+        {
+            Monster = GameObject.Find("Polyart_Golem");
+            if (Monster)
+                TargetPos = Monster.transform.position;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!bIsMove)
+        if (m_bPlayerUse)
         {
-            //Debug.Log("발사");
-            transform.position = Vector3.MoveTowards(transform.position, TargetPos, 1.0f);
-            transform.Rotate(new Vector3(0, 0, 3));
+            if (!Monster)
+            {
+                Vector3 dir = GameObject.Find("MainCamera").transform.forward;
+                gameObject.transform.position += dir * Time.deltaTime * 10f;
+            }
+            else
+            {
+                transform.position = Vector3.MoveTowards(transform.position, TargetPos, 1.0f);
+                transform.Rotate(new Vector3(0, 0, 3));
+            }
         }
         else
         {
-            //Debug.Log("이동");
-            transform.position = MonsterHand.transform.position;
+            if (!bIsMove)
+            {
+                //Debug.Log("발사");
+                transform.position = Vector3.MoveTowards(transform.position, TargetPos, 1.0f);
+                transform.Rotate(new Vector3(0, 0, 3));
+            }
+            else
+            {
+                //Debug.Log("이동");
+                transform.position = MonsterHand.transform.position;
+            }
         }
     }
 }

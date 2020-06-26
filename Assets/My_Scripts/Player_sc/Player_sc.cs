@@ -48,7 +48,7 @@ public class Player_sc : MonoBehaviour
     private Transform MainCameraPos;
     private ObjectMgr_sc ObjMgrScript;
 
-    public enum SKILL { SKILL_WIND, SKILL_POISON, SKILL_NUT, SKILL_END };
+    public enum SKILL { SKILL_WIND, SKILL_POISON, SKILL_NUT, SKILL_ROCK, SKILL_CLOUD, SKILL_END };
     public SKILL[] m_eSkill = new SKILL[3];
 
     public SKILL GetSkill(int iScene)
@@ -163,7 +163,7 @@ public class Player_sc : MonoBehaviour
         if (bOrbCreate)
             fOrbCheckTime += Time.deltaTime;
 
-        if (fOrbCheckTime > 10.0f)
+        if (fOrbCheckTime > 5f)
         {
             bOrbCreate = false;
             fOrbCheckTime = 0;
@@ -328,7 +328,26 @@ public class Player_sc : MonoBehaviour
 
     public void SecondAttack()
     {
-        Debug.Log("2");
+        if (m_bSkillOnce[1])
+            return;
+
+        switch (m_eSkill[1])
+        {
+            case SKILL.SKILL_ROCK:
+                {
+                    m_animator.SetBool("LMainAtt", true);
+                    SkillMgr_Sc.Instance.CreateRock();
+                }
+                break;
+            case SKILL.SKILL_CLOUD:
+                {
+                    m_animator.SetBool("LMainAtt", true);
+                    SkillMgr_Sc.Instance.CreateCloud();
+                }
+                break;
+        }
+
+        m_bSkillOnce[1] = true;
     }
 
     public void ThirdAttack()
