@@ -17,6 +17,7 @@ public class Monster_sc : MonoBehaviour
     [SerializeField] private GameObject nut;
     [SerializeField] private NavMeshAgent nav;
 
+    private AudioSource HitSound;
 
     public enum CurrentState { idle, walk, attck_wind, attack_poison, attack_nut, hit, dead, end };
     public CurrentState curState = CurrentState.end;
@@ -54,6 +55,10 @@ public class Monster_sc : MonoBehaviour
     {
         nav = GetComponent<NavMeshAgent>();
         target = GameObject.Find("Player");
+
+        HitSound = GetComponent<AudioSource>();
+        HitSound.Stop();
+        HitSound.playOnAwake = false;
 
         StartCoroutine(this.CheackState());
         StartCoroutine(this.CheckStateForAction());
@@ -228,11 +233,13 @@ public class Monster_sc : MonoBehaviour
         if (!bIsHit)
         {
             --iHp;
+            HitSound.Play();
             bIsHit = true;
         }
     }
     public void FalseHit()
     {
+        HitSound.Stop();
         m_animator.SetBool("Hit", false);
         bIsHit = false;
     }

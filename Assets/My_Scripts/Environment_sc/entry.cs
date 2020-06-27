@@ -18,15 +18,16 @@ public class entry : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(0.0f, y_pos, 0.0f);
-
+       
         if (entry_on)
         {
+            transform.Translate(0.0f, y_pos, 0.0f);
            // Debug.Log("입구등장");
             y_pos += speed * Time.deltaTime;
             if (transform.position.y >= 0.0f)
-            { 
-                y_pos = 0.0f;
+            {
+                entry_on = false;
+                //y_pos = 0.0f;
             }
         }
     }

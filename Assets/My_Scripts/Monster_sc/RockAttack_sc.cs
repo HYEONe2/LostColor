@@ -8,10 +8,13 @@ public class RockAttack_sc : MonoBehaviour
     GameObject MonsterHand;
     Vector3 TargetPos;
 
+    private AudioSource ShootSound;
+
     [SerializeField] private GameObject Blood;
 
     public static bool bIsMove = true;
     public bool m_bPlayerUse = false;
+    private bool bIsPlay = false;
 
     private GameObject Monster;
 
@@ -22,6 +25,10 @@ public class RockAttack_sc : MonoBehaviour
         MonsterHand = GameObject.Find("Index_Proximal_R");
         TargetPos = Target.transform.position;
         Destroy(gameObject, 4);
+
+        ShootSound = GetComponent<AudioSource>();
+        ShootSound.Stop();
+        ShootSound.playOnAwake = false;
 
         if (m_bPlayerUse)
         {
@@ -52,6 +59,11 @@ public class RockAttack_sc : MonoBehaviour
             if (!bIsMove)
             {
                 //Debug.Log("발사");
+                if (!bIsPlay)
+                {
+                    ShootSound.Play();bIsPlay = true;
+
+                }
                 transform.position = Vector3.MoveTowards(transform.position, TargetPos, 1.0f);
                 transform.Rotate(new Vector3(0, 0, 3));
             }

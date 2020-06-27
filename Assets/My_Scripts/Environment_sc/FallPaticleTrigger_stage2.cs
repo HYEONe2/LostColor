@@ -9,16 +9,34 @@ public class FallPaticleTrigger_stage2 : MonoBehaviour
     public GameObject LeftTree;
     public GameObject Entry;
 
+    private AudioSource EntrySound;
+
     private bool isUsed = false;
+    private bool isPlay = false;
+
+    private entry Entryclass;
+    private MovingTree Rtreeclass;
+    private MovingTree Ltreeclass;
 
     // Start is called before the first frame update
     void Start()
     {
+        Entryclass = Entry.GetComponent<entry>();
+        EntrySound = GetComponent<AudioSource>();
+        Rtreeclass = RightTree.GetComponent<MovingTree>();
+        Ltreeclass = LeftTree.GetComponent<MovingTree>();
+        EntrySound.Stop();
+        EntrySound.playOnAwake = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (isUsed && !Entryclass.entry_on && !isPlay)
+        {
+            EntrySound.Stop();
+            isPlay = true;
+        }
     }
 
     void OnTriggerEnter(Collider other)
@@ -26,13 +44,10 @@ public class FallPaticleTrigger_stage2 : MonoBehaviour
         if (!isUsed && other.gameObject.CompareTag("Player"))
         {
             Debug.Log("FallParticleTrigger & Player");
-
-            entry Entryclass = Entry.GetComponent<entry>();
+            EntrySound.Play();
             Entryclass.entry_on = true;
 
             CameraMgrScript.ShakingCamera2On();
-            MovingTree Rtreeclass = RightTree.GetComponent<MovingTree>();
-            MovingTree Ltreeclass = LeftTree.GetComponent<MovingTree>();
 
             Rtreeclass.entry_on2 = true;
             Ltreeclass.entry_on2 = true;
