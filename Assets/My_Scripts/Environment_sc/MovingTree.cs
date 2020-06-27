@@ -72,7 +72,7 @@ public class MovingTree : MonoBehaviour
         }
         else if (!IsRight)
         {
-            Debug.Log("왼쪽" + transform.position.x);
+            //Debug.Log("왼쪽" + transform.position.x);
             x_pos -= speed * Time.deltaTime;
             if (transform.position.x <= 31.7f)
             {

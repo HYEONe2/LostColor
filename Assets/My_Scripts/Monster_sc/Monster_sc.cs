@@ -186,7 +186,7 @@ public class Monster_sc : MonoBehaviour
     {
         if (bPoisonCreate)
             return;
-        Debug.Log("독 공격");                        
+        //Debug.Log("독 공격");                        
         Instantiate(posion, weapon.transform.position, transform.rotation);
 
         bPoisonCreate = true;
@@ -201,7 +201,7 @@ public class Monster_sc : MonoBehaviour
     {
         if (bWindCreate)
             return;
-        Debug.Log("바람 공격");
+        //Debug.Log("바람 공격");
         Instantiate(wind, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y+1.4f, gameObject.transform.position.z), gameObject.transform.rotation); // 타이밍 조절해줘야함   
 
         bWindCreate = true;
@@ -216,7 +216,7 @@ public class Monster_sc : MonoBehaviour
     {
         if (bNutCreate)
             return;
-        Debug.Log("밤송이 공격");
+        //Debug.Log("밤송이 공격");
         Instantiate(nut, weapon.transform.position, transform.rotation); // 타이밍 조절해줘야함    
 
         bNutCreate = true;

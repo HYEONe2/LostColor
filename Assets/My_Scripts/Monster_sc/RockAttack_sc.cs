@@ -26,15 +26,17 @@ public class RockAttack_sc : MonoBehaviour
         TargetPos = Target.transform.position;
         Destroy(gameObject, 4);
 
-        ShootSound = GetComponent<AudioSource>();
-        ShootSound.Stop();
-        ShootSound.playOnAwake = false;
-
         if (m_bPlayerUse)
         {
-            Monster = GameObject.Find("Polyart_Golem");
+            Monster = GameObject.FindWithTag("Boss");
             if (Monster)
                 TargetPos = Monster.transform.position;
+        }
+        else
+        {
+            ShootSound = GetComponent<AudioSource>();
+            ShootSound.Stop();
+            ShootSound.playOnAwake = false;
         }
     }
 
@@ -58,11 +60,10 @@ public class RockAttack_sc : MonoBehaviour
         {
             if (!bIsMove)
             {
-                //Debug.Log("발사");
                 if (!bIsPlay)
                 {
-                    ShootSound.Play();bIsPlay = true;
-
+                    ShootSound.Play();
+                    bIsPlay = true;
                 }
                 transform.position = Vector3.MoveTowards(transform.position, TargetPos, 1.0f);
                 transform.Rotate(new Vector3(0, 0, 3));

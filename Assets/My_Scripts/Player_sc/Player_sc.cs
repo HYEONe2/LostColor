@@ -4,34 +4,46 @@ using UnityEngine.SceneManagement;
 
 public class Player_sc : MonoBehaviour
 {
-    private float m_moveSpeed = 5f;
-    private float m_turnSpeed = 180f;
-    [SerializeField] private float m_jumpForce = 100f;
-
+    // Player Component
     private Animator m_animator;
     private Rigidbody m_rigidBody;
     private Transform tr;
     private Transform BossTrans;
-    public static int m_Hp = 10;
 
+    // Player Info
+    public static int m_Hp = 10;
+    private float m_moveSpeed = 5f;
+    private float m_turnSpeed = 180f;
+
+    // Walk
     private readonly float m_walkScale = 0.33f;
     private readonly float m_backwardsWalkScale = 0.16f;
     private readonly float m_backwardRunScale = 0.66f;
 
+    // Jump
     private float m_jumpTimeStamp = 0;
     private float m_minJumpInterval = 0.25f;
+    [SerializeField] private float m_jumpForce = 100f;
 
+    // Grounded
     private bool m_wasGrounded;
     private bool m_isGrounded;
 
+    // MoveInput
     private float h = 0f;
     private float v = 0f;
     private float r = 0f;
 
+    // Collision
     private List<Collider> m_collisions = new List<Collider>();
+    
+    // Shields
     public static List<GameObject> m_ShieldGaugeList = new List<GameObject>();
 
-    //bool bOrbOnce = false;    // 행동따라 Orb 생성 제어
+    // Skill Manage
+    public enum SKILL { SKILL_WIND, SKILL_POISON, SKILL_NUT, SKILL_ROCK, SKILL_CLOUD, SKILL_END };
+    public SKILL[] m_eSkill = new SKILL[3];
+    
     bool bShieldOnce = false;   // 쉴드 생성 제어
     // 시간따라 Orb 생성 제어
     bool bOrbCreate = false;
@@ -47,12 +59,16 @@ public class Player_sc : MonoBehaviour
     float fDeadCheckTime = 0;
 
     bool bPosInit = false;
-
     private Transform MainCameraPos;
     private ObjectMgr_sc ObjMgrScript;
 
-    public enum SKILL { SKILL_WIND, SKILL_POISON, SKILL_NUT, SKILL_ROCK, SKILL_CLOUD, SKILL_END };
-    public SKILL[] m_eSkill = new SKILL[3];
+    // Audio
+    enum SOUND { SOUND_ATT, SOUND_HIT, SOUND_WIN, SOUND_DIE, SOUND_ORB, SOUND_SHIELD,
+        SOUND_WIND, SOUND_POISON, SOUND_NUT, SOUND_ROCK, SOUND_CLOUD, SOUND_END };
+    private AudioSource SoundAudio;
+    private AudioSource EffectAudio;
+    private List<AudioClip> Sound = new List<AudioClip>();
+    private List<AudioClip> EffectSound = new List<AudioClip>();
 
     public SKILL GetSkill(int iScene) { return m_eSkill[iScene];    }
     public void SetSkill(int iScene, SKILL eSkill) { m_eSkill[iScene] = eSkill; }
@@ -77,6 +93,23 @@ public class Player_sc : MonoBehaviour
             m_eSkill[i] = SKILL.SKILL_END;
             m_bSkillOnce[i] = false;
         }
+
+        this.SoundAudio = gameObject.AddComponent<AudioSource>();
+        SoundAudio.loop = false;
+        this.EffectAudio = gameObject.AddComponent<AudioSource>();
+        EffectAudio.loop = false;
+
+        Sound.Add(Resources.Load<AudioClip>("PlayerSound/PlayerAtt"));
+        Sound.Add(Resources.Load<AudioClip>("PlayerSound/PlayerHit"));
+        Sound.Add(Resources.Load<AudioClip>("PlayerSound/PlayerWin"));
+        Sound.Add(Resources.Load<AudioClip>("PlayerSound/PlayerDie"));
+        Sound.Add(Resources.Load<AudioClip>("PlayerSound/OrbSound"));
+        Sound.Add(Resources.Load<AudioClip>("PlayerSound/ShieldSound"));
+        Sound.Add(Resources.Load<AudioClip>("PlayerSound/WindSound"));
+        Sound.Add(Resources.Load<AudioClip>("PlayerSound/PoisonSound"));
+        Sound.Add(Resources.Load<AudioClip>("PlayerSound/NutsSound"));
+        Sound.Add(Resources.Load<AudioClip>("PlayerSound/RockSound"));
+        Sound.Add(Resources.Load<AudioClip>("PlayerSound/ThunderSound"));
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -146,6 +179,7 @@ public class Player_sc : MonoBehaviour
         // 죽음 처리
         if (m_Hp <= 0)
         {
+            SoundPlay(SOUND.SOUND_DIE);
             m_animator.SetBool("Die", true);
             fDeadCheckTime += Time.deltaTime;
         }
@@ -249,6 +283,8 @@ public class Player_sc : MonoBehaviour
         else
             m_animator.SetBool("LMainAtt", true);
 
+        if (!m_bAtt)
+            SoundPlay(SOUND.SOUND_ATT);
         m_bAtt = true;
     }
 
@@ -264,6 +300,8 @@ public class Player_sc : MonoBehaviour
         bOrbOnce = false;
         for (int i = 0; i < 3; ++i)
             m_bSkillOnce[i] = false;
+
+        EffectAudio.Stop();
     }
 
     public void ShieldAttack()
@@ -274,6 +312,7 @@ public class Player_sc : MonoBehaviour
         if (skillCnt == 3 || ShieldGaugeCnt == 0)
             return;
 
+        EffectSoundPlay(SOUND.SOUND_SHIELD);
         bShieldOnce = false;
         m_animator.SetBool("ShieldAtt", true);
     }
@@ -296,6 +335,7 @@ public class Player_sc : MonoBehaviour
 
         m_bAtt = true;
         bOrbOnce = true;
+        EffectSoundPlay(SOUND.SOUND_ORB);
         m_animator.SetBool("LMainAtt", true);
     }
 
@@ -318,18 +358,21 @@ public class Player_sc : MonoBehaviour
         {
             case SKILL.SKILL_WIND:
                 {
+                    EffectSoundPlay(SOUND.SOUND_WIND);
                     m_animator.SetBool("LMainAtt", true);
                     SkillMgr_Sc.Instance.CreateWind();
                 }
                 break;
             case SKILL.SKILL_POISON:
                 {
+                    EffectSoundPlay(SOUND.SOUND_POISON);
                     m_animator.SetBool("LMainAtt", true);
                     SkillMgr_Sc.Instance.CreatePoison();
                 }
                 break;
             case SKILL.SKILL_NUT:
                 {
+                    EffectSoundPlay(SOUND.SOUND_NUT);
                     m_animator.SetBool("LMainAtt", true);
                     SkillMgr_Sc.Instance.CreateNut();
                 }
@@ -349,12 +392,14 @@ public class Player_sc : MonoBehaviour
         {
             case SKILL.SKILL_ROCK:
                 {
+                    EffectSoundPlay(SOUND.SOUND_ROCK);
                     m_animator.SetBool("LMainAtt", true);
                     SkillMgr_Sc.Instance.CreateRock();
                 }
                 break;
             case SKILL.SKILL_CLOUD:
                 {
+                    EffectSoundPlay(SOUND.SOUND_CLOUD);
                     m_animator.SetBool("LMainAtt", true);
                     SkillMgr_Sc.Instance.CreateCloud();
                 }
@@ -382,9 +427,11 @@ public class Player_sc : MonoBehaviour
                 return;
             }
 
-            m_bDamaged = true;
+            if (!m_bDamaged)
+                SoundPlay(SOUND.SOUND_HIT);
             m_animator.SetBool("Damaged", true);
             m_Hp -= 1;
+            m_bDamaged = true;
         }
     }
 
@@ -413,5 +460,17 @@ public class Player_sc : MonoBehaviour
             m_animator.SetBool("Die", false);
             bPosInit = false;
         }
+    }
+
+    private void SoundPlay(SOUND eSound)
+    {
+        SoundAudio.clip = Sound[(int)eSound];
+        SoundAudio.Play();
+    }
+
+    private void EffectSoundPlay(SOUND eSound)
+    {
+        EffectAudio.clip = Sound[(int)eSound];
+        EffectAudio.Play();
     }
 }

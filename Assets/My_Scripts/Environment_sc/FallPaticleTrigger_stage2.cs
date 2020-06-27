@@ -43,7 +43,7 @@ public class FallPaticleTrigger_stage2 : MonoBehaviour
     {
         if (!isUsed && other.gameObject.CompareTag("Player"))
         {
-            Debug.Log("FallParticleTrigger & Player");
+            //Debug.Log("FallParticleTrigger & Player");
             EntrySound.Play();
             Entryclass.entry_on = true;
 

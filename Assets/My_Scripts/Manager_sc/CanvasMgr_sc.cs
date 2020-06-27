@@ -28,7 +28,8 @@ public class CanvasMgr_sc : MonoBehaviour
     void Start()
     {
         JoystickCanvas = GameObject.Find("JoyStickCanvas");
-        SkillCanvas = GameObject.Find("SkillCanvas");
+        //SkillCanvas = GameObject.Find("SkillCanvas");        
+        SkillCanvas = GameObject.Find("SkillCanvas _Demo");
         CardCanvas = GameObject.Find("CardCanvas");
 
         JoystickCanvas.SetActive(true);

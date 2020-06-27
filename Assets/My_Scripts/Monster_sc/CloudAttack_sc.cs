@@ -23,7 +23,7 @@ public class CloudAttack_sc : MonoBehaviour
 
         if(m_bPlayerUse)
         {
-            Monster = GameObject.Find("Polyart_Golem");
+            Monster = GameObject.FindWithTag("Boss");
             if (Monster)
                 TargetPos = new Vector3(Monster.transform.position.x, Monster.transform.position.y + 7.0f, Monster.transform.position.z);
             else
