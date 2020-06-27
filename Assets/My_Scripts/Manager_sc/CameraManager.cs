@@ -14,8 +14,11 @@ public class CameraManager : MonoBehaviour
     private ClearCamera_sc ClearCameraSc1;
 
     public float ShakeMaxTime = 5f;
-    public float ClearMaxTime = 3f;
+    public float ClearMaxTime = 5f;
     public float Magnitude = 10f;
+
+    public bool m_bChangeSkyBox = false;
+    private Material SkyboxMaterial;
 
     // Start is called before the first frame update
     void Start()
@@ -30,6 +33,8 @@ public class CameraManager : MonoBehaviour
         ShakeCameraSc = ShakingCamera.GetComponent<ShakingCamera>();
         ShakeCameraSc2 = ShakingCamera2.GetComponent<ShakingCamera>();
         ClearCameraSc1 = ClearCamera1.GetComponent<ClearCamera_sc>();
+
+        SkyboxMaterial = Resources.Load<Material>("Skybox Cubemap Extended Day");
 
         MainCameraOn();
     }
@@ -56,6 +61,9 @@ public class CameraManager : MonoBehaviour
         ShakingCamera.GetComponent<Camera>().enabled = false;
         ShakingCamera2.GetComponent<Camera>().enabled = false;
         ClearCamera1.GetComponent<Camera>().enabled = false;
+
+        if(m_bChangeSkyBox)
+            RenderSettings.skybox = SkyboxMaterial;
     }
 
     public void ShakingCameraOn()

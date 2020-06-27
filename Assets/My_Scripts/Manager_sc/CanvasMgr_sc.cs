@@ -11,7 +11,7 @@ public class CanvasMgr_sc : MonoBehaviour
     GameObject SkillCanvas;
     GameObject CardCanvas;
 
-    public static List<CardUI_sc> m_CardList = new List<CardUI_sc>();
+    public static CardUI_sc[] m_CardList = new CardUI_sc[3];
     public static bool[] m_bIsTurn = new bool[3];
 
     public static bool m_bIsClicked = false;
@@ -87,7 +87,7 @@ public class CanvasMgr_sc : MonoBehaviour
 
     void CheckCard()
     {
-        for(int i=0;i<m_CardList.Count; ++i)
+        for(int i=0;i<m_CardList.Length; ++i)
         {
             if (m_bIsTurn[i])
                 continue;

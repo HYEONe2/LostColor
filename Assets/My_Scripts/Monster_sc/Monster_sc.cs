@@ -61,7 +61,7 @@ public class Monster_sc : MonoBehaviour
 
     private void Update()
     {
-        if (iHp <= 0) //몬스터 사망
+        if (iHp <= 1) //몬스터 사망
         {
             nextState = CurrentState.dead;
             m_animator.SetBool("Death", true);
@@ -164,9 +164,6 @@ public class Monster_sc : MonoBehaviour
             m_animator.SetBool("NutAttack", false);
             m_animator.SetBool("NutAttack", false);
             m_animator.SetBool("Hit", true);
-            iHp--; /*Debug.Log(iHp);*/
-
-
         }
     }
 
@@ -230,7 +227,7 @@ public class Monster_sc : MonoBehaviour
     {
         if (!bIsHit)
         {
-            iHp--;
+            --iHp;
             bIsHit = true;
         }
     }

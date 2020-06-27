@@ -63,7 +63,7 @@ public class Stage2Monster_sc : MonoBehaviour
 
     private void Update()
     {
-        if (iHp <= 0) //몬스터 사망
+        if (iHp <= 1) //몬스터 사망
         {
             nextState = CurrentState.dead;
             m_animator.SetBool("Die", true);
@@ -167,7 +167,6 @@ public class Stage2Monster_sc : MonoBehaviour
             m_animator.SetBool("Attack2", false);
             m_animator.SetBool("Attack3", false);
             m_animator.SetBool("Hit", true);
-            Debug.Log(iHp);
         }
     }
     public bool GetIsAttack()
@@ -225,7 +224,7 @@ public class Stage2Monster_sc : MonoBehaviour
     {
         if (!bIsHit)
         {
-            iHp--;
+            --iHp;
             bIsHit = true;
         }
     }

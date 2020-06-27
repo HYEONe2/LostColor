@@ -31,7 +31,18 @@ public class CardUI_sc : MonoBehaviour, IPointerDownHandler
         else if (m_strScene == "Stage_3")
             m_iScene = 2;
 
-        CanvasMgr_sc.m_CardList.Add(this);
+        switch(eSkill)
+        {
+            case SKILL.SKILL_1:
+                CanvasMgr_sc.m_CardList[0] = this;
+                break;
+            case SKILL.SKILL_2:
+                CanvasMgr_sc.m_CardList[1] = this;
+                break;
+            case SKILL.SKILL_3:
+                CanvasMgr_sc.m_CardList[2] = this;
+                break;
+        }
 
         playerScript = GameObject.Find("Player").GetComponent<Player_sc>();
     }
@@ -103,7 +114,8 @@ public class CardUI_sc : MonoBehaviour, IPointerDownHandler
                         playerScript.SetSkill(1, Player_sc.SKILL.SKILL_CLOUD);
                         break;
                     case SKILL.SKILL_3:
-                        playerScript.SetSkill(1, Player_sc.SKILL.SKILL_NUT);
+                        int iSkill = Random.Range(1, 3);
+                        playerScript.SetSkill(1, (Player_sc.SKILL)iSkill);
                         break;
                     default:
                         break;

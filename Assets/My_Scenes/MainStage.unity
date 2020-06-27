@@ -2680,10 +2680,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 286512462}
   m_LocalRotation: {x: -0, y: 0.5162023, z: -0, w: -0.8564667}
-  m_LocalPosition: {x: 102.99, y: 64.8, z: -55.64}
-  m_LocalScale: {x: 3.0278258, y: 8.579354, z: 3.0278258}
+  m_LocalPosition: {x: 45.623108, y: 17.055164, z: 5.445055}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1121533363}
+  m_Father: {fileID: 2103545882}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 297.844, z: 0}
 --- !u!114 &286512464
@@ -9557,11 +9557,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Orb: {fileID: 1371598241635088, guid: 566ef7c8ae1740247925e081200e0977, type: 3}
   Shield: {fileID: 1884747205189362, guid: c9362480eecb3b349b1785b07cc4e3f9, type: 3}
-  Wind: {fileID: 1682439711449256, guid: ab22dfee5ddd2634f991aee1f95f050f, type: 3}
-  Poison: {fileID: 1661582078456886541, guid: ece0ef9a932b4994db1f1cdb2f79cf66, type: 3}
-  Nut: {fileID: 2688439759020598191, guid: 4df1564c632a3d545afaf78c4b9a19bc, type: 3}
-  Rock: {fileID: 5298590762127773683, guid: cad9f745870d9f448bf225d2a253d382, type: 3}
-  Cloud: {fileID: 1146932368203680071, guid: 06581d1157ccfd54fa2e93c525916e0e, type: 3}
+  Wind: {fileID: 8328917787101457721, guid: fedbbd0ae1c87854f8d71256fbac85de, type: 3}
+  Poison: {fileID: 1661582078456886541, guid: ebea94ccdae24884888e2b29327da9e4, type: 3}
+  Nut: {fileID: 2688439759020598191, guid: 0ca61442843273e4e9bc295446e2d803, type: 3}
+  Rock: {fileID: 5298590762127773683, guid: 7b09cdba3229c304a8b9de9a5d8362a8, type: 3}
+  Cloud: {fileID: 1146932368203680071, guid: a36b8898c70d3004fb8a50103e3cbcdc, type: 3}
 --- !u!4 &1239160074
 Transform:
   m_ObjectHideFlags: 0
@@ -15241,6 +15241,10 @@ PrefabInstance:
       propertyPath: m_jumpForce
       value: 6.5
       objectReference: {fileID: 0}
+    - target: {fileID: 2026084922, guid: ccd8c3b89aa02e943a08ab9238a8a70c, type: 3}
+      propertyPath: m_ClearFlags
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1248815240492774, guid: ccd8c3b89aa02e943a08ab9238a8a70c, type: 3}
       propertyPath: m_Name
       value: Player
@@ -15908,6 +15912,7 @@ Transform:
   - {fileID: 1121533363}
   - {fileID: 920740914}
   - {fileID: 1880804439}
+  - {fileID: 286512463}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

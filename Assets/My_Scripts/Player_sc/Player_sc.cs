@@ -12,7 +12,7 @@ public class Player_sc : MonoBehaviour
     private Rigidbody m_rigidBody;
     private Transform tr;
     private Transform BossTrans;
-    public static int m_Hp = 100;
+    public static int m_Hp = 10;
 
     private readonly float m_walkScale = 0.33f;
     private readonly float m_backwardsWalkScale = 0.16f;
@@ -33,14 +33,17 @@ public class Player_sc : MonoBehaviour
 
     //bool bOrbOnce = false;    // 행동따라 Orb 생성 제어
     bool bShieldOnce = false;   // 쉴드 생성 제어
-
     // 시간따라 Orb 생성 제어
     bool bOrbCreate = false;
     bool bOrbOnce = false;
     float fOrbCheckTime = 0;
+
     bool[] m_bSkillOnce = new bool[3];
+    bool m_bAtt = false;
 
     //죽은 후 시간 지나고 씬 전환
+    bool m_bDamaged = false;
+    float m_fDamageTime = 0;
     float fDeadCheckTime = 0;
 
     bool bPosInit = false;
@@ -51,15 +54,9 @@ public class Player_sc : MonoBehaviour
     public enum SKILL { SKILL_WIND, SKILL_POISON, SKILL_NUT, SKILL_ROCK, SKILL_CLOUD, SKILL_END };
     public SKILL[] m_eSkill = new SKILL[3];
 
-    public SKILL GetSkill(int iScene)
-    {
-        return m_eSkill[iScene];
-    }
-
-    public void SetSkill(int iScene, SKILL eSkill)
-    {
-        m_eSkill[iScene] = eSkill;
-    }
+    public SKILL GetSkill(int iScene) { return m_eSkill[iScene];    }
+    public void SetSkill(int iScene, SKILL eSkill) { m_eSkill[iScene] = eSkill; }
+    public bool GetAtt() { return m_bAtt; }
 
     void Awake()
     {
@@ -146,6 +143,7 @@ public class Player_sc : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "MainStage")
             Stage_Main_PosInit();
 
+        // 죽음 처리
         if (m_Hp <= 0)
         {
             m_animator.SetBool("Die", true);
@@ -160,6 +158,17 @@ public class Player_sc : MonoBehaviour
             return;
         }
 
+        // 피격 처리
+        if(m_bDamaged)
+            m_fDamageTime += Time.deltaTime;
+
+        if(m_fDamageTime > 1f)
+        {
+            m_bDamaged = false;
+            m_fDamageTime = 0;
+        }
+
+        // Orb 공격 쿨타임
         if (bOrbCreate)
             fOrbCheckTime += Time.deltaTime;
 
@@ -239,6 +248,8 @@ public class Player_sc : MonoBehaviour
             m_animator.SetBool("MainAtt", true);
         else
             m_animator.SetBool("LMainAtt", true);
+
+        m_bAtt = true;
     }
 
     void SetAttackFalse()
@@ -249,6 +260,7 @@ public class Player_sc : MonoBehaviour
         m_animator.SetBool("LMainAtt", false);
         m_animator.SetBool("Damaged", false);
 
+        m_bAtt = false;
         bOrbOnce = false;
         for (int i = 0; i < 3; ++i)
             m_bSkillOnce[i] = false;
@@ -282,6 +294,7 @@ public class Player_sc : MonoBehaviour
         if (bOrbCreate)
             return;
 
+        m_bAtt = true;
         bOrbOnce = true;
         m_animator.SetBool("LMainAtt", true);
     }
@@ -323,6 +336,7 @@ public class Player_sc : MonoBehaviour
                 break;
         }
 
+        m_bAtt = true;
         m_bSkillOnce[0] = true;
     }
 
@@ -347,6 +361,7 @@ public class Player_sc : MonoBehaviour
                 break;
         }
 
+        m_bAtt = true;
         m_bSkillOnce[1] = true;
     }
 
@@ -367,6 +382,7 @@ public class Player_sc : MonoBehaviour
                 return;
             }
 
+            m_bDamaged = true;
             m_animator.SetBool("Damaged", true);
             m_Hp -= 1;
         }

@@ -11,6 +11,8 @@ public class ColorChange_sc : MonoBehaviour
     [SerializeField] private Color color;
     public STAGE CheckStage = STAGE.STAGE_END;
 
+    private Material SkyboxMaterial;
+    private Stage_Manager StageManager;
     private GameObject ClearCamera1;
 
     private Transform[] m_transformArr;
@@ -21,12 +23,14 @@ public class ColorChange_sc : MonoBehaviour
     private float m_fChangeTime = 0.5f;
 
     private string SceneName= "";
-    private bool[] m_StageChecked = new bool[3];
 
     // Start is called before the first frame update
     void Start()
     {
+        SkyboxMaterial = Resources.Load<Material>("Skybox Cubemap Extended Day");
+        StageManager = GameObject.Find("StageManager").GetComponent<Stage_Manager>();
         ClearCamera1 = GameObject.Find("ClearCamera1");
+
         m_fChangeTime = Random.Range(1, 5) * 0.25f;
 
         if (IsParent)
@@ -39,71 +43,80 @@ public class ColorChange_sc : MonoBehaviour
                 m_transformArr[i++] = mr;
             }
         }
-
-        for (int i = 0; i < 3; ++i)
-            m_StageChecked[i] = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //if (Input.GetKeyDown("1"))
-        //    m_Stage = STAGE.STAGE_1;
-        //if (Input.GetKeyDown("2"))
-        //    m_Stage = STAGE.STAGE_2;
-        //if (Input.GetKeyDown("3"))
-        //    m_Stage = STAGE.STAGE_3;
-
-        m_Stage = STAGE.STAGE_2;
+        if (!ClearCamera1)
+        {
+            ClearCamera1 = GameObject.Find("ClearCamera1");
+            return;
+        }
 
         if (CheckScene())
             return;
 
-        if (ClearCamera1.GetComponent<Camera>().enabled == false)
+        if (StayColor())
             return;
 
-        ChangeColor();
+        if (ClearCamera1.GetComponent<Camera>().enabled)
+            ChangeColor();
     }
 
     bool CheckScene()
     {
         SceneName = SceneManager.GetActiveScene().name;
 
-        if (SceneName == "MainStage")
-            return false;
-        else if (SceneName == "Stage_1")
-        {
-            m_StageChecked[0] = true;
-            m_StageChecked[1] = false;
-            m_StageChecked[2] = false;
-        }
-        else if (SceneName == "Stage_2")
-        {
-            m_StageChecked[0] = false;
-            m_StageChecked[1] = true;
-            m_StageChecked[2] = false;
-        }
-        else if (SceneName == "Stage_3")
-        {
-            m_StageChecked[0] = false;
-            m_StageChecked[1] = false;
-            m_StageChecked[2] = true;
-        }
+        if (SceneName != "MainStage")
+            return true;
 
-        if (m_StageChecked[0])
-            m_Stage = STAGE.STAGE_1;
-        else if (m_StageChecked[1])
+        if (!StageManager.stage1_open && StageManager.stage2_open)
             m_Stage = STAGE.STAGE_2;
-        else if (m_StageChecked[2])
+        else if (!StageManager.stage1_open && !StageManager.stage2_open)
             m_Stage = STAGE.STAGE_3;
 
-        return true;
+        return false;
+    }
+
+    bool StayColor()
+    {
+        if (CheckStage == STAGE.STAGE_2 && m_Stage == STAGE.STAGE_3)
+        {
+            RenderSettings.skybox = SkyboxMaterial;
+            if (IsParent)
+            {
+                for (int i = 0; i < transform.childCount; ++i)
+                {
+                    if (m_transformArr[i].GetComponent<MeshRenderer>().material != null)
+                    {
+                        m_transformArr[i].GetComponent<MeshRenderer>().material.color = color;
+                    }
+                    else
+                    {
+                        Material material = new Material(shader);
+                        material.color = color;
+                        m_transformArr[i].GetComponent<MeshRenderer>().material = material;
+                    }
+                }
+            }
+            else
+            {
+                transform.GetComponent<MeshRenderer>().material.color = color;
+            }
+            return true;
+        }
+
+        return false;
     }
 
     void ChangeColor()
     {
         if (m_Stage == CheckStage && TargetInScreen_Direction())
         {
+            if (m_Stage == STAGE.STAGE_3)
+                GameObject.Find("CameraManager").GetComponent<CameraManager>().m_bChangeSkyBox = true;
+
             if (IsParent)
             {
                 for (int i = 0; i < transform.childCount; ++i)

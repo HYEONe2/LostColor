@@ -20,7 +20,7 @@ public class LodingSceneManager_sc : MonoBehaviour
         StartCoroutine(LoadScene());
         loadingText.SetActive(false);
 
-        //CameraManager = GameObject.Find("CameraManager").GetComponent<CameraManager>();
+        CameraManager = GameObject.Find("CameraManager").GetComponent<CameraManager>();
     }
 
     public static void LoadScene(string sceneName)
@@ -55,8 +55,8 @@ public class LodingSceneManager_sc : MonoBehaviour
                    // if (Input.GetMouseButton(0))
                         oper.allowSceneActivation = true;
 
-                    //if(nextScene == "MainStage")
-                    //    CameraManager.ClearCameraOn();
+                    if (nextScene == "MainStage")
+                        CameraManager.ClearCameraOn();
                 }
             }
             else

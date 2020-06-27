@@ -94,4 +94,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsParent: 0
   color: {r: 1, g: 0.27607292, b: 0, a: 0}
-  CheckStage: 1
+  CheckStage: 2
