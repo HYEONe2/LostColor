@@ -8,6 +8,8 @@ public class RockAttack_sc : MonoBehaviour
     GameObject MonsterHand;
     Vector3 TargetPos;
 
+    [SerializeField] private GameObject Blood;
+
     public static bool bIsMove = true;
     public bool m_bPlayerUse = false;
 
@@ -59,5 +61,15 @@ public class RockAttack_sc : MonoBehaviour
                 transform.position = MonsterHand.transform.position;
             }
         }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            Vector3 OriginPos = gameObject.transform.position;
+            Instantiate(Blood, OriginPos, Quaternion.identity);
+            gameObject.SetActive(false);
+        }
+
     }
 }

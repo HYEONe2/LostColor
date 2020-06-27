@@ -17,11 +17,11 @@ public class StartText_sc : MonoBehaviour
     void Update()
     {
         StartTime += Time.deltaTime;
-        if (StartTime > 1.5f)
+        if (StartTime > 1.0f)
         {
             if (!bIsInit)
             {
-                StartCoroutine(FadeTextToFullAlpha());
+                StartCoroutine(FadeTextToZero());
                 bIsInit = true;
             }
         }

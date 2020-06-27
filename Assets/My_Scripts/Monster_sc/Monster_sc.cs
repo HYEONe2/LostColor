@@ -28,14 +28,14 @@ public class Monster_sc : MonoBehaviour
     public float attackDist = 3.2f;
     private bool isDead = false;
     public static int iHp = 10;
-    //private bool bIsAttack = false;
+    private bool bIsAttack = false;
+    private bool bIsHit = false;
+
 
     // 시간따라 Orb 생성 제어
     bool bPoisonCreate = false;
     bool bWindCreate = false;
     bool bNutCreate = false;
-
-
 
 
     public void Initialize(GameObject character)
@@ -170,6 +170,16 @@ public class Monster_sc : MonoBehaviour
         }
     }
 
+    public bool GetIsAttack()
+    {
+        return bIsAttack;
+    }
+
+    public void StartAttack()
+    {
+        bIsAttack = true;
+    }
+
     public void CreatePoison()
     {
         if (bPoisonCreate)
@@ -183,6 +193,7 @@ public class Monster_sc : MonoBehaviour
     {
         if (bPoisonCreate)
             bPoisonCreate = false;
+        bIsAttack = false;
     }
     public void CreateWind()
     {
@@ -197,6 +208,7 @@ public class Monster_sc : MonoBehaviour
     {
         if (bWindCreate)
             bWindCreate = false;
+        bIsAttack = false;
     }
     public void CreateNut()
     {
@@ -211,5 +223,20 @@ public class Monster_sc : MonoBehaviour
     {
         if (bNutCreate)
             bNutCreate = false;
+        bIsAttack = false;
+    }
+
+    public void DamageAttack()
+    {
+        if (!bIsHit)
+        {
+            iHp--;
+            bIsHit = true;
+        }
+    }
+    public void FalseHit()
+    {
+        m_animator.SetBool("Hit", false);
+        bIsHit = false;
     }
 }

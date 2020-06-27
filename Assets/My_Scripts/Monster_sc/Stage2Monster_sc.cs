@@ -28,7 +28,8 @@ public class Stage2Monster_sc : MonoBehaviour
     private bool isDead = false;
     public static int iHp = 10;
     private RockAttack_sc Rockclass;
-    //private bool bIsAttack = false;
+    private bool bIsAttack = false;
+    private bool bIsHit = false;
 
     //// 시간따라 Orb 생성 제어
     bool bRockCreate = false;
@@ -67,9 +68,9 @@ public class Stage2Monster_sc : MonoBehaviour
             nextState = CurrentState.dead;
             m_animator.SetBool("Die", true);
             isDead = true;
-            //triggerObj = (Stage_Manager)FindObjectOfType(typeof(Stage_Manager));
-            //triggerObj.stage1_open = false;
-            //triggerObj.stage2_open = true;
+            triggerObj = (Stage_Manager)FindObjectOfType(typeof(Stage_Manager));
+            triggerObj.stage1_open = false;
+            triggerObj.stage2_open = false;
             curState = nextState;
         }
     }
@@ -166,10 +167,21 @@ public class Stage2Monster_sc : MonoBehaviour
             m_animator.SetBool("Attack2", false);
             m_animator.SetBool("Attack3", false);
             m_animator.SetBool("Hit", true);
-            iHp--; Debug.Log(iHp);
-
-
+            Debug.Log(iHp);
         }
+    }
+    public bool GetIsAttack()
+    {
+        return bIsAttack;
+    }
+
+    public void StartAttack()
+    {
+        bIsAttack = true;
+    }
+    public void EndAttack()
+    {
+        bIsAttack = false;
     }
 
     public void CreateRock()
@@ -180,6 +192,7 @@ public class Stage2Monster_sc : MonoBehaviour
         Instantiate(rock, new Vector3(gameObject.transform.position.x - 2.0f, gameObject.transform.position.y, gameObject.transform.position.z), gameObject.transform.rotation);
         RockAttack_sc.bIsMove = true;
         bRockCreate = true;
+        bIsAttack = true;
     }
     public void ShootRock()
     {
@@ -189,6 +202,7 @@ public class Stage2Monster_sc : MonoBehaviour
     {
         if (bRockCreate)
             bRockCreate = false;
+        bIsAttack = false;
 
     }
 
@@ -204,6 +218,20 @@ public class Stage2Monster_sc : MonoBehaviour
     {
         if (bCloudCreate)
             bCloudCreate = false;
+        bIsAttack = false;
 
+    }
+    public void DamageAttack()
+    {
+        if (!bIsHit)
+        {
+            iHp--;
+            bIsHit = true;
+        }
+    }
+    public void FalseHit()
+    {
+        m_animator.SetBool("Hit", false);
+        bIsHit = false;
     }
 }

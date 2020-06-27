@@ -9,6 +9,8 @@ public class CloudAttack_sc : MonoBehaviour
 
     public bool m_bPlayerUse = false;
     private GameObject Monster;
+    [SerializeField] private GameObject rain;
+    [SerializeField] private Collider Coll;
 
     // Start is called before the first frame update
     void Start()
@@ -16,6 +18,8 @@ public class CloudAttack_sc : MonoBehaviour
         Target = GameObject.Find("Player");
         TargetPos = new Vector3 (Target.transform.position.x, Target.transform.position.y+5.0f, Target.transform.position.z);
         Destroy(gameObject, 2.5f);
+        rain.SetActive(false);
+        Coll.enabled = false;
 
         if(m_bPlayerUse)
         {
@@ -46,6 +50,12 @@ public class CloudAttack_sc : MonoBehaviour
                 Vector3 vDir = (TargetPos - gameObject.transform.position).normalized;
                 if (fDist > 1)
                     gameObject.transform.position += vDir * Time.deltaTime * 11.0f;
+
+                else if (rain.activeSelf == false)
+                {
+                    rain.SetActive(true);
+                    Coll.enabled = true;
+                }
             }
         }
         else
@@ -55,6 +65,12 @@ public class CloudAttack_sc : MonoBehaviour
             Vector3 vDir = (TargetPos - gameObject.transform.position).normalized;
             if (fDist > 1)
                 gameObject.transform.position += vDir * Time.deltaTime * 11.0f;
+
+            else if (rain.activeSelf == false)
+            {
+                rain.SetActive(true);
+                Coll.enabled = true;
+            }
         }
     }
 }
