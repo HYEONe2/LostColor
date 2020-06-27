@@ -45,7 +45,7 @@ MonoBehaviour:
   m_ShowMode: 4
   m_Title: 
   m_RootView: {fileID: 5}
-  m_MinSize: {x: 875, y: 542}
+  m_MinSize: {x: 875, y: 521}
   m_MaxSize: {x: 10000, y: 10000}
   m_Maximized: 1
 --- !u!114 &3
@@ -67,8 +67,8 @@ MonoBehaviour:
     y: 0
     width: 1920
     height: 1040
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 100, y: 121}
+  m_MaxSize: {x: 4000, y: 4021}
   m_ActualView: {fileID: 21}
   m_Panes:
   - {fileID: 21}
@@ -97,7 +97,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 121}
   m_MaxSize: {x: 4000, y: 4021}
   vertical: 0
-  controlID: 2669
+  controlID: 58
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -187,10 +187,10 @@ MonoBehaviour:
     y: 30
     width: 1920
     height: 947
-  m_MinSize: {x: 709, y: 492}
-  m_MaxSize: {x: 18004, y: 14042}
+  m_MinSize: {x: 708, y: 471}
+  m_MaxSize: {x: 18003, y: 14021}
   vertical: 0
-  controlID: 169
+  controlID: 168
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -212,10 +212,10 @@ MonoBehaviour:
     y: 0
     width: 520
     height: 947
-  m_MinSize: {x: 231, y: 492}
-  m_MaxSize: {x: 10001, y: 14042}
+  m_MinSize: {x: 231, y: 471}
+  m_MaxSize: {x: 10001, y: 14021}
   vertical: 1
-  controlID: 100
+  controlID: 150
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -292,7 +292,7 @@ MonoBehaviour:
   m_MinSize: {x: 202, y: 342}
   m_MaxSize: {x: 4002, y: 8042}
   vertical: 1
-  controlID: 143
+  controlID: 169
 --- !u!114 &13
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -312,8 +312,8 @@ MonoBehaviour:
     y: 0
     width: 982
     height: 706
-  m_MinSize: {x: 202, y: 221}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 19}
   m_Panes:
   - {fileID: 19}
@@ -340,8 +340,8 @@ MonoBehaviour:
     y: 706
     width: 982
     height: 241
-  m_MinSize: {x: 102, y: 121}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 22}
   m_Panes:
   - {fileID: 22}
@@ -366,8 +366,8 @@ MonoBehaviour:
     y: 0
     width: 418
     height: 947
-  m_MinSize: {x: 276, y: 71}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 23}
   m_Panes:
   - {fileID: 23}
@@ -429,9 +429,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: e82f0000
+      m_SelectedIDs: 042e0000
       m_LastClickedID: 0
-      m_ExpandedIDs: 6e70feff1884feffc091feffbc96feff30d9feff72e8feff781bffff262bffff9045ffffd450fffff66fffff7274ffff9082ffff9a89fffff4fffffff2770000647f0000ca84000072a6000092f300001622010038240100a21e0200b6220200ce25020014490200
+      m_ExpandedIDs: 887cffff107dffff6a7effff88abffff6cccffff70fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -494,20 +494,20 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/My_Scripts/Environment_sc
+    - Assets/My_Scripts/Player_sc
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/My_Scripts/Environment_sc
+  - Assets/My_Scripts/Player_sc
   m_LastFoldersGridSize: 16
   m_LastProjectPath: D:\UNITY\PROJECT\Junior\LostColor
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 49}
-    m_SelectedIDs: 566b0000
-    m_LastClickedID: 27478
-    m_ExpandedIDs: 000000006c6a00006e6a0000706a0000726a0000746a0000766a0000786a00007a6a00007c6a00007e6a0000806a0000826a0000846a0000866a0000886a00008a6a00008c6a00008e6a0000906a0000926a0000946a0000966a0000986a0000626b00006c6b000000ca9a3b
+    m_SelectedIDs: 70390000
+    m_LastClickedID: 14704
+    m_ExpandedIDs: 000000008438000086380000883800008a3800008c3800008e38000090380000923800009438000096380000983800009a3800009c3800009e380000a0380000a2380000a4380000a6380000a8380000aa380000ac380000ae380000b038000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -535,7 +535,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000006c6a00006e6a0000706a0000726a0000746a0000766a0000786a00007a6a00007c6a00007e6a0000806a0000826a0000846a0000866a0000886a00008a6a00008c6a00008e6a0000906a0000926a0000946a0000966a0000986a0000
+    m_ExpandedIDs: 000000008438000086380000883800008a3800008c3800008e38000090380000923800009438000096380000983800009a3800009c3800009e380000a0380000a2380000a4380000a6380000a8380000aa380000ac380000ae380000b0380000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -566,15 +566,15 @@ MonoBehaviour:
     m_ExpandedInstanceIDs: ec3400008c3c0000306d00005a410000ba680000b2450000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: ColorChange_sc
-      m_OriginalName: ColorChange_sc
+      m_Name: My_Scenes
+      m_OriginalName: My_Scenes
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 12264
+      m_UserData: 14690
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
       m_OriginalEventType: 0
