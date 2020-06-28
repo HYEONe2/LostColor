@@ -140,7 +140,10 @@ public class CardUI_sc : MonoBehaviour, IPointerDownHandler
 
     void OnTouch(Vector2 vecTouch)
     {
-
+        AudioSource audio = gameObject.AddComponent<AudioSource>();
+        audio.loop = false;
+        audio.clip = Resources.Load<AudioClip>("Sound/UI/CardSelect");
+        audio.Play();
     }
 
     public void OnPointerDown(PointerEventData eventData)

@@ -84,13 +84,12 @@ public class SkillMgr_Sc : MonoBehaviour
                 ShieldMake = 1;
         }
 
-        GameObject ShieldObj = null;
         PlayerPos = PlayerTrans.position;
         if (ShieldMake == 3)
         {
-            Player_sc.m_ShieldGaugeList.Add(Instantiate(Shield, new Vector3(PlayerPos.x, PlayerPos.y + 1.0f, PlayerPos.z + 1.0f), Quaternion.identity));
-            Player_sc.m_ShieldGaugeList.Add(Instantiate(Shield, new Vector3(PlayerPos.x + 1.0f, PlayerPos.y + 1.0f, PlayerPos.z - 0.5f), Quaternion.identity));
-            Player_sc.m_ShieldGaugeList.Add(Instantiate(Shield, new Vector3(PlayerPos.x - 1.0f, PlayerPos.y + 1.0f, PlayerPos.z - 0.5f), Quaternion.identity));
+            Player_sc.m_ShieldGaugeList[0] = (Instantiate(Shield, new Vector3(PlayerPos.x, PlayerPos.y + 1.0f, PlayerPos.z + 1.0f), Quaternion.identity));
+            Player_sc.m_ShieldGaugeList[1] = (Instantiate(Shield, new Vector3(PlayerPos.x + 1.0f, PlayerPos.y + 1.0f, PlayerPos.z - 0.5f), Quaternion.identity));
+            Player_sc.m_ShieldGaugeList[2] = (Instantiate(Shield, new Vector3(PlayerPos.x - 1.0f, PlayerPos.y + 1.0f, PlayerPos.z - 0.5f), Quaternion.identity));
 
             SkillUI_sc.TurnOffShieldGauge(3);
         }
@@ -98,17 +97,13 @@ public class SkillMgr_Sc : MonoBehaviour
         {
             if (ShieldCnt == 0)
             {
-                ShieldObj = Instantiate(Shield, new Vector3(PlayerPos.x, PlayerPos.y + 1.0f, PlayerPos.z + 1.0f), Quaternion.identity);
-                Player_sc.m_ShieldGaugeList[0] = ShieldObj;
-                ShieldObj = Instantiate(Shield, new Vector3(PlayerPos.x + 1.0f, PlayerPos.y + 1.0f, PlayerPos.z - 0.5f), Quaternion.identity);
-                Player_sc.m_ShieldGaugeList[1] = ShieldObj;
+                Player_sc.m_ShieldGaugeList[0] = Instantiate(Shield, new Vector3(PlayerPos.x, PlayerPos.y + 1.0f, PlayerPos.z + 1.0f), Quaternion.identity);
+                Player_sc.m_ShieldGaugeList[1] = Instantiate(Shield, new Vector3(PlayerPos.x + 1.0f, PlayerPos.y + 1.0f, PlayerPos.z - 0.5f), Quaternion.identity);
             }
             else if (ShieldCnt == 1)
             {
-                ShieldObj = Instantiate(Shield, new Vector3(PlayerPos.x + 1.0f, PlayerPos.y + 1.0f, PlayerPos.z - 0.5f), Quaternion.identity);
-                Player_sc.m_ShieldGaugeList[1] = ShieldObj;
-                ShieldObj = Instantiate(Shield, new Vector3(PlayerPos.x - 1.0f, PlayerPos.y + 1.0f, PlayerPos.z - 0.5f), Quaternion.identity);
-                Player_sc.m_ShieldGaugeList[2] = ShieldObj;
+                Player_sc.m_ShieldGaugeList[1] = Instantiate(Shield, new Vector3(PlayerPos.x + 1.0f, PlayerPos.y + 1.0f, PlayerPos.z - 0.5f), Quaternion.identity);
+                Player_sc.m_ShieldGaugeList[2] = Instantiate(Shield, new Vector3(PlayerPos.x - 1.0f, PlayerPos.y + 1.0f, PlayerPos.z - 0.5f), Quaternion.identity);
             }
 
             SkillUI_sc.TurnOffShieldGauge(2);
@@ -116,20 +111,11 @@ public class SkillMgr_Sc : MonoBehaviour
         else if (ShieldMake == 1)
         {
             if (ShieldCnt == 0)
-            {
-                ShieldObj = Instantiate(Shield, new Vector3(PlayerPos.x, PlayerPos.y + 1.0f, PlayerPos.z + 1.0f), Quaternion.identity);
-                Player_sc.m_ShieldGaugeList[0] = ShieldObj;
-            }
+                Player_sc.m_ShieldGaugeList[0] = Instantiate(Shield, new Vector3(PlayerPos.x, PlayerPos.y + 1.0f, PlayerPos.z + 1.0f), Quaternion.identity);
             else if (ShieldCnt == 1)
-            {
-                ShieldObj = Instantiate(Shield, new Vector3(PlayerPos.x + 1.0f, PlayerPos.y + 1.0f, PlayerPos.z - 0.5f), Quaternion.identity);
-                Player_sc.m_ShieldGaugeList[1] = ShieldObj;
-            }
+                Player_sc.m_ShieldGaugeList[1] = Instantiate(Shield, new Vector3(PlayerPos.x + 1.0f, PlayerPos.y + 1.0f, PlayerPos.z - 0.5f), Quaternion.identity);
             else if (ShieldCnt == 2)
-            {
-                ShieldObj = Instantiate(Shield, new Vector3(PlayerPos.x - 1.0f, PlayerPos.y + 1.0f, PlayerPos.z - 0.5f), Quaternion.identity);
-                Player_sc.m_ShieldGaugeList[2] = ShieldObj;
-            }
+                Player_sc.m_ShieldGaugeList[2] = Instantiate(Shield, new Vector3(PlayerPos.x - 1.0f, PlayerPos.y + 1.0f, PlayerPos.z - 0.5f), Quaternion.identity);
 
             SkillUI_sc.TurnOffShieldGauge(1);
         }
@@ -192,7 +178,7 @@ public class SkillMgr_Sc : MonoBehaviour
         if (ShieldOn)
             CheckTime += Time.deltaTime;
 
-        if (CheckTime > 15.0f)
+        if (CheckTime > 10f)
         {
             SkillUI_sc.TurnOnShieldGauge();
             CheckTime = 0;

@@ -110,6 +110,11 @@ public class CanvasMgr_sc : MonoBehaviour
     {
         if (!m_bDestroy && m_fCheckTime >= 4.0f)
         {
+            AudioSource audio = gameObject.AddComponent<AudioSource>();
+            audio.loop = false;
+            audio.clip = Resources.Load<AudioClip>("Sound/UI/CardCanvas");
+            audio.Play();
+
             JoystickCanvas.SetActive(false);
             SkillCanvas.SetActive(false);
             CardCanvas.gameObject.SetActive(true);

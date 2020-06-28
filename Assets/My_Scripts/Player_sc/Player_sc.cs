@@ -8,10 +8,15 @@ public class Player_sc : MonoBehaviour
     private Animator m_animator;
     private Rigidbody m_rigidBody;
     private Transform tr;
-    private Transform BossTrans;
+    
+    // Needs
+    private GameObject Boss;
+    private bool IsBossAtt = false;
+    private Transform MainCameraPos;
+    private ObjectMgr_sc ObjMgrScript;
 
     // Player Info
-    public static int m_Hp = 200;
+    public static int m_Hp = 20;
     private float m_moveSpeed = 5f;
     private float m_turnSpeed = 180f;
 
@@ -23,7 +28,7 @@ public class Player_sc : MonoBehaviour
     // Jump
     private float m_jumpTimeStamp = 0;
     private float m_minJumpInterval = 0.25f;
-    [SerializeField] private float m_jumpForce = 100f;
+    private float m_jumpForce = 6.5f;
 
     // Grounded
     private bool m_wasGrounded;
@@ -38,7 +43,7 @@ public class Player_sc : MonoBehaviour
     private List<Collider> m_collisions = new List<Collider>();
     
     // Shields
-    public static List<GameObject> m_ShieldGaugeList = new List<GameObject>();
+    public static GameObject[] m_ShieldGaugeList = new GameObject[3];
 
     // Skill Manage
     public enum SKILL { SKILL_WIND, SKILL_POISON, SKILL_NUT, SKILL_ROCK, SKILL_CLOUD, SKILL_END };
@@ -46,9 +51,9 @@ public class Player_sc : MonoBehaviour
     
     bool bShieldOnce = false;   // 쉴드 생성 제어
     // 시간따라 Orb 생성 제어
-    bool bOrbCreate = false;
     bool bOrbOnce = false;
-    float fOrbCheckTime = 0;
+    //bool bOrbCreate = false;
+    //float fOrbCheckTime = 0;
 
     bool[] m_bSkillOnce = new bool[3];
     bool m_bAtt = false;
@@ -58,9 +63,9 @@ public class Player_sc : MonoBehaviour
     float m_fDamageTime = 0;
     float fDeadCheckTime = 0;
 
+    enum STAGE { STAGE_MAIN, STAGE_1, STAGE_2, STAGE_3, STAGE_END};
+    STAGE m_eStage = STAGE.STAGE_END;
     bool bPosInit = false;
-    private Transform MainCameraPos;
-    private ObjectMgr_sc ObjMgrScript;
 
     // Audio
     enum SOUND { SOUND_ATT, SOUND_HIT, SOUND_WIN, SOUND_DIE, SOUND_ORB, SOUND_SHIELD,
@@ -68,7 +73,6 @@ public class Player_sc : MonoBehaviour
     private AudioSource SoundAudio;
     private AudioSource EffectAudio;
     private List<AudioClip> Sound = new List<AudioClip>();
-    private List<AudioClip> EffectSound = new List<AudioClip>();
 
     public SKILL GetSkill(int iScene) { return m_eSkill[iScene];    }
     public void SetSkill(int iScene, SKILL eSkill) { m_eSkill[iScene] = eSkill; }
@@ -84,7 +88,6 @@ public class Player_sc : MonoBehaviour
         if (!m_animator) { m_animator = gameObject.GetComponent<Animator>(); }
         if (!m_rigidBody) { m_rigidBody = gameObject.GetComponent<Rigidbody>(); }
         if (!tr) { tr = gameObject.GetComponent<Transform>(); }
-        if (!BossTrans) { BossTrans = GameObject.Find("BossMonster").transform; }
         if (!MainCameraPos) { MainCameraPos = GameObject.Find("MainCamera").transform; }
         if (!ObjMgrScript) { ObjMgrScript = GameObject.Find("ObjectManager").GetComponent<ObjectMgr_sc>(); }
 
@@ -99,17 +102,17 @@ public class Player_sc : MonoBehaviour
         this.EffectAudio = gameObject.AddComponent<AudioSource>();
         EffectAudio.loop = false;
 
-        Sound.Add(Resources.Load<AudioClip>("PlayerSound/PlayerAtt"));
-        Sound.Add(Resources.Load<AudioClip>("PlayerSound/PlayerHit"));
-        Sound.Add(Resources.Load<AudioClip>("PlayerSound/PlayerWin"));
-        Sound.Add(Resources.Load<AudioClip>("PlayerSound/PlayerDie"));
-        Sound.Add(Resources.Load<AudioClip>("PlayerSound/OrbSound"));
-        Sound.Add(Resources.Load<AudioClip>("PlayerSound/ShieldSound"));
-        Sound.Add(Resources.Load<AudioClip>("PlayerSound/WindSound"));
-        Sound.Add(Resources.Load<AudioClip>("PlayerSound/PoisonSound"));
-        Sound.Add(Resources.Load<AudioClip>("PlayerSound/NutsSound"));
-        Sound.Add(Resources.Load<AudioClip>("PlayerSound/RockSound"));
-        Sound.Add(Resources.Load<AudioClip>("PlayerSound/ThunderSound"));
+        Sound.Add(Resources.Load<AudioClip>("Sound/Player/PlayerAtt"));
+        Sound.Add(Resources.Load<AudioClip>("Sound/Player/PlayerHit"));
+        Sound.Add(Resources.Load<AudioClip>("Sound/Player/PlayerWin"));
+        Sound.Add(Resources.Load<AudioClip>("Sound/Player/PlayerDie"));
+        Sound.Add(Resources.Load<AudioClip>("Sound/Player/OrbSound"));
+        Sound.Add(Resources.Load<AudioClip>("Sound/Player/ShieldSound"));
+        Sound.Add(Resources.Load<AudioClip>("Sound/Player/WindSound"));
+        Sound.Add(Resources.Load<AudioClip>("Sound/Player/PoisonSound"));
+        Sound.Add(Resources.Load<AudioClip>("Sound/Player/NutsSound"));
+        Sound.Add(Resources.Load<AudioClip>("Sound/Player/RockSound"));
+        Sound.Add(Resources.Load<AudioClip>("Sound/Player/ThunderSound"));
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -170,16 +173,19 @@ public class Player_sc : MonoBehaviour
     private void Update()
     {
         if (SceneManager.GetActiveScene().name == "Stage_1")
-            Stage_1_PosInit();
-        if (SceneManager.GetActiveScene().name == "Stage_2")
-            Stage_2_PosInit();
-        if (SceneManager.GetActiveScene().name == "MainStage")
-            Stage_Main_PosInit();
+            m_eStage = STAGE.STAGE_1;
+        else if (SceneManager.GetActiveScene().name == "Stage_2")
+            m_eStage = STAGE.STAGE_2;
+        else if (SceneManager.GetActiveScene().name == "MainStage")
+            m_eStage = STAGE.STAGE_MAIN;
+        else
+            m_eStage = STAGE.STAGE_END;
+
+        SceneControl();
 
         // 죽음 처리
         if (m_Hp <= 0)
         {
-            SoundPlay(SOUND.SOUND_DIE);
             m_animator.SetBool("Die", true);
             fDeadCheckTime += Time.deltaTime;
         }
@@ -202,20 +208,21 @@ public class Player_sc : MonoBehaviour
             m_fDamageTime = 0;
         }
 
-        // Orb 공격 쿨타임
-        if (bOrbCreate)
-            fOrbCheckTime += Time.deltaTime;
+        //// Orb 공격 쿨타임
+        //if (bOrbCreate)
+        //    fOrbCheckTime += Time.deltaTime;
 
-        if (fOrbCheckTime > 5f)
-        {
-            bOrbCreate = false;
-            fOrbCheckTime = 0;
-        }
+        //if (fOrbCheckTime > 0f)
+        //{
+        //    bOrbCreate = false;
+        //    fOrbCheckTime = 0;
+        //}
     }
 
     void FixedUpdate()
     {
-        if (m_Hp <= 0 || m_animator.GetBool("Die") || m_animator.GetBool("Damaged"))
+        if (m_Hp <= 0 
+            || m_animator.GetBool("Die") || m_animator.GetBool("Damaged") || m_animator.GetBool("Win"))
             return;
 
         m_animator.SetBool("Grounded", m_isGrounded);
@@ -274,10 +281,24 @@ public class Player_sc : MonoBehaviour
 
     public void MainAttack()
     {
+        if (m_animator.GetBool("Damaged"))
+            return;
+
+        if (!Boss)
+        {
+            m_animator.SetBool("LMainAtt", true);
+
+            if (!m_bAtt)
+                SoundPlay(SOUND.SOUND_ATT);
+            m_bAtt = true;
+
+            return;
+        }
+
         if (!tr)
             Initialize();
 
-        float dist = (tr.position - BossTrans.position).magnitude;
+        float dist = (tr.position - Boss.transform.position).magnitude;
         if (dist < 5.0f)
             m_animator.SetBool("MainAtt", true);
         else
@@ -290,14 +311,14 @@ public class Player_sc : MonoBehaviour
 
     void SetAttackFalse()
     {
-        m_animator.SetBool("MainAtt", false);
-
         // LMainAtt : MainAtt & OrbAtt 공유
+        m_animator.SetBool("MainAtt", false);
         m_animator.SetBool("LMainAtt", false);
         m_animator.SetBool("Damaged", false);
 
         m_bAtt = false;
         bOrbOnce = false;
+        m_bDamaged = false;
         for (int i = 0; i < 3; ++i)
             m_bSkillOnce[i] = false;
 
@@ -312,7 +333,6 @@ public class Player_sc : MonoBehaviour
         if (skillCnt == 3 || ShieldGaugeCnt == 0)
             return;
 
-        EffectSoundPlay(SOUND.SOUND_SHIELD);
         bShieldOnce = false;
         m_animator.SetBool("ShieldAtt", true);
     }
@@ -322,6 +342,7 @@ public class Player_sc : MonoBehaviour
         if (bShieldOnce)
             return;
 
+        EffectSoundPlay(SOUND.SOUND_SHIELD);
         SkillMgr_Sc.Instance.CreateShield();
 
         bShieldOnce = true;
@@ -330,23 +351,24 @@ public class Player_sc : MonoBehaviour
 
     public void OrbAttack()
     {
-        if (bOrbCreate)
+        //if (bOrbCreate)
+        //return;
+        if (bOrbOnce)
             return;
 
         m_bAtt = true;
         bOrbOnce = true;
-        EffectSoundPlay(SOUND.SOUND_ORB);
         m_animator.SetBool("LMainAtt", true);
     }
 
     public void CreateOrb()
     {
-        if (!bOrbOnce || bOrbCreate)
+        if (!bOrbOnce /*|| bOrbCreate*/)
             return;
 
+        EffectSoundPlay(SOUND.SOUND_ORB);
         SkillMgr_Sc.Instance.CreateOrb();
-
-        bOrbCreate = true;
+        //bOrbCreate = true;
     }
 
     public void FirstAttack()
@@ -358,22 +380,22 @@ public class Player_sc : MonoBehaviour
         {
             case SKILL.SKILL_WIND:
                 {
-                    EffectSoundPlay(SOUND.SOUND_WIND);
                     m_animator.SetBool("LMainAtt", true);
+                    EffectSoundPlay(SOUND.SOUND_WIND);
                     SkillMgr_Sc.Instance.CreateWind();
                 }
                 break;
             case SKILL.SKILL_POISON:
                 {
-                    EffectSoundPlay(SOUND.SOUND_POISON);
                     m_animator.SetBool("LMainAtt", true);
+                    EffectSoundPlay(SOUND.SOUND_POISON);
                     SkillMgr_Sc.Instance.CreatePoison();
                 }
                 break;
             case SKILL.SKILL_NUT:
                 {
-                    EffectSoundPlay(SOUND.SOUND_NUT);
                     m_animator.SetBool("LMainAtt", true);
+                    EffectSoundPlay(SOUND.SOUND_NUT);
                     SkillMgr_Sc.Instance.CreateNut();
                 }
                 break;
@@ -392,15 +414,15 @@ public class Player_sc : MonoBehaviour
         {
             case SKILL.SKILL_ROCK:
                 {
-                    EffectSoundPlay(SOUND.SOUND_ROCK);
                     m_animator.SetBool("LMainAtt", true);
+                    EffectSoundPlay(SOUND.SOUND_ROCK);
                     SkillMgr_Sc.Instance.CreateRock();
                 }
                 break;
             case SKILL.SKILL_CLOUD:
                 {
-                    EffectSoundPlay(SOUND.SOUND_CLOUD);
                     m_animator.SetBool("LMainAtt", true);
+                    EffectSoundPlay(SOUND.SOUND_CLOUD);
                     SkillMgr_Sc.Instance.CreateCloud();
                 }
                 break;
@@ -415,13 +437,21 @@ public class Player_sc : MonoBehaviour
         Debug.Log("3");
     }
 
+    public void SetVictory()
+    {
+        SoundPlay(SOUND.SOUND_WIN);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Boss")
             || other.gameObject.CompareTag("MonsterWeapon"))
         {
+            if (!IsBossAtt)
+                return;
+
             int ShieldCnt = ObjectMgr_sc.Instance.CountOfObject(ObjectMgr_sc.OBJECT.OBJ_SHIELD);
-            if (ShieldCnt != 0)
+            if (ShieldCnt != 0 && !m_bDamaged)
             {
                 Destroy(m_ShieldGaugeList[--ShieldCnt]);
                 return;
@@ -429,9 +459,12 @@ public class Player_sc : MonoBehaviour
 
             if (!m_bDamaged)
                 SoundPlay(SOUND.SOUND_HIT);
-            m_animator.SetBool("Damaged", true);
-            m_Hp -= 1;
             m_bDamaged = true;
+            m_animator.SetBool("Damaged", true);
+
+            m_Hp -= 1;
+            if(m_Hp == 0)
+                SoundPlay(SOUND.SOUND_DIE);
         }
     }
 
@@ -457,6 +490,8 @@ public class Player_sc : MonoBehaviour
         {
             transform.position = new Vector3(-19.0f, 0.0f, 20.0f);
             //Debug.Log("die :" + m_animator.GetBool("Die"));
+            SetAttackFalse();
+            m_animator.SetBool("Win", false);
             m_animator.SetBool("Die", false);
             bPosInit = false;
         }
@@ -472,5 +507,37 @@ public class Player_sc : MonoBehaviour
     {
         EffectAudio.clip = Sound[(int)eSound];
         EffectAudio.Play();
+    }
+
+    private void SceneControl()
+    {
+        switch(m_eStage)
+        {
+            case STAGE.STAGE_MAIN:
+                Stage_Main_PosInit();
+                break;
+            case STAGE.STAGE_1:
+                Stage_1_PosInit();
+                Boss = GameObject.FindWithTag("Boss");
+                IsBossAtt = Boss.GetComponent<Monster_sc>().GetIsAttack();
+                if (Boss.GetComponent<Monster_sc>().nextState == Monster_sc.CurrentState.dead)
+                {
+                    m_animator.SetBool("Win", true);
+                    return;
+                }
+                break;
+            case STAGE.STAGE_2:
+                Stage_2_PosInit();
+                Boss = GameObject.FindWithTag("Boss");
+                IsBossAtt = Boss.GetComponent<Stage2Monster_sc>().GetIsAttack();
+                if (Boss.GetComponent<Stage2Monster_sc>().nextState == Stage2Monster_sc.CurrentState.dead)
+                {
+                    m_animator.SetBool("Win", true);
+                    return;
+                }
+                break;
+            case STAGE.STAGE_3:
+                break;
+        }
     }
 }
