@@ -166,12 +166,15 @@ public class Stage2Monster_sc : MonoBehaviour
     {
         if (other.gameObject.CompareTag("PlayerWeapon"))
         {
+            if (!target.GetComponent<Player_sc>().GetAtt())
+                return;
             // Debug.Log("충돌!!!");
             m_animator.SetBool("Walk", false);
             m_animator.SetBool("Attack1", false);
             m_animator.SetBool("Attack2", false);
             m_animator.SetBool("Attack3", false);
             m_animator.SetBool("Hit", true);
+            --iHp;
         }
     }
     public bool GetIsAttack()
@@ -229,7 +232,6 @@ public class Stage2Monster_sc : MonoBehaviour
     {
         if (!bIsHit)
         {
-            --iHp;
             HitSound.Play();
             bIsHit = true;
         }

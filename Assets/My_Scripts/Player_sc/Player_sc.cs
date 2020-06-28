@@ -412,6 +412,27 @@ public class Player_sc : MonoBehaviour
 
         switch (m_eSkill[1])
         {
+            case SKILL.SKILL_WIND:
+                {
+                    m_animator.SetBool("LMainAtt", true);
+                    EffectSoundPlay(SOUND.SOUND_WIND);
+                    SkillMgr_Sc.Instance.CreateWind();
+                }
+                break;
+            case SKILL.SKILL_POISON:
+                {
+                    m_animator.SetBool("LMainAtt", true);
+                    EffectSoundPlay(SOUND.SOUND_POISON);
+                    SkillMgr_Sc.Instance.CreatePoison();
+                }
+                break;
+            case SKILL.SKILL_NUT:
+                {
+                    m_animator.SetBool("LMainAtt", true);
+                    EffectSoundPlay(SOUND.SOUND_NUT);
+                    SkillMgr_Sc.Instance.CreateNut();
+                }
+                break;
             case SKILL.SKILL_ROCK:
                 {
                     m_animator.SetBool("LMainAtt", true);
@@ -521,21 +542,15 @@ public class Player_sc : MonoBehaviour
                 Boss = GameObject.FindWithTag("Boss");
                 IsBossAtt = Boss.GetComponent<Monster_sc>().GetIsAttack();
                 if (Boss.GetComponent<Monster_sc>().nextState == Monster_sc.CurrentState.dead)
-                {
                     m_animator.SetBool("Win", true);
-                    return;
-                }
-                break;
+                return;
             case STAGE.STAGE_2:
                 Stage_2_PosInit();
                 Boss = GameObject.FindWithTag("Boss");
                 IsBossAtt = Boss.GetComponent<Stage2Monster_sc>().GetIsAttack();
                 if (Boss.GetComponent<Stage2Monster_sc>().nextState == Stage2Monster_sc.CurrentState.dead)
-                {
                     m_animator.SetBool("Win", true);
-                    return;
-                }
-                break;
+                return;
             case STAGE.STAGE_3:
                 break;
         }

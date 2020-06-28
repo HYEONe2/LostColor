@@ -60,6 +60,8 @@ public class Monster_sc : MonoBehaviour
         HitSound.Stop();
         HitSound.playOnAwake = false;
 
+        m_animator.SetBool("Death", false);
+
         StartCoroutine(this.CheackState());
         StartCoroutine(this.CheckStateForAction());
     }
@@ -68,13 +70,15 @@ public class Monster_sc : MonoBehaviour
     {
         if (iHp <= 0) //몬스터 사망
         {
+
+            m_animator.SetBool("Death", true);
             nextState = CurrentState.dead;
-            
             isDead = true;
             triggerObj = (Stage_Manager)FindObjectOfType(typeof(Stage_Manager));
             triggerObj.stage1_open = false;
             triggerObj.stage2_open = true;
             curState = nextState;
+            return;
         }
     }
 
@@ -162,16 +166,17 @@ public class Monster_sc : MonoBehaviour
     {
         if (other.gameObject.CompareTag("PlayerWeapon"))
         {
-           // Debug.Log("충돌!!!");
+            // Debug.Log("충돌!!!");
+            if (!target.GetComponent<Player_sc>().GetAtt())
+                return;
+            
             m_animator.SetBool("Walk", false);
             m_animator.SetBool("WindAttack", false);
             m_animator.SetBool("PoisonAttack", false);
             m_animator.SetBool("NutAttack", false);
-            m_animator.SetBool("NutAttack", false);           
-            if (iHp == 1)
-                m_animator.SetBool("Death", true);         
-            else
-                m_animator.SetBool("Hit", true);
+            m_animator.SetBool("NutAttack", false);
+            m_animator.SetBool("Hit", true);
+            --iHp;
         }
     }
 
@@ -235,7 +240,6 @@ public class Monster_sc : MonoBehaviour
     {
         if (!bIsHit)
         {
-            --iHp;
             HitSound.Play();
             bIsHit = true;
         }
@@ -245,5 +249,6 @@ public class Monster_sc : MonoBehaviour
         HitSound.Stop();
         m_animator.SetBool("Hit", false);
         bIsHit = false;
+
     }
 }

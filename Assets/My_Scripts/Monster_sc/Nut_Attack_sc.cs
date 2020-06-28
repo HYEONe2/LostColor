@@ -7,10 +7,11 @@ public class Nut_Attack_sc : MonoBehaviour
     float fAngle = 0.0f;
 
     [SerializeField] private GameObject Blood;
+    public bool m_bPlayerUse = false;
+
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
@@ -22,12 +23,24 @@ public class Nut_Attack_sc : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (!m_bPlayerUse)
         {
-            Vector3 OriginPos = gameObject.transform.position;
-            Instantiate(Blood, OriginPos, Quaternion.identity);
-            gameObject.SetActive(false);
+            if (other.gameObject.CompareTag("Player"))
+            {
+                Vector3 OriginPos = gameObject.transform.position;
+                Instantiate(Blood, OriginPos, Quaternion.identity);
+                gameObject.SetActive(false);
+            }
         }
-
+        else
+        {
+            if (other.gameObject.CompareTag("Boss"))
+            {
+                Vector3 OriginPos = gameObject.transform.position;
+                Instantiate(Blood, OriginPos, Quaternion.identity);
+                gameObject.SetActive(false);
+                //Destroy(this);
+            }
+        }
     }
 }
