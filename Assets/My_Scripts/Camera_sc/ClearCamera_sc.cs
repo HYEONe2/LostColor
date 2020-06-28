@@ -29,7 +29,7 @@ public class ClearCamera_sc : MonoBehaviour
         while (fTimer < fMaxTime)
         {
             fTimer += Time.deltaTime;
-            transform.Rotate(Vector3.up * Time.deltaTime * 5f);
+            transform.Rotate(Vector3.up * Time.deltaTime * 3f);
 
             yield return null;
         }

@@ -18,7 +18,6 @@ public class entry : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
         if (entry_on)
         {
             transform.Translate(0.0f, y_pos, 0.0f);
@@ -26,6 +25,7 @@ public class entry : MonoBehaviour
             y_pos += speed * Time.deltaTime;
             if (transform.position.y >= 0.0f)
             {
+                GameObject.Find("Player").GetComponent<Player_sc>().SetTriggerStop(false);
                 entry_on = false;
                 //y_pos = 0.0f;
             }

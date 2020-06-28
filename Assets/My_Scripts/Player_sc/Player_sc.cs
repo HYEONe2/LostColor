@@ -8,15 +8,16 @@ public class Player_sc : MonoBehaviour
     private Animator m_animator;
     private Rigidbody m_rigidBody;
     private Transform tr;
-    
+
     // Needs
     private GameObject Boss;
     private bool IsBossAtt = false;
     private Transform MainCameraPos;
     private ObjectMgr_sc ObjMgrScript;
+    private Stage_Manager StageManager;
 
     // Player Info
-    public static int m_Hp = 30;
+    public static int m_Hp = 10;
     private float m_moveSpeed = 5f;
     private float m_turnSpeed = 180f;
 
@@ -41,42 +42,54 @@ public class Player_sc : MonoBehaviour
 
     // Collision
     private List<Collider> m_collisions = new List<Collider>();
-    
-    // Shields
-    public static GameObject[] m_ShieldGaugeList = new GameObject[3];
 
-    // Skill Manage
+    // Skill 관리
     public enum SKILL { SKILL_WIND, SKILL_POISON, SKILL_NUT, SKILL_ROCK, SKILL_CLOUD, SKILL_END };
     public SKILL[] m_eSkill = new SKILL[3];
-    
-    bool bShieldOnce = false;   // 쉴드 생성 제어
-    // 시간따라 Orb 생성 제어
+    public SKILL GetSkill(int iScene) { return m_eSkill[iScene]; }
+    public void SetSkill(int iScene, SKILL eSkill) { m_eSkill[iScene] = eSkill; }
+
+    // Skill 생성 제어
     bool bOrbOnce = false;
-    //bool bOrbCreate = false;
-    //float fOrbCheckTime = 0;
+    bool bShieldOnce = false;
+    public static GameObject[] m_ShieldGaugeList = new GameObject[3];
 
+    // Skill 쿨타임 제어
     bool[] m_bSkillOnce = new bool[3];
-    bool m_bAtt = false;
+    float[] m_fSkillCoolTime = new float[3];
+    float[] m_fSkillCheckTime = new float[3];
 
-    //죽은 후 시간 지나고 씬 전환
+    public bool GetSkillOnce(int iIndex) { return m_bSkillOnce[iIndex]; }
+    public float GetCoolTime(int iIndex) { return m_fSkillCoolTime[iIndex]; }
+    public float GetCoolCheckTime(int iIndex) { return m_fSkillCheckTime[iIndex]; }
+
+    // 공격 중 표시
+    bool m_bAtt = false;
+    public bool GetAtt() { return m_bAtt; }
+
+    // Trigger 제어
+    bool m_bTriggerStop = false;
+    public void SetTriggerStop(bool bStop) { m_bTriggerStop = bStop; }
+
+    // Dead 제어
     bool m_bDamaged = false;
     float m_fDamageTime = 0;
     float fDeadCheckTime = 0;
 
-    enum STAGE { STAGE_MAIN, STAGE_1, STAGE_2, STAGE_3, STAGE_END};
+    // Stage 관리
+    enum STAGE { STAGE_MAIN, STAGE_1, STAGE_2, STAGE_3, STAGE_END };
     STAGE m_eStage = STAGE.STAGE_END;
     bool bPosInit = false;
 
-    // Audio
-    enum SOUND { SOUND_ATT, SOUND_HIT, SOUND_WIN, SOUND_DIE, SOUND_ORB, SOUND_SHIELD,
-        SOUND_WIND, SOUND_POISON, SOUND_NUT, SOUND_ROCK, SOUND_CLOUD, SOUND_END };
+    // Audio 관리
+    enum SOUND
+    {
+        SOUND_ATT, SOUND_HIT, SOUND_WIN, SOUND_DIE, SOUND_ORB, SOUND_SHIELD,
+        SOUND_WIND, SOUND_POISON, SOUND_NUT, SOUND_ROCK, SOUND_CLOUD, SOUND_END
+    };
     private AudioSource SoundAudio;
     private AudioSource EffectAudio;
     private List<AudioClip> Sound = new List<AudioClip>();
-
-    public SKILL GetSkill(int iScene) { return m_eSkill[iScene];    }
-    public void SetSkill(int iScene, SKILL eSkill) { m_eSkill[iScene] = eSkill; }
-    public bool GetAtt() { return m_bAtt; }
 
     void Awake()
     {
@@ -90,6 +103,7 @@ public class Player_sc : MonoBehaviour
         if (!tr) { tr = gameObject.GetComponent<Transform>(); }
         if (!MainCameraPos) { MainCameraPos = GameObject.Find("MainCamera").transform; }
         if (!ObjMgrScript) { ObjMgrScript = GameObject.Find("ObjectManager").GetComponent<ObjectMgr_sc>(); }
+        StageManager = GameObject.Find("StageManager").GetComponent<Stage_Manager>();
 
         for (int i = 0; i < 3; ++i)
         {
@@ -183,6 +197,11 @@ public class Player_sc : MonoBehaviour
 
         SceneControl();
 
+        if (m_bSkillOnce[0])
+            m_fSkillCoolTime[0] += Time.deltaTime;
+        if (m_bSkillOnce[1])
+            m_fSkillCoolTime[1] += Time.deltaTime;
+
         // 죽음 처리
         if (m_Hp <= 0)
         {
@@ -199,31 +218,27 @@ public class Player_sc : MonoBehaviour
         }
 
         // 피격 처리
-        if(m_bDamaged)
+        if (m_bDamaged)
             m_fDamageTime += Time.deltaTime;
 
-        if(m_fDamageTime > 1f)
+        if (m_fDamageTime > 1f)
         {
             m_bDamaged = false;
             m_fDamageTime = 0;
         }
-
-        //// Orb 공격 쿨타임
-        //if (bOrbCreate)
-        //    fOrbCheckTime += Time.deltaTime;
-
-        //if (fOrbCheckTime > 0f)
-        //{
-        //    bOrbCreate = false;
-        //    fOrbCheckTime = 0;
-        //}
     }
 
     void FixedUpdate()
     {
-        if (m_Hp <= 0 
+        if (m_Hp <= 0
             || m_animator.GetBool("Die") || m_animator.GetBool("Damaged") || m_animator.GetBool("Win"))
             return;
+
+        if (m_bTriggerStop)
+        {
+            m_animator.SetFloat("MoveSpeed", 0f);
+            return;
+        }
 
         m_animator.SetBool("Grounded", m_isGrounded);
 
@@ -319,8 +334,6 @@ public class Player_sc : MonoBehaviour
         m_bAtt = false;
         bOrbOnce = false;
         m_bDamaged = false;
-        for (int i = 0; i < 3; ++i)
-            m_bSkillOnce[i] = false;
 
         EffectAudio.Stop();
     }
@@ -373,84 +386,172 @@ public class Player_sc : MonoBehaviour
 
     public void FirstAttack()
     {
-        if (m_bSkillOnce[0])
-            return;
-
         switch (m_eSkill[0])
         {
             case SKILL.SKILL_WIND:
                 {
+                    if (m_fSkillCoolTime[0] > 3f)
+                    {
+                        m_bSkillOnce[0] = false;
+                        m_fSkillCoolTime[0] = 0f;
+                        return;
+                    }
+                    if (m_bSkillOnce[0])
+                        return;
+
                     m_animator.SetBool("LMainAtt", true);
                     EffectSoundPlay(SOUND.SOUND_WIND);
                     SkillMgr_Sc.Instance.CreateWind();
+
+                    m_bSkillOnce[0] = true;
+                    m_fSkillCheckTime[0] = 3f;
                 }
                 break;
             case SKILL.SKILL_POISON:
                 {
+                    if (m_fSkillCoolTime[0] > 2f)
+                    {
+                        m_bSkillOnce[0] = false;
+                        m_fSkillCoolTime[0] = 0f;
+                        return;
+                    }
+                    if (m_bSkillOnce[0])
+                        return;
+
                     m_animator.SetBool("LMainAtt", true);
                     EffectSoundPlay(SOUND.SOUND_POISON);
                     SkillMgr_Sc.Instance.CreatePoison();
+
+                    m_bSkillOnce[0] = true;
+                    m_fSkillCheckTime[0] = 2f;
                 }
                 break;
             case SKILL.SKILL_NUT:
                 {
+                    if (m_fSkillCoolTime[0] > 5f)
+                    {
+                        m_bSkillOnce[0] = false;
+                        m_fSkillCoolTime[0] = 0f;
+                        return;
+                    }
+
+                    if (m_bSkillOnce[0])
+                        return;
                     m_animator.SetBool("LMainAtt", true);
                     EffectSoundPlay(SOUND.SOUND_NUT);
                     SkillMgr_Sc.Instance.CreateNut();
+
+                    m_bSkillOnce[0] = true;
+                    m_fSkillCheckTime[0] = 5f;
                 }
                 break;
         }
 
         m_bAtt = true;
-        m_bSkillOnce[0] = true;
     }
 
     public void SecondAttack()
     {
-        if (m_bSkillOnce[1])
-            return;
-
         switch (m_eSkill[1])
         {
             case SKILL.SKILL_WIND:
                 {
+                    if (m_fSkillCoolTime[1] > 3f)
+                    {
+                        m_bSkillOnce[1] = false;
+                        m_fSkillCoolTime[1] = 0f;
+                        return;
+                    }
+                    if (m_bSkillOnce[1])
+                        return;
+
                     m_animator.SetBool("LMainAtt", true);
                     EffectSoundPlay(SOUND.SOUND_WIND);
                     SkillMgr_Sc.Instance.CreateWind();
+
+                    m_bSkillOnce[1] = true;
+                    m_fSkillCheckTime[1] = 3f;
                 }
                 break;
             case SKILL.SKILL_POISON:
                 {
+                    if (m_fSkillCoolTime[1] > 2f)
+                    {
+                        m_bSkillOnce[1] = false;
+                        m_fSkillCoolTime[1] = 0f;
+                        return;
+                    }
+                    if (m_bSkillOnce[1])
+                        return;
+
                     m_animator.SetBool("LMainAtt", true);
                     EffectSoundPlay(SOUND.SOUND_POISON);
                     SkillMgr_Sc.Instance.CreatePoison();
+
+                    m_bSkillOnce[1] = true;
+                    m_fSkillCheckTime[1] = 2f;
                 }
                 break;
             case SKILL.SKILL_NUT:
                 {
+                    if (m_fSkillCoolTime[1] > 5f)
+                    {
+                        m_bSkillOnce[1] = false;
+                        m_fSkillCoolTime[1] = 0f;
+                        return;
+                    }
+                    if (m_bSkillOnce[1])
+                        return;
+
                     m_animator.SetBool("LMainAtt", true);
                     EffectSoundPlay(SOUND.SOUND_NUT);
                     SkillMgr_Sc.Instance.CreateNut();
+
+                    m_bSkillOnce[1] = true;
+                    m_fSkillCheckTime[1] = 5f;
                 }
                 break;
             case SKILL.SKILL_ROCK:
                 {
+                    if (m_fSkillCoolTime[1] > 2f)
+                    {
+                        m_bSkillOnce[1] = false;
+                        m_fSkillCoolTime[1] = 0f;
+                        return;
+                    }
+                    if (m_bSkillOnce[1])
+                        return;
+
                     m_animator.SetBool("LMainAtt", true);
                     EffectSoundPlay(SOUND.SOUND_ROCK);
                     SkillMgr_Sc.Instance.CreateRock();
+
+                    m_bSkillOnce[1] = true;
+                    m_fSkillCheckTime[1] = 2f;
                 }
                 break;
             case SKILL.SKILL_CLOUD:
                 {
+                    if (m_fSkillCoolTime[1] > 3f)
+                    {
+                        m_bSkillOnce[1] = false;
+                        m_fSkillCoolTime[1] = 0f;
+                        return;
+                    }
+                    if (m_bSkillOnce[1])
+                        return;
+
                     m_animator.SetBool("LMainAtt", true);
                     EffectSoundPlay(SOUND.SOUND_CLOUD);
                     SkillMgr_Sc.Instance.CreateCloud();
+
+                    m_bSkillOnce[1] = true;
+                    m_fSkillCheckTime[1] = 3f;
                 }
                 break;
         }
 
         m_bAtt = true;
-        m_bSkillOnce[1] = true;
     }
 
     public void ThirdAttack()
@@ -484,7 +585,7 @@ public class Player_sc : MonoBehaviour
             m_animator.SetBool("Damaged", true);
 
             m_Hp -= 1;
-            if(m_Hp == 0)
+            if (m_Hp == 0)
                 SoundPlay(SOUND.SOUND_DIE);
         }
     }
@@ -501,6 +602,7 @@ public class Player_sc : MonoBehaviour
     {
         if (!bPosInit)
         {
+            GameObject.Find("FirstAttack").GetComponent<SkillUI_sc>().SetTexture((int)m_eSkill[0]);
             transform.position = new Vector3(9.84f, 0.34f, -13.97f);
             bPosInit = true;
         }
@@ -509,8 +611,15 @@ public class Player_sc : MonoBehaviour
     {
         if (bPosInit)
         {
+            if (!StageManager.stage1_open && StageManager.stage2_open)
+                GameObject.Find("FirstAttack").GetComponent<SkillUI_sc>().SetTexture((int)m_eSkill[0]);
+            else if (!StageManager.stage1_open && !StageManager.stage2_open)
+            {
+                GameObject.Find("FirstAttack").GetComponent<SkillUI_sc>().SetTexture((int)m_eSkill[0]);
+                GameObject.Find("SecondAttack").GetComponent<SkillUI_sc>().SetTexture((int)m_eSkill[1]);
+            }
+
             transform.position = new Vector3(-19.0f, 0.0f, 20.0f);
-            //Debug.Log("die :" + m_animator.GetBool("Die"));
             SetAttackFalse();
             m_animator.SetBool("Win", false);
             m_animator.SetBool("Die", false);
@@ -532,7 +641,7 @@ public class Player_sc : MonoBehaviour
 
     private void SceneControl()
     {
-        switch(m_eStage)
+        switch (m_eStage)
         {
             case STAGE.STAGE_MAIN:
                 Stage_Main_PosInit();

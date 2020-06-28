@@ -7,11 +7,13 @@ public class UIManager_sc : MonoBehaviour
 {
     public Slider BackVolume;
     public AudioSource audio;
+    public GameObject Pannel;
 
     private float backVol = 1.0f;
     // Start is called before the first frame update
     void Start()
     {
+        Pannel.SetActive(false);
         backVol = BackVolume.value;
         PlayerPrefs.SetFloat("backvol", backVol);
     }
@@ -28,5 +30,14 @@ public class UIManager_sc : MonoBehaviour
 
         backVol = BackVolume.value;
         PlayerPrefs.SetFloat("backvol", backVol);
+    }
+
+    public void SettingdOn()
+    {
+        Pannel.SetActive(true);
+    }
+    public void SettingdOff()
+    {
+        Pannel.SetActive(false);
     }
 }

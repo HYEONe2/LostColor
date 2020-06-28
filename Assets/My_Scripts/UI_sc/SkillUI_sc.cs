@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class SkillUI_sc : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
@@ -60,6 +61,8 @@ public class SkillUI_sc : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoi
     // Update is called once per frame
     void Update()
     {
+        ChangeAlpha();
+
         if (m_bTouch)
         {
             switch (eSKill)
@@ -162,5 +165,52 @@ public class SkillUI_sc : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoi
         }
 
         return Cnt;
+    }
+
+    void ChangeAlpha()
+    {
+        float alpha = 1f;
+        switch (eSKill)
+        {
+            case SKILL.SKILL_FIRST:
+                if(playerScript.GetSkillOnce(0))
+                    alpha = playerScript.GetCoolTime(0) / playerScript.GetCoolCheckTime(0);
+                break;
+            case SKILL.SKILL_SECOND:
+                if (playerScript.GetSkillOnce(1))
+                    alpha = playerScript.GetCoolTime(1) / playerScript.GetCoolCheckTime(1);
+                break;
+            case SKILL.SKILL_THIRD:
+                if (playerScript.GetSkillOnce(2))
+                    alpha = playerScript.GetCoolTime(2) / playerScript.GetCoolCheckTime(2);
+                break;
+        }
+
+        Color originColor = gameObject.GetComponent<Image>().color;
+        gameObject.GetComponent<Image>().color = new Vector4(originColor.r, originColor.g, originColor.b, alpha);
+    }
+
+    public void SetTexture(int iSkillNum)
+    {
+        Sprite SkillImage = null;
+        switch (iSkillNum)
+        {
+            case 0:
+                SkillImage = Resources.Load<Sprite>("Texture/UI/wind");
+                break;
+            case 1:
+                SkillImage = Resources.Load<Sprite>("Texture/UI/poison");
+                break;
+            case 2:
+                SkillImage = Resources.Load<Sprite>("Texture/UI/stones");
+                break;
+            case 3:
+                SkillImage = Resources.Load<Sprite>("Texture/UI/rock");
+                break;
+            case 4:
+                SkillImage = Resources.Load<Sprite>("Texture/UI/cloud");
+                break;
+        }
+        gameObject.GetComponent<Image>().sprite = SkillImage;
     }
 }

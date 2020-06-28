@@ -138,6 +138,9 @@ public class ColorChange_sc : MonoBehaviour
                 transform.GetComponent<MeshRenderer>().material.color = color;
             }
         }
+
+        if (m_Stage == STAGE.STAGE_3)
+            GameObject.Find("EndingText").GetComponent<Endind_sc>().m_bStartEnding = true; ;
     }
 
     bool TargetInScreen_Direction()
