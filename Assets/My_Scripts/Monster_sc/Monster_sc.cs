@@ -69,7 +69,7 @@ public class Monster_sc : MonoBehaviour
         if (iHp <= 0) //몬스터 사망
         {
             nextState = CurrentState.dead;
-            m_animator.SetBool("Death", true);
+            
             isDead = true;
             triggerObj = (Stage_Manager)FindObjectOfType(typeof(Stage_Manager));
             triggerObj.stage1_open = false;
@@ -167,8 +167,11 @@ public class Monster_sc : MonoBehaviour
             m_animator.SetBool("WindAttack", false);
             m_animator.SetBool("PoisonAttack", false);
             m_animator.SetBool("NutAttack", false);
-            m_animator.SetBool("NutAttack", false);
-            m_animator.SetBool("Hit", true);
+            m_animator.SetBool("NutAttack", false);           
+            if (iHp == 1)
+                m_animator.SetBool("Death", true);         
+            else
+                m_animator.SetBool("Hit", true);
         }
     }
 

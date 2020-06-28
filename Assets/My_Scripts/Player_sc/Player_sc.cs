@@ -16,7 +16,7 @@ public class Player_sc : MonoBehaviour
     private ObjectMgr_sc ObjMgrScript;
 
     // Player Info
-    public static int m_Hp = 20;
+    public static int m_Hp = 30;
     private float m_moveSpeed = 5f;
     private float m_turnSpeed = 180f;
 
