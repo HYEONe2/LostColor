@@ -10,6 +10,8 @@ public class Wind_sc : MonoBehaviour
     public bool m_bPlayerUse = false;
     private Vector3 CameraDir;
     float fSpeed = 1.0f;
+    [SerializeField] private GameObject Blood;
+
 
     // Start is called before the first frame update
     void Start()
@@ -31,5 +33,15 @@ public class Wind_sc : MonoBehaviour
 
             transform.position = new Vector3(vPlayerTrans.x + dir.x, vPlayerTrans.y + 1.4f, vPlayerTrans.z + dir.z);
         }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            Vector3 OriginPos = gameObject.transform.position;
+            Instantiate(Blood, OriginPos, Quaternion.identity);
+            //gameObject.SetActive(false);
+        }
+
     }
 }

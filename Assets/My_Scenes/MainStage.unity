@@ -12307,6 +12307,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6577393677827729772, guid: f92a19fbd8d7a3a488d122e51d9d950a,
+        type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 6577393677827729775, guid: f92a19fbd8d7a3a488d122e51d9d950a,
         type: 3}
       propertyPath: m_Name

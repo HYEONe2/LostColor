@@ -16,6 +16,7 @@ public class Stage2Monster_sc : MonoBehaviour
     //[SerializeField] private GameObject nut;
     [SerializeField] private NavMeshAgent nav;
 
+    private AudioSource HitSound;
 
     public enum CurrentState { idle, walk, attck_1, attack_3, attack_2, hit, dead, end };
     public CurrentState curState = CurrentState.end;
@@ -56,6 +57,10 @@ public class Stage2Monster_sc : MonoBehaviour
         nav = GetComponent<NavMeshAgent>();
         target = GameObject.Find("Player");
 
+        HitSound = GetComponent<AudioSource>();
+        HitSound.Stop();
+        HitSound.playOnAwake = false;
+
         StartCoroutine(this.CheackState());
         StartCoroutine(this.CheckStateForAction());
         Rockclass = rock.GetComponent<RockAttack_sc>();
@@ -63,7 +68,7 @@ public class Stage2Monster_sc : MonoBehaviour
 
     private void Update()
     {
-        if (iHp <= 1) //몬스터 사망
+        if (iHp <= 0) //몬스터 사망
         {
             nextState = CurrentState.dead;
             m_animator.SetBool("Die", true);
@@ -225,11 +230,13 @@ public class Stage2Monster_sc : MonoBehaviour
         if (!bIsHit)
         {
             --iHp;
+            HitSound.Play();
             bIsHit = true;
         }
     }
     public void FalseHit()
     {
+        HitSound.Stop();
         m_animator.SetBool("Hit", false);
         bIsHit = false;
     }

@@ -11,7 +11,7 @@ public class Player_sc : MonoBehaviour
     private Transform BossTrans;
 
     // Player Info
-    public static int m_Hp = 20;
+    public static int m_Hp = 200;
     private float m_moveSpeed = 5f;
     private float m_turnSpeed = 180f;
 

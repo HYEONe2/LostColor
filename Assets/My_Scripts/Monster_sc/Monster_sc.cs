@@ -66,7 +66,7 @@ public class Monster_sc : MonoBehaviour
 
     private void Update()
     {
-        if (iHp <= 1) //몬스터 사망
+        if (iHp <= 0) //몬스터 사망
         {
             nextState = CurrentState.dead;
             m_animator.SetBool("Death", true);

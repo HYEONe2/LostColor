@@ -13,6 +13,8 @@ public class Nut_sc : MonoBehaviour
     //private Vector3 CameraDir;
     float fSpeed = 5.0f;
 
+   // [SerializeField] private GameObject Blood;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -41,4 +43,15 @@ public class Nut_sc : MonoBehaviour
         //Vector3 vPlayerTrans = Target.transform.position; ;
         //float fDist = (TargetPos - gameObject.transform.position).magnitude;
     }
+
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.gameObject.CompareTag("Player"))
+    //    {
+    //        Vector3 OriginPos = gameObject.transform.position;
+    //        Instantiate(Blood, OriginPos, Quaternion.identity);
+    //        gameObject.SetActive(false);
+    //    }
+
+    //}
 }

@@ -89,7 +89,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: caf4d4c0b3bd2834cbaafc7c33ac3c34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Blood: {fileID: 1968586304485042, guid: 6c86c599d7bf3464eb4506d2584fbe57, type: 3}
+  Blood: {fileID: 1949398963624892, guid: d786e2d05a34bf741b1bd7fd569828cd, type: 3}
 --- !u!54 &352727374
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -132,7 +132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: caf4d4c0b3bd2834cbaafc7c33ac3c34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Blood: {fileID: 1968586304485042, guid: 6c86c599d7bf3464eb4506d2584fbe57, type: 3}
+  Blood: {fileID: 1949398963624892, guid: d786e2d05a34bf741b1bd7fd569828cd, type: 3}
 --- !u!54 &1174389090
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -175,7 +175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: caf4d4c0b3bd2834cbaafc7c33ac3c34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Blood: {fileID: 1968586304485042, guid: 6c86c599d7bf3464eb4506d2584fbe57, type: 3}
+  Blood: {fileID: 1949398963624892, guid: d786e2d05a34bf741b1bd7fd569828cd, type: 3}
 --- !u!1001 &767150574058140654
 PrefabInstance:
   m_ObjectHideFlags: 0

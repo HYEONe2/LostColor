@@ -4801,6 +4801,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_bPlayerUse: 0
+  Blood: {fileID: 1391589557849848, guid: a12791d0a94e4c140ac99bd147d6518e, type: 3}
 --- !u!82 &-536508015026580248
 AudioSource:
   m_ObjectHideFlags: 0

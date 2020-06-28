@@ -52,7 +52,7 @@ public class RockAttack_sc : MonoBehaviour
             }
             else
             {
-                transform.position = Vector3.MoveTowards(transform.position, TargetPos, 1.0f);
+                transform.position = Vector3.MoveTowards(transform.position, TargetPos, 0.5f);
                 transform.Rotate(new Vector3(0, 0, 3));
             }
         }
@@ -65,7 +65,7 @@ public class RockAttack_sc : MonoBehaviour
                     ShootSound.Play();
                     bIsPlay = true;
                 }
-                transform.position = Vector3.MoveTowards(transform.position, TargetPos, 1.0f);
+                transform.position = Vector3.MoveTowards(transform.position, TargetPos, 0.5f);
                 transform.Rotate(new Vector3(0, 0, 3));
             }
             else
