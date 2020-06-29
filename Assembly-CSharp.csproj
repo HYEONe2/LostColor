@@ -93,6 +93,7 @@
     <Compile Include="Assets\My_Scripts\Manager_sc\LogoSceneManager_sc.cs" />
     <Compile Include="Assets\My_Scripts\Manager_sc\ObjectMgr_sc.cs" />
     <Compile Include="Assets\My_Scripts\Manager_sc\SkillMgr_Sc.cs" />
+    <Compile Include="Assets\My_Scripts\Manager_sc\SoundManager_sc.cs" />
     <Compile Include="Assets\My_Scripts\Manager_sc\Stage_Manager.cs" />
     <Compile Include="Assets\My_Scripts\Manager_sc\UIManager_sc.cs" />
     <Compile Include="Assets\My_Scripts\Monster_sc\CloudAttack_sc.cs" />
@@ -149,9 +150,6 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
-    <Compile Include="Assets\TypeOut\Scripts\GUIScript.cs" />
-    <Compile Include="Assets\TypeOut\Scripts\TypeOutEditor.cs" />
-    <Compile Include="Assets\TypeOut\Scripts\TypeOutScript.cs" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap.shader" />

@@ -594,6 +594,7 @@ public class Player_sc : MonoBehaviour
     {
         if (!bPosInit)
         {
+            m_Hp = 10;
             transform.position = new Vector3(14.347f, 0.34f, -0.066f);
             bPosInit = true;
         }
@@ -602,6 +603,7 @@ public class Player_sc : MonoBehaviour
     {
         if (!bPosInit)
         {
+            m_Hp = 10;
             GameObject.Find("FirstAttack").GetComponent<SkillUI_sc>().SetTexture((int)m_eSkill[0]);
             transform.position = new Vector3(9.84f, 0.34f, -13.97f);
             bPosInit = true;
@@ -612,7 +614,9 @@ public class Player_sc : MonoBehaviour
         if (bPosInit)
         {
             if (!StageManager.stage1_open && StageManager.stage2_open)
+            {
                 GameObject.Find("FirstAttack").GetComponent<SkillUI_sc>().SetTexture((int)m_eSkill[0]);
+            }
             else if (!StageManager.stage1_open && !StageManager.stage2_open)
             {
                 GameObject.Find("FirstAttack").GetComponent<SkillUI_sc>().SetTexture((int)m_eSkill[0]);

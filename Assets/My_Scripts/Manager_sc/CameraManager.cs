@@ -14,7 +14,7 @@ public class CameraManager : MonoBehaviour
     private ClearCamera_sc ClearCameraSc1;
 
     float ShakeMaxTime = 5f;
-    float ClearMaxTime = 14f;
+    float ClearMaxTime = 15f;
     float Magnitude = 5f;
 
     public bool m_bChangeSkyBox = false;

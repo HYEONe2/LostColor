@@ -6,7 +6,7 @@ public class ClearCamera_sc : MonoBehaviour
 {
     private CameraManager CameraMgrScript;
 
-    [SerializeField] private float m_Speed = 2.5f;
+    private float m_Speed = 4f;
     Vector3 vOriginDir;
 
     // Start is called before the first frame update
@@ -29,7 +29,7 @@ public class ClearCamera_sc : MonoBehaviour
         while (fTimer < fMaxTime)
         {
             fTimer += Time.deltaTime;
-            transform.Rotate(Vector3.up * Time.deltaTime * 3f);
+            transform.Rotate(Vector3.up * Time.deltaTime * m_Speed);
 
             yield return null;
         }
