@@ -20,11 +20,13 @@ public class entry : MonoBehaviour
     {
         if (entry_on)
         {
+            deltatime += Time.deltaTime;
             transform.Translate(0.0f, y_pos, 0.0f);
-           // Debug.Log("입구등장");
+            Debug.Log(transform.position.y);
             y_pos += speed * Time.deltaTime;
-            if (transform.position.y >= 0.0f)
+            if (deltatime >= 10.0f)
             {
+                Debug.Log("입구STOP"+ transform.position.y);
                 GameObject.Find("Player").GetComponent<Player_sc>().SetTriggerStop(false);
                 entry_on = false;
                 //y_pos = 0.0f;

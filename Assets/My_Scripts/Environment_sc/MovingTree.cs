@@ -12,6 +12,8 @@ public class MovingTree : MonoBehaviour
     public float speed = 0.005f;
     public bool entry_on = false;
     public bool entry_on2 = false;
+    public bool entry_on3 = false;
+
 
 
     // Start is called before the first frame update
@@ -19,6 +21,8 @@ public class MovingTree : MonoBehaviour
     {
         entry_on = false;
         entry_on2 = false;
+        entry_on3 = false;
+
     }
 
     // Update is called once per frame
@@ -51,7 +55,6 @@ public class MovingTree : MonoBehaviour
         }
         else if (!IsRight)
         {
-            //Debug.Log("왼쪽" + x_pos);
             z_pos -= speed * Time.deltaTime;
             if (transform.position.z <= -7.3f)
             {
