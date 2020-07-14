@@ -39,6 +39,10 @@ public class MovingTree : MonoBehaviour
         {
             Second_Entry();
         }
+        if(entry_on3)
+        {
+            Third_Entry();
+        }
     }
 
     private void First_Entry()
@@ -78,6 +82,29 @@ public class MovingTree : MonoBehaviour
             //Debug.Log("왼쪽" + transform.position.x);
             x_pos -= speed * Time.deltaTime;
             if (transform.position.x <= 31.7f)
+            {
+                x_pos = 0.0f;
+            }
+        }
+    }
+
+    private void Third_Entry()
+    {
+        z_pos = 0.0f;
+        if (IsRight)
+        {
+            x_pos -= speed * Time.deltaTime;
+            Debug.Log("오른쪽" + transform.position.x);
+            if (transform.position.x <= 42.3f)
+            {
+                x_pos = 0.0f;
+            }
+        }
+        else if (!IsRight)
+        {
+            Debug.Log("왼쪽" + transform.position.x);
+            x_pos += speed * Time.deltaTime;
+            if (transform.position.x >= 48.2f)
             {
                 x_pos = 0.0f;
             }

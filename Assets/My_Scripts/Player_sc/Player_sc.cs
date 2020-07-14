@@ -190,6 +190,8 @@ public class Player_sc : MonoBehaviour
             m_eStage = STAGE.STAGE_1;
         else if (SceneManager.GetActiveScene().name == "Stage_2")
             m_eStage = STAGE.STAGE_2;
+        else if (SceneManager.GetActiveScene().name == "Stage_3")
+            m_eStage = STAGE.STAGE_3;
         else if (SceneManager.GetActiveScene().name == "MainStage")
             m_eStage = STAGE.STAGE_MAIN;
         else
@@ -609,6 +611,15 @@ public class Player_sc : MonoBehaviour
             bPosInit = true;
         }
     }
+    private void Stage_3_PosInit()
+    {
+        if (!bPosInit)
+        {
+            m_Hp = 10;
+            transform.position = new Vector3(14.347f, 0.9f, -0.066f);
+            bPosInit = true;
+        }
+    }
     private void Stage_Main_PosInit()
     {
         if (bPosInit)
@@ -665,7 +676,8 @@ public class Player_sc : MonoBehaviour
                     m_animator.SetBool("Win", true);
                 return;
             case STAGE.STAGE_3:
-                break;
+                Stage_3_PosInit();
+                return;
         }
     }
 }

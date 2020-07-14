@@ -22,11 +22,11 @@ public class entry : MonoBehaviour
         {
             deltatime += Time.deltaTime;
             transform.Translate(0.0f, y_pos, 0.0f);
-            Debug.Log(transform.position.y);
+           // Debug.Log(transform.position.y);
             y_pos += speed * Time.deltaTime;
-            if (deltatime >= 10.0f)
+            if (deltatime >= 6.5f)
             {
-                Debug.Log("입구STOP"+ transform.position.y);
+                //Debug.Log("입구STOP"+ transform.position.y);
                 GameObject.Find("Player").GetComponent<Player_sc>().SetTriggerStop(false);
                 entry_on = false;
                 //y_pos = 0.0f;

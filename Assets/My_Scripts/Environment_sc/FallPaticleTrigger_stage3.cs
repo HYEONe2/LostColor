@@ -50,8 +50,8 @@ public class FallPaticleTrigger_stage3 : MonoBehaviour
 
             CameraMgrScript.ShakingCamera3On();
 
-            Rtreeclass.entry_on2 = true;
-            Ltreeclass.entry_on2 = true;
+            Rtreeclass.entry_on3 = true;
+            Ltreeclass.entry_on3 = true;
 
             isUsed = true;
         }

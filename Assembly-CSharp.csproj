@@ -85,6 +85,7 @@
     <Compile Include="Assets\My_Scripts\Environment_sc\FallPaticleTrigger_stage2.cs" />
     <Compile Include="Assets\My_Scripts\Environment_sc\FallPaticleTrigger_stage3.cs" />
     <Compile Include="Assets\My_Scripts\Environment_sc\FallStage2Trigger.cs" />
+    <Compile Include="Assets\My_Scripts\Environment_sc\FallStage3Trigger.cs" />
     <Compile Include="Assets\My_Scripts\Environment_sc\FallStageTrigger.cs" />
     <Compile Include="Assets\My_Scripts\Environment_sc\MovingTree.cs" />
     <Compile Include="Assets\My_Scripts\Environment_sc\entry.cs" />
