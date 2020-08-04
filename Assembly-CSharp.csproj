@@ -98,6 +98,7 @@
     <Compile Include="Assets\My_Scripts\Manager_sc\SoundManager_sc.cs" />
     <Compile Include="Assets\My_Scripts\Manager_sc\Stage_Manager.cs" />
     <Compile Include="Assets\My_Scripts\Manager_sc\UIManager_sc.cs" />
+    <Compile Include="Assets\My_Scripts\Monster_sc\BombAttack_sc.cs" />
     <Compile Include="Assets\My_Scripts\Monster_sc\CloudAttack_sc.cs" />
     <Compile Include="Assets\My_Scripts\Monster_sc\Monster_Bullet_sc.cs" />
     <Compile Include="Assets\My_Scripts\Monster_sc\Monster_sc.cs" />
