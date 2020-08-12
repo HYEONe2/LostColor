@@ -616,7 +616,7 @@ public class Player_sc : MonoBehaviour
         if (!bPosInit)
         {
             m_Hp = 10;
-            transform.position = new Vector3(14.347f, 0.9f, -0.066f);
+            transform.position = new Vector3(-15.18f, 10.85f, 16.14f);
             bPosInit = true;
         }
     }

@@ -105,6 +105,7 @@
     <Compile Include="Assets\My_Scripts\Monster_sc\Nut_Attack_sc.cs" />
     <Compile Include="Assets\My_Scripts\Monster_sc\Nut_sc.cs" />
     <Compile Include="Assets\My_Scripts\Monster_sc\RockAttack_sc.cs" />
+    <Compile Include="Assets\My_Scripts\Monster_sc\SmokeAttack_sc.cs" />
     <Compile Include="Assets\My_Scripts\Monster_sc\Stage2Monster_sc.cs" />
     <Compile Include="Assets\My_Scripts\Monster_sc\Stage3Monster_sc.cs" />
     <Compile Include="Assets\My_Scripts\Monster_sc\WindAttack_sc.cs" />

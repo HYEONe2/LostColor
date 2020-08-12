@@ -10,9 +10,10 @@ public class Stage3Monster_sc : MonoBehaviour
     [SerializeField] private Rigidbody m_rigidBody;
     [SerializeField] private Transform tr;
     [SerializeField] private GameObject target;
-    //[SerializeField] private Transform RightHand;
-    //[SerializeField] private GameObject rock;
-    //[SerializeField] private GameObject cloud;
+    [SerializeField] private Transform LeftHand;
+    [SerializeField] private Transform LookPos;
+    [SerializeField] private GameObject bomb;
+    [SerializeField] private GameObject smoke;
     //[SerializeField] private GameObject nut;
     [SerializeField] private NavMeshAgent nav;
 
@@ -33,8 +34,9 @@ public class Stage3Monster_sc : MonoBehaviour
     private bool bIsHit = false;
 
     //// 시간따라 Orb 생성 제어
-    bool bRockCreate = false;
-    bool bCloudCreate = false;
+    bool bBombCreate = false;
+    bool bSmokeCreate = false;
+    int iSmokecnt = 0;
     //bool bNutCreate = false;
 
 
@@ -177,4 +179,63 @@ public class Stage3Monster_sc : MonoBehaviour
             --iHp;
         }
     }
+
+    public bool GetIsAttack()
+    {
+        return bIsAttack;
+    }
+
+    public void StartAttack()
+    {
+        bIsAttack = true;
+    }
+    public void EndAttack()
+    {
+        bIsAttack = false;
+    }
+    public void CreateBomb()
+    {
+        if (bBombCreate)
+            return;
+        bBombCreate = true;
+        Instantiate(bomb, LeftHand.transform.position, gameObject.transform.rotation);
+    }
+
+    public void FalseBomb()
+    {
+        if (bBombCreate)
+            bBombCreate = false;
+        bIsAttack = false;
+
+    }
+    public void CreateSmoke()
+    {
+        //iSmokecnt++;
+        //if (bSmokeCreate)
+        //    return;
+        bSmokeCreate = true;
+        Instantiate(smoke, LookPos.transform.position, Quaternion.identity);
+    }
+
+    public void FalseSmoke()
+    {
+        if (bSmokeCreate)
+            bSmokeCreate = false;
+        bIsAttack = false;
+
+    }
+    //public void DamageAttack()
+    //{
+    //    if (!bIsHit)
+    //    {
+    //        HitSound.Play();
+    //        bIsHit = true;
+    //    }
+    //}
+    //public void FalseHit()
+    //{
+    //    HitSound.Stop();
+    //    m_animator.SetBool("Hit", false);
+    //    bIsHit = false;
+    //}
 }
