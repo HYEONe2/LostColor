@@ -18,8 +18,6 @@ public class Stage_Manager : MonoBehaviour
     public bool stage2_open = false;
     public bool stage3_open = false;
 
-
-
     public static Stage_Manager Instance
     {
         get
@@ -60,11 +58,11 @@ public class Stage_Manager : MonoBehaviour
 
     private void Update()
     {
-        if(SceneManager.GetActiveScene().name=="MainStage")
+        if (SceneManager.GetActiveScene().name == "MainStage")
         {
             if (stage1_open)
                 paticle1.SetActive(true);
-            if(stage2_open)
+            if (stage2_open)
                 paticle2.SetActive(true);
             if (stage3_open)
                 paticle3.SetActive(true);
@@ -81,7 +79,6 @@ public class Stage_Manager : MonoBehaviour
             paticle1.SetActive(false);
             paticle2.SetActive(false);
             paticle3.SetActive(false);
-
         }
         else
         {
@@ -90,5 +87,4 @@ public class Stage_Manager : MonoBehaviour
             //paticle2.SetActive(false);       
         }
     }
-
 }

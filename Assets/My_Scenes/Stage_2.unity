@@ -4909,6 +4909,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterScript: {fileID: 0}
   monster2Script: {fileID: 1131122222}
+  monster3Script: {fileID: 0}
 --- !u!4 &1004873573
 Transform:
   m_ObjectHideFlags: 0
@@ -5197,6 +5198,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SkillCanvas _Demo
+      objectReference: {fileID: 0}
+    - target: {fileID: 6577393677827729775, guid: f92a19fbd8d7a3a488d122e51d9d950a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f92a19fbd8d7a3a488d122e51d9d950a, type: 3}
@@ -5620,6 +5626,8 @@ MonoBehaviour:
   Nut: {fileID: 2688439759020598191, guid: 0ca61442843273e4e9bc295446e2d803, type: 3}
   Rock: {fileID: 5298590762127773683, guid: 7b09cdba3229c304a8b9de9a5d8362a8, type: 3}
   Cloud: {fileID: 1146932368203680071, guid: a36b8898c70d3004fb8a50103e3cbcdc, type: 3}
+  Bomb: {fileID: 1884747205189362, guid: 1ceafbfae16ecdf4bac41f9e590c7fd3, type: 3}
+  Smoke: {fileID: 1316054152699922598, guid: b94d8c28e0bfeda4cb60ebeb750d0f28, type: 3}
 --- !u!4 &1108057558
 Transform:
   m_ObjectHideFlags: 0
@@ -9554,6 +9562,12 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 25534797}
     m_Modifications:
+    - target: {fileID: 1568191995995667605, guid: eb8f2ac6a9e060d448a2b7221576bcef,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: d4bcda4005cc8f2449664a7b219b5f92,
+        type: 3}
     - target: {fileID: 6577393677827729771, guid: eb8f2ac6a9e060d448a2b7221576bcef,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9667,8 +9681,20 @@ PrefabInstance:
     - target: {fileID: 6577393677827729775, guid: eb8f2ac6a9e060d448a2b7221576bcef,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6577393679324110404, guid: eb8f2ac6a9e060d448a2b7221576bcef,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 126b6ab941e9f684a927ae2b91ceacff,
+        type: 3}
+    - target: {fileID: 7045237785766067193, guid: eb8f2ac6a9e060d448a2b7221576bcef,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: dd3f73658da26654ab4e4450fdfe5c85,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb8f2ac6a9e060d448a2b7221576bcef, type: 3}
 --- !u!224 &1793656687 stripped

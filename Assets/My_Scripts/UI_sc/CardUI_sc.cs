@@ -114,7 +114,12 @@ public class CardUI_sc : MonoBehaviour, IPointerDownHandler
                         playerScript.SetSkill(1, Player_sc.SKILL.SKILL_CLOUD);
                         break;
                     case SKILL.SKILL_3:
-                        int iSkill = Random.Range(1, 3);
+                        int iSkill = 0;
+                        do
+                        {
+                            iSkill = Random.Range(1, 3);
+
+                        } while (iSkill == (int)playerScript.GetSkill(0));
                         playerScript.SetSkill(1, (Player_sc.SKILL)iSkill);
                         break;
                     default:
@@ -126,10 +131,19 @@ public class CardUI_sc : MonoBehaviour, IPointerDownHandler
                 switch (eSkill)
                 {
                     case SKILL.SKILL_1:
+                        playerScript.SetSkill(2, Player_sc.SKILL.SKILL_BOMB);
                         break;
                     case SKILL.SKILL_2:
+                        playerScript.SetSkill(2, Player_sc.SKILL.SKILL_SMOKE);
                         break;
                     case SKILL.SKILL_3:
+                        int iSkill = 0;
+                        do
+                        {
+                            iSkill = Random.Range(1, 3);
+
+                        } while (iSkill == (int)playerScript.GetSkill(1));
+                        playerScript.SetSkill(2, (Player_sc.SKILL)iSkill);
                         break;
                     default:
                         break;

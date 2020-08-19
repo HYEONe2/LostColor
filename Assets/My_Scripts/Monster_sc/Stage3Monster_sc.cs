@@ -77,6 +77,7 @@ public class Stage3Monster_sc : MonoBehaviour
             triggerObj = (Stage_Manager)FindObjectOfType(typeof(Stage_Manager));
             triggerObj.stage1_open = false;
             triggerObj.stage2_open = false;
+            triggerObj.stage3_open = false;
             curState = nextState;
         }
     }

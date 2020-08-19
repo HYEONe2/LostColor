@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class ColorChange_sc : MonoBehaviour
 {
-    public enum STAGE { STAGE_1, STAGE_2, STAGE_3, STAGE_END};
+    public enum STAGE { STAGE_1, STAGE_2, STAGE_3, STAGE_ENDING, STAGE_END};
 
     [SerializeField] private bool IsParent = true;
     [SerializeField] private Color color;
@@ -16,7 +16,7 @@ public class ColorChange_sc : MonoBehaviour
     private GameObject ClearCamera1;
 
     private Transform[] m_transformArr;
-    private STAGE m_Stage = STAGE.STAGE_END;
+    private STAGE m_Stage = STAGE.STAGE_1;
     private Shader shader;
 
     private float m_fTime = 0f;
@@ -71,17 +71,20 @@ public class ColorChange_sc : MonoBehaviour
         if (SceneName != "MainStage")
             return true;
 
-        if (!StageManager.stage1_open && StageManager.stage2_open)
+        if (!StageManager.stage1_open && StageManager.stage2_open && !StageManager.stage3_open)
             m_Stage = STAGE.STAGE_2;
-        else if (!StageManager.stage1_open && !StageManager.stage2_open)
+        else if (!StageManager.stage1_open && !StageManager.stage2_open && StageManager.stage3_open)
             m_Stage = STAGE.STAGE_3;
+        else if (!StageManager.stage1_open && !StageManager.stage2_open && !StageManager.stage3_open)
+            m_Stage = STAGE.STAGE_ENDING;
 
-        return false;
+            return false;
     }
 
     bool StayColor()
     {
-        if (CheckStage == STAGE.STAGE_2 && m_Stage == STAGE.STAGE_3)
+        //if (CheckStage == STAGE.STAGE_2 && m_Stage == STAGE.STAGE_3)
+        if (CheckStage == STAGE.STAGE_3 && m_Stage == STAGE.STAGE_ENDING)
         {
             RenderSettings.skybox = SkyboxMaterial;
             if (IsParent)
@@ -114,7 +117,7 @@ public class ColorChange_sc : MonoBehaviour
     {
         if (m_Stage == CheckStage && TargetInScreen_Direction())
         {
-            if (m_Stage == STAGE.STAGE_3)
+            if (m_Stage == STAGE.STAGE_ENDING)
                 GameObject.Find("CameraManager").GetComponent<CameraManager>().m_bChangeSkyBox = true;
 
             if (IsParent)
@@ -139,8 +142,8 @@ public class ColorChange_sc : MonoBehaviour
             }
         }
 
-        if (m_Stage == STAGE.STAGE_3)
-            GameObject.Find("EndingText").GetComponent<Endind_sc>().m_bStartEnding = true; ;
+        if (m_Stage == STAGE.STAGE_ENDING)
+            GameObject.Find("EndingText").GetComponent<Ending_sc>().m_bStartEnding = true;
     }
 
     bool TargetInScreen_Direction()

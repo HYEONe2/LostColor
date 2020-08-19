@@ -6,6 +6,7 @@ public class CanvasMgr_sc : MonoBehaviour
 {
     [SerializeField] private Monster_sc monsterScript;
     [SerializeField] private Stage2Monster_sc monster2Script;
+    [SerializeField] private Stage3Monster_sc monster3Script;
 
     GameObject JoystickCanvas;
     GameObject SkillCanvas;
@@ -28,8 +29,8 @@ public class CanvasMgr_sc : MonoBehaviour
     void Start()
     {
         JoystickCanvas = GameObject.Find("JoyStickCanvas");
-        //SkillCanvas = GameObject.Find("SkillCanvas");        
-        SkillCanvas = GameObject.Find("SkillCanvas _Demo");
+        SkillCanvas = GameObject.Find("SkillCanvas");
+        //SkillCanvas = GameObject.Find("SkillCanvas_Demo");
         CardCanvas = GameObject.Find("CardCanvas");
 
         JoystickCanvas.SetActive(true);
@@ -43,6 +44,8 @@ public class CanvasMgr_sc : MonoBehaviour
             eStage = STAGE.STAGE_1;
         else if (monster2Script != null)
             eStage = STAGE.STAGE_2;
+        else if (monster3Script != null)
+            eStage = STAGE.STAGE_3;
     }
 
     // Update is called once per frame
@@ -77,6 +80,8 @@ public class CanvasMgr_sc : MonoBehaviour
                     CheckTimeForCanvas();
                 break;
             case STAGE.STAGE_3:
+                if (monster3Script.nextState == Stage3Monster_sc.CurrentState.dead)
+                    CheckTimeForCanvas();
                 break;
         }
         

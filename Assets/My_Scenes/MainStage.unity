@@ -11796,13 +11796,12 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Credit\r\n\nPlayer \t\t\t\t\uC774\uC18C\uD604\r\nMonster \t\t\t\uC774\uB2E4\uC601\r\nCamera
+  m_Text: "Credit\r\n\nPlayer \t\t\t\t\uC774\uC18C\uD604\r\nMonster \t\t\t    \uC774\uB2E4\uC601\r\nCamera
     \t\t\t\t\uC774\uC18C\uD604\r\n\nJoystickUI\t\t\t\uC774\uC18C\uD604\nSkillUI\t\t\t\t\t\uC774\uC18C\uD604\nCardUI
     \t\t\t\t\uC774\uC18C\uD604\r\nLoadingUI\t\t\t\uC774\uB2E4\uC601\nSettingUI\t\t\t\uC774\uB2E4\uC601\r\n\nSound
-    \t  \t\t\uC774\uB2E4\uC601 \uC774\uC18C\uD604\r\nEffect\t\t\t\t\uC774\uB2E4\uC601
-    \uC774\uC18C\uD604\r\n\nMap Arrangement\t\t\t\t    \uC774\uB2E4\uC601\r\nMap
-    Color Chage\n\uC774\uC18C\uD604\n\r\nEngine Unity3D\r\n\r\n2020 Team Project
-    \r\nLost Color"
+    \t  \t\uC774\uB2E4\uC601 \uC774\uC18C\uD604\r\nEffect\t\t\t\uC774\uB2E4\uC601
+    \uC774\uC18C\uD604\r\n\nMap Arrangement\n\uC774\uB2E4\uC601\r\nMap Color Chage\n\uC774\uC18C\uD604\n\r\nEngine
+    Unity3D\r\n\r\n2020 Team Project \r\nLost Color"
 --- !u!222 &1105589631
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -13171,6 +13170,8 @@ MonoBehaviour:
   Nut: {fileID: 2688439759020598191, guid: 0ca61442843273e4e9bc295446e2d803, type: 3}
   Rock: {fileID: 5298590762127773683, guid: 7b09cdba3229c304a8b9de9a5d8362a8, type: 3}
   Cloud: {fileID: 1146932368203680071, guid: a36b8898c70d3004fb8a50103e3cbcdc, type: 3}
+  Bomb: {fileID: 1884747205189362, guid: 1ceafbfae16ecdf4bac41f9e590c7fd3, type: 3}
+  Smoke: {fileID: 1316054152699922598, guid: b94d8c28e0bfeda4cb60ebeb750d0f28, type: 3}
 --- !u!4 &1239160074
 Transform:
   m_ObjectHideFlags: 0
@@ -16682,6 +16683,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SkillCanvas _Demo
+      objectReference: {fileID: 0}
+    - target: {fileID: 6577393677827729775, guid: f92a19fbd8d7a3a488d122e51d9d950a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f92a19fbd8d7a3a488d122e51d9d950a, type: 3}
@@ -21236,15 +21242,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4463868907105534, guid: ccd8c3b89aa02e943a08ab9238a8a70c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 77.2
+      value: 75.19
       objectReference: {fileID: 0}
     - target: {fileID: 4463868907105534, guid: ccd8c3b89aa02e943a08ab9238a8a70c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 16.27
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 4463868907105534, guid: ccd8c3b89aa02e943a08ab9238a8a70c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 94.85
+      value: 98
       objectReference: {fileID: 0}
     - target: {fileID: 4463868907105534, guid: ccd8c3b89aa02e943a08ab9238a8a70c, type: 3}
       propertyPath: m_LocalRotation.x
@@ -22888,6 +22894,12 @@ PrefabInstance:
       propertyPath: playerScript
       value: 
       objectReference: {fileID: 1880804435}
+    - target: {fileID: 1568191995995667605, guid: eb8f2ac6a9e060d448a2b7221576bcef,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: d4bcda4005cc8f2449664a7b219b5f92,
+        type: 3}
     - target: {fileID: 2081680779255368365, guid: eb8f2ac6a9e060d448a2b7221576bcef,
         type: 3}
       propertyPath: playerScript
@@ -23036,13 +23048,25 @@ PrefabInstance:
     - target: {fileID: 6577393677827729775, guid: eb8f2ac6a9e060d448a2b7221576bcef,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6577393679324110404, guid: eb8f2ac6a9e060d448a2b7221576bcef,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 126b6ab941e9f684a927ae2b91ceacff,
+        type: 3}
     - target: {fileID: 6736852744314624144, guid: eb8f2ac6a9e060d448a2b7221576bcef,
         type: 3}
       propertyPath: playerScript
       value: 
       objectReference: {fileID: 1880804435}
+    - target: {fileID: 7045237785766067193, guid: eb8f2ac6a9e060d448a2b7221576bcef,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: dd3f73658da26654ab4e4450fdfe5c85,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb8f2ac6a9e060d448a2b7221576bcef, type: 3}
 --- !u!1001 &4810965298915128172
@@ -23071,6 +23095,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4810965299515701092, guid: 27379c24349ced74e827ed8405b677e0,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.9262878
+      objectReference: {fileID: 0}
+    - target: {fileID: 4810965299515701092, guid: 27379c24349ced74e827ed8405b677e0,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.1458
+      objectReference: {fileID: 0}
+    - target: {fileID: 4810965299515701092, guid: 27379c24349ced74e827ed8405b677e0,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.1458
       objectReference: {fileID: 0}
     - target: {fileID: 4810965299806877884, guid: 27379c24349ced74e827ed8405b677e0,
         type: 3}

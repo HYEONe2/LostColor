@@ -87,7 +87,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eSKill: 6
-  playerScript: {fileID: 0}
 --- !u!1 &2762916815641694386
 GameObject:
   m_ObjectHideFlags: 0
@@ -175,7 +174,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eSKill: 4
-  playerScript: {fileID: 0}
 --- !u!1 &3276244408946834036
 GameObject:
   m_ObjectHideFlags: 0
@@ -263,7 +261,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eSKill: 5
-  playerScript: {fileID: 0}
 --- !u!1 &4789244872484887399
 GameObject:
   m_ObjectHideFlags: 0
@@ -351,7 +348,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eSKill: 6
-  playerScript: {fileID: 0}
 --- !u!1 &6577393677827729775
 GameObject:
   m_ObjectHideFlags: 0
@@ -523,7 +519,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 126b6ab941e9f684a927ae2b91ceacff, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -546,7 +542,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eSKill: 0
-  playerScript: {fileID: 0}
 --- !u!1 &7637517584774196017
 GameObject:
   m_ObjectHideFlags: 0
@@ -611,7 +606,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: d4bcda4005cc8f2449664a7b219b5f92, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -634,7 +629,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eSKill: 2
-  playerScript: {fileID: 0}
 --- !u!1 &8058843952334743801
 GameObject:
   m_ObjectHideFlags: 0
@@ -722,7 +716,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eSKill: 6
-  playerScript: {fileID: 0}
 --- !u!1 &8987733864705631050
 GameObject:
   m_ObjectHideFlags: 0
@@ -810,7 +803,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eSKill: 3
-  playerScript: {fileID: 0}
 --- !u!1 &9021425693204458306
 GameObject:
   m_ObjectHideFlags: 0
@@ -875,7 +867,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: dd3f73658da26654ab4e4450fdfe5c85, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -898,4 +890,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eSKill: 1
-  playerScript: {fileID: 0}

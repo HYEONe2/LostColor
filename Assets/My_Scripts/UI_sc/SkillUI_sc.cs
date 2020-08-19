@@ -210,6 +210,14 @@ public class SkillUI_sc : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoi
             case 4:
                 SkillImage = Resources.Load<Sprite>("Texture/UI/cloud");
                 break;
+            case 5:
+                SkillImage = Resources.Load<Sprite>("Texture/UI/Bomb");
+                break;
+            case 6:
+                SkillImage = Resources.Load<Sprite>("Texture/UI/Smoke");
+                break;
+            default:
+                return;
         }
         gameObject.GetComponent<Image>().sprite = SkillImage;
     }

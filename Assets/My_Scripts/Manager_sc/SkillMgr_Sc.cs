@@ -17,6 +17,8 @@ public class SkillMgr_Sc : MonoBehaviour
     [SerializeField] private GameObject Nut;
     [SerializeField] private GameObject Rock;
     [SerializeField] private GameObject Cloud;
+    [SerializeField] private GameObject Bomb;
+    [SerializeField] private GameObject Smoke;
 
     private float CheckTime = 0;
     private bool ShieldOn = false;
@@ -175,6 +177,26 @@ public class SkillMgr_Sc : MonoBehaviour
         Vector3 dir = GameObject.Find("MainCamera").transform.forward;
         CloudObj = Instantiate(Cloud, new Vector3(PlayerPos.x + dir.x * 3f, PlayerPos.y + 1.5f, PlayerPos.z + dir.z * 3f), Quaternion.identity);
         CloudObj.GetComponent<CloudAttack_sc>().m_bPlayerUse = true;
+    }
+
+    public void CreateBomb()
+    {
+        GameObject BombObj;
+        PlayerPos = PlayerTrans.position;
+
+        Vector3 dir = GameObject.Find("MainCamera").transform.forward;
+        BombObj = Instantiate(Bomb, new Vector3(PlayerPos.x + dir.x * 3f, PlayerPos.y + 1.5f, PlayerPos.z + dir.z * 3f), Quaternion.identity);
+        BombObj.GetComponent<BombAttack_sc>().m_bPlayerUse = true;
+    }
+
+    public void CreateSmoke()
+    {
+        GameObject SmokeObj;
+        PlayerPos = PlayerTrans.position;
+
+        Vector3 dir = GameObject.Find("MainCamera").transform.forward;
+        SmokeObj = Instantiate(Smoke, new Vector3(PlayerPos.x + dir.x * 3f, PlayerPos.y, PlayerPos.z + dir.z * 3f), Quaternion.identity);
+        SmokeObj.GetComponent<SmokeAttack_sc>().m_bPlayerUse = true;
     }
 
     private void Shield_Update()

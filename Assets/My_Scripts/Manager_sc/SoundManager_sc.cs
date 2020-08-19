@@ -20,7 +20,6 @@ public class SoundManager_sc : MonoBehaviour
         {
             if (!StageManager.stage1_open && !StageManager.stage2_open)
             {
-
                 gameObject.GetComponent<AudioSource>().clip = Resources.Load<AudioClip>("Sound/Ending");
                 gameObject.GetComponent<AudioSource>().Play();
                 bIsPlay = true;
