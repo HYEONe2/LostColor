@@ -195,8 +195,13 @@ public class SkillMgr_Sc : MonoBehaviour
         PlayerPos = PlayerTrans.position;
 
         Vector3 dir = GameObject.Find("MainCamera").transform.forward;
-        SmokeObj = Instantiate(Smoke, new Vector3(PlayerPos.x + dir.x * 3f, PlayerPos.y, PlayerPos.z + dir.z * 3f), Quaternion.identity);
-        SmokeObj.GetComponent<SmokeAttack_sc>().m_bPlayerUse = true;
+        Vector3 rightDir = PlayerTrans.right;
+
+        for (int i = 0; i < 7; ++i)
+        {
+            SmokeObj = Instantiate(Smoke, new Vector3(PlayerPos.x + dir.x * 3f + rightDir.x * 2f * (-3 + i), PlayerPos.y, PlayerPos.z + dir.z * 3f + rightDir.z * 2f * (-3 + i)), Quaternion.identity);
+            SmokeObj.GetComponent<SmokeAttack_sc>().m_bPlayerUse = true;
+        }
     }
 
     private void Shield_Update()
