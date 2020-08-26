@@ -83,31 +83,12 @@ public class ColorChange_sc : MonoBehaviour
 
     bool StayColor()
     {
-        //if (CheckStage == STAGE.STAGE_2 && m_Stage == STAGE.STAGE_3)
-        if (CheckStage == STAGE.STAGE_3 && m_Stage == STAGE.STAGE_ENDING)
+        if(CheckStage == STAGE.STAGE_2 && m_Stage == STAGE.STAGE_3)
+            Change_ChildColor();
+        else if((CheckStage == STAGE.STAGE_2 || CheckStage == STAGE.STAGE_3) && m_Stage == STAGE.STAGE_ENDING)
         {
             RenderSettings.skybox = SkyboxMaterial;
-            if (IsParent)
-            {
-                for (int i = 0; i < transform.childCount; ++i)
-                {
-                    if (m_transformArr[i].GetComponent<MeshRenderer>().material != null)
-                    {
-                        m_transformArr[i].GetComponent<MeshRenderer>().material.color = color;
-                    }
-                    else
-                    {
-                        Material material = new Material(shader);
-                        material.color = color;
-                        m_transformArr[i].GetComponent<MeshRenderer>().material = material;
-                    }
-                }
-            }
-            else
-            {
-                transform.GetComponent<MeshRenderer>().material.color = color;
-            }
-            return true;
+            Change_ChildColor();
         }
 
         return false;
@@ -120,30 +101,31 @@ public class ColorChange_sc : MonoBehaviour
             if (m_Stage == STAGE.STAGE_ENDING)
                 GameObject.Find("CameraManager").GetComponent<CameraManager>().m_bChangeSkyBox = true;
 
-            if (IsParent)
-            {
-                for (int i = 0; i < transform.childCount; ++i)
-                {
-                    if (m_transformArr[i].GetComponent<MeshRenderer>().material != null)
-                    {
-                        m_transformArr[i].GetComponent<MeshRenderer>().material.color = color;
-                    }
-                    else
-                    {
-                        Material material = new Material(shader);
-                        material.color = color;
-                        m_transformArr[i].GetComponent<MeshRenderer>().material = material;
-                    }
-                }
-            }
-            else
-            {
-                transform.GetComponent<MeshRenderer>().material.color = color;
-            }
+            Change_ChildColor();
         }
 
         if (m_Stage == STAGE.STAGE_ENDING)
             GameObject.Find("EndingText").GetComponent<Ending_sc>().m_bStartEnding = true;
+    }
+    
+    void Change_ChildColor()
+    {
+        if (IsParent)
+        {
+            for (int i = 0; i < transform.childCount; ++i)
+            {
+                if (m_transformArr[i].GetComponent<MeshRenderer>().material != null)
+                    m_transformArr[i].GetComponent<MeshRenderer>().material.color = color;
+                else
+                {
+                    Material material = new Material(shader);
+                    material.color = color;
+                    m_transformArr[i].GetComponent<MeshRenderer>().material = material;
+                }
+            }
+        }
+        else
+            transform.GetComponent<MeshRenderer>().material.color = color;
     }
 
     bool TargetInScreen_Direction()

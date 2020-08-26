@@ -45,7 +45,7 @@ MonoBehaviour:
   m_ShowMode: 4
   m_Title: 
   m_RootView: {fileID: 5}
-  m_MinSize: {x: 875, y: 542}
+  m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
   m_Maximized: 1
 --- !u!114 &3
@@ -97,7 +97,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 121}
   m_MaxSize: {x: 4000, y: 4021}
   vertical: 0
-  controlID: 196
+  controlID: 16
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -190,7 +190,7 @@ MonoBehaviour:
   m_MinSize: {x: 709, y: 492}
   m_MaxSize: {x: 18004, y: 14042}
   vertical: 0
-  controlID: 129
+  controlID: 188
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -215,7 +215,7 @@ MonoBehaviour:
   m_MinSize: {x: 231, y: 492}
   m_MaxSize: {x: 10001, y: 14042}
   vertical: 1
-  controlID: 83
+  controlID: 104
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -292,7 +292,7 @@ MonoBehaviour:
   m_MinSize: {x: 202, y: 342}
   m_MaxSize: {x: 4002, y: 8042}
   vertical: 1
-  controlID: 130
+  controlID: 126
 --- !u!114 &13
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -429,23 +429,23 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 58670000
-      m_LastClickedID: 26456
-      m_ExpandedIDs: a6a8feff3639ffff5c49ffff209dffff72b4ffff7ab4ffff7eb4ffff42bdffffd8e2ffffe8e2ffff34ecfffff4ffffff2a3f000030400000ee40000076410000b44200003a5900009a640000dc6600001e690000
+      m_SelectedIDs: 062e0000
+      m_LastClickedID: 0
+      m_ExpandedIDs: 70fbfffff4ffffffc0390000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: 
-        m_OriginalName: 
+        m_Name: StageManager
+        m_OriginalName: StageManager
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
           y: 0
           width: 0
           height: 0
-        m_UserData: 0
+        m_UserData: 15266
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
-        m_OriginalEventType: 11
+        m_OriginalEventType: 0
         m_IsRenamingFilename: 0
         m_ClientGUIView: {fileID: 10}
       m_SearchString: 
@@ -494,20 +494,20 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/My_Prefabs
+    - Assets/My_Scripts/Player_sc
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/My_Prefabs
+  - Assets/My_Scripts/Player_sc
   m_LastFoldersGridSize: 16
   m_LastProjectPath: D:\Unity\PROJECT\Junior\LostColor
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 481}
-    m_SelectedIDs: 544c0000
-    m_LastClickedID: 19540
-    m_ExpandedIDs: 00000000644b0000664b0000684b00006a4b00006c4b00006e4b0000704b0000724b0000744b0000764b0000784b00007a4b00007c4b00007e4b0000804b0000824b0000844b0000864b0000884b00008a4b00008c4b00008e4b0000904b0000924b00002a4c00003c4c000000ca9a3b
+    scrollPos: {x: 0, y: 609}
+    m_SelectedIDs: 8c460000
+    m_LastClickedID: 18060
+    m_ExpandedIDs: 0000000086450000884500008a4500008c4500008e45000090450000924500009445000096450000984500009a4500009c4500009e450000a0450000a2450000a4450000a6450000a8450000aa450000ac450000ae450000b0450000b2450000b4450000b6450000b845000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -535,7 +535,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000644b0000664b0000684b00006a4b00006c4b00006e4b0000704b0000724b0000744b0000764b0000784b00007a4b00007c4b00007e4b0000804b0000824b0000844b0000864b0000884b00008a4b00008c4b00008e4b0000904b0000924b0000
+    m_ExpandedIDs: 0000000086450000884500008a4500008c4500008e45000090450000924500009445000096450000984500009a4500009c4500009e450000a0450000a2450000a4450000a6450000a8450000aa450000ac450000ae450000b0450000b2450000b4450000b6450000b8450000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -566,15 +566,15 @@ MonoBehaviour:
     m_ExpandedInstanceIDs: ec3400008c3c0000306d00005a410000ba680000b2450000a84a000000000000423900004c390000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: PlayerRock
-      m_OriginalName: PlayerRock
+      m_Name: My_Scripts
+      m_OriginalName: My_Scripts
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 17348
+      m_UserData: 17832
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
       m_OriginalEventType: 0
@@ -587,7 +587,7 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
     m_NewAssetIndexInList: -1
-    m_ScrollPosition: {x: 0, y: 60}
+    m_ScrollPosition: {x: 0, y: 0}
     m_GridSize: 16
   m_SkipHiddenPackages: 0
   m_DirectoriesAreaWidth: 205
@@ -627,9 +627,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 3.6934283, y: 6.0090294, z: -3.2342978}
+    m_Target: {x: 40.470562, y: 30.423626, z: -7.7735467}
     speed: 2
-    m_Value: {x: 3.6934283, y: 6.0090294, z: -3.2342978}
+    m_Value: {x: 40.470562, y: 30.423626, z: -7.7735467}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -675,13 +675,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.11635635, y: 0.87742484, z: -0.26765698, w: -0.38119787}
+    m_Target: {x: -0.19711447, y: 0.3882755, z: -0.08576655, w: -0.8963518}
     speed: 2
-    m_Value: {x: -0.11633512, y: 0.87726474, z: -0.26760814, w: -0.3811283}
+    m_Value: {x: -0.19841748, y: 0.38806593, z: -0.08633138, w: -0.89586955}
   m_Size:
-    m_Target: 1.0368688
+    m_Target: 0.7852726
     speed: 2
-    m_Value: 1.0368688
+    m_Value: 0.7852726
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -972,7 +972,7 @@ MonoBehaviour:
     m_PrefName: Preview_InspectorPreview
   m_PreviewWindow: {fileID: 0}
   m_LastInspectedObjectInstanceID: -1
-  m_LastVerticalScrollValue: 63
+  m_LastVerticalScrollValue: 0
 --- !u!114 &24
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -994,8 +994,8 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1204.8
-    y: 73.6
-    width: 330
-    height: 710
+    x: 1506
+    y: 73
+    width: 413
+    height: 926
   m_ViewDataDictionary: {fileID: 0}
