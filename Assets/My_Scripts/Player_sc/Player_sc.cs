@@ -15,6 +15,7 @@ public class Player_sc : MonoBehaviour
     private Transform MainCameraPos;
     private ObjectMgr_sc ObjMgrScript;
     private Stage_Manager StageManager;
+    private CameraManager CameraManager;
 
     // Player Info
     public static int m_Hp = 10;
@@ -104,6 +105,7 @@ public class Player_sc : MonoBehaviour
         if (!MainCameraPos) { MainCameraPos = GameObject.Find("MainCamera").transform; }
         if (!ObjMgrScript) { ObjMgrScript = GameObject.Find("ObjectManager").GetComponent<ObjectMgr_sc>(); }
         if (!StageManager) { StageManager = GameObject.Find("StageManager").GetComponent<Stage_Manager>(); }
+        if (!CameraManager) { CameraManager = GameObject.Find("CameraManager").GetComponent<CameraManager>(); }
 
         for (int i = 0; i < 3; ++i)
         {
@@ -245,6 +247,9 @@ public class Player_sc : MonoBehaviour
             m_animator.SetFloat("MoveSpeed", 0f);
             return;
         }
+
+        if (CameraManager.GetClearCameraOn())
+            return;
 
         DirectUpdate();
 
@@ -765,25 +770,37 @@ public class Player_sc : MonoBehaviour
                 Stage_Main_PosInit();
                 break;
             case STAGE.STAGE_1:
-                Stage_1_PosInit();
-                Boss = GameObject.FindWithTag("Boss");
-                IsBossAtt = Boss.GetComponent<Monster_sc>().GetIsAttack();
-                if (Boss.GetComponent<Monster_sc>().nextState == Monster_sc.CurrentState.dead)
-                    m_animator.SetBool("Win", true);
+                {
+                    Stage_1_PosInit();
+
+                    Boss = GameObject.FindWithTag("Boss");
+                    IsBossAtt = Boss.GetComponent<Monster_sc>().GetIsAttack();
+
+                    if (Boss.GetComponent<Monster_sc>().nextState == Monster_sc.CurrentState.dead)
+                        m_animator.SetBool("Win", true);
+                }
                 return;
             case STAGE.STAGE_2:
-                Stage_2_PosInit();
-                Boss = GameObject.FindWithTag("Boss");
-                IsBossAtt = Boss.GetComponent<Stage2Monster_sc>().GetIsAttack();
-                if (Boss.GetComponent<Stage2Monster_sc>().nextState == Stage2Monster_sc.CurrentState.dead)
-                    m_animator.SetBool("Win", true);
+                {
+                    Stage_2_PosInit();
+
+                    Boss = GameObject.FindWithTag("Boss");
+                    IsBossAtt = Boss.GetComponent<Stage2Monster_sc>().GetIsAttack();
+
+                    if (Boss.GetComponent<Stage2Monster_sc>().nextState == Stage2Monster_sc.CurrentState.dead)
+                        m_animator.SetBool("Win", true);
+                }
                 return;
             case STAGE.STAGE_3:
-                Stage_3_PosInit();
-                Boss = GameObject.FindWithTag("Boss");
-                IsBossAtt = Boss.GetComponent<Stage3Monster_sc>().GetIsAttack();
-                if (Boss.GetComponent<Stage3Monster_sc>().nextState == Stage3Monster_sc.CurrentState.dead)
-                    m_animator.SetBool("Win", true);
+                {
+                    Stage_3_PosInit();
+
+                    Boss = GameObject.FindWithTag("Boss");
+                    IsBossAtt = Boss.GetComponent<Stage3Monster_sc>().GetIsAttack();
+
+                    if (Boss.GetComponent<Stage3Monster_sc>().nextState == Stage3Monster_sc.CurrentState.dead)
+                        m_animator.SetBool("Win", true);
+                }
                 return;
         }
     }

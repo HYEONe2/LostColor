@@ -140,9 +140,10 @@ public class CardUI_sc : MonoBehaviour, IPointerDownHandler
                         int iSkill = 0;
                         do
                         {
-                            iSkill = Random.Range(1, 3);
-
+                            iSkill = Random.Range(4, 5);
+                            Debug.Log("ReSelect");
                         } while (iSkill == (int)playerScript.GetSkill(1));
+                        Debug.Log(iSkill + "\t" + (int)playerScript.GetSkill(1));
                         playerScript.SetSkill(2, (Player_sc.SKILL)iSkill);
                         break;
                     default:

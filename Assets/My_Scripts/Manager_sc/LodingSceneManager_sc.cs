@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class LodingSceneManager_sc : MonoBehaviour
 {
+    public static string curScene;
     public static string nextScene;
     public GameObject loadingText;
    // private Touch touch = Input.GetTouch(0);
@@ -26,6 +27,7 @@ public class LodingSceneManager_sc : MonoBehaviour
 
     public static void LoadScene(string sceneName)
     {
+        curScene = SceneManager.GetActiveScene().name;
         nextScene = sceneName;
         SceneManager.LoadScene("Loading_Scene");
     }
@@ -57,7 +59,12 @@ public class LodingSceneManager_sc : MonoBehaviour
                         oper.allowSceneActivation = true;
 
                     if (CameraManager && nextScene == "MainStage")
-                        CameraManager.ClearCameraOn();
+                    {
+                        if (curScene == "Stage_1")
+                            CameraManager.ClearCameraOn();
+                        else if (curScene == "Stage_2")
+                            CameraManager.ClearCamera2On();
+                    }
                 }
             }
             else
