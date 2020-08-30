@@ -11801,7 +11801,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Credit\r\n\nPlayer \t\t\t\t\uC774\uC18C\uD604\r\nMonster \t\t\t    \uC774\uB2E4\uC601\r\nCamera
+  m_Text: "Credit\r\n\nPlayer \t\t\t\t\uC774\uC18C\uD604\r\nMonster \t\t\t\uC774\uB2E4\uC601\r\nCamera
     \t\t\t\t\uC774\uC18C\uD604\r\n\nJoystickUI\t\t\t\uC774\uC18C\uD604\nSkillUI\t\t\t\t\t\uC774\uC18C\uD604\nCardUI
     \t\t\t\t\uC774\uC18C\uD604\r\nLoadingUI\t\t\t\uC774\uB2E4\uC601\nSettingUI\t\t\t\uC774\uB2E4\uC601\r\n\nSound
     \t  \t\uC774\uB2E4\uC601 \uC774\uC18C\uD604\r\nEffect\t\t\t\uC774\uB2E4\uC601

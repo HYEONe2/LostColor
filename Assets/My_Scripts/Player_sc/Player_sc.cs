@@ -221,6 +221,7 @@ public class Player_sc : MonoBehaviour
         {
             fDeadCheckTime = 0.0f;
             m_Hp = 10;
+            m_animator.SetBool("Die", false);
             LodingSceneManager_sc.LoadScene("MainStage");
             return;
         }
@@ -229,7 +230,7 @@ public class Player_sc : MonoBehaviour
         if (m_bDamaged)
             m_fDamageTime += Time.deltaTime;
 
-        if (m_fDamageTime > 1f)
+        if (m_fDamageTime > 0.5f)
         {
             m_bDamaged = false;
             m_fDamageTime = 0;
@@ -242,14 +243,11 @@ public class Player_sc : MonoBehaviour
             || m_animator.GetBool("Die") || m_animator.GetBool("Damaged") || m_animator.GetBool("Win"))
             return;
 
-        if (m_bTriggerStop)
+        if (m_bTriggerStop || CameraManager.GetClearCameraOn())
         {
             m_animator.SetFloat("MoveSpeed", 0f);
             return;
         }
-
-        if (CameraManager.GetClearCameraOn())
-            return;
 
         DirectUpdate();
 
@@ -682,7 +680,10 @@ public class Player_sc : MonoBehaviour
             }
 
             if (!m_bDamaged)
+            {
                 SoundPlay(SOUND.SOUND_HIT);
+                SetAttackFalse();
+            }
             m_bDamaged = true;
             m_animator.SetBool("Damaged", true);
 
@@ -726,23 +727,32 @@ public class Player_sc : MonoBehaviour
     {
         if (bPosInit)
         {
-            if (!StageManager.stage1_open && StageManager.stage2_open && !StageManager.stage3_open)
+            if(StageManager.stage1_open && !StageManager.stage2_open && !StageManager.stage3_open)
+            {
+                transform.position = new Vector3(-19.0f, 0.0f, 20.0f);
+            }
+            else if (!StageManager.stage1_open && StageManager.stage2_open && !StageManager.stage3_open)
             {
                 GameObject.Find("FirstAttack").GetComponent<SkillUI_sc>().SetTexture((int)m_eSkill[0]);
+
+                transform.position = new Vector3(-19.0f, 0.0f, 20.0f);
             }
             else if (!StageManager.stage1_open && !StageManager.stage2_open && StageManager.stage3_open)
             {
                 GameObject.Find("FirstAttack").GetComponent<SkillUI_sc>().SetTexture((int)m_eSkill[0]);
                 GameObject.Find("SecondAttack").GetComponent<SkillUI_sc>().SetTexture((int)m_eSkill[1]);
+
+                transform.position = new Vector3(34.0f, 0.0f, 43.0f);
             }
             else if(!StageManager.stage1_open && !StageManager.stage2_open && !StageManager.stage3_open)
             {
                 GameObject.Find("FirstAttack").GetComponent<SkillUI_sc>().SetTexture((int)m_eSkill[0]);
                 GameObject.Find("SecondAttack").GetComponent<SkillUI_sc>().SetTexture((int)m_eSkill[1]);
                 GameObject.Find("ThirdAttack").GetComponent<SkillUI_sc>().SetTexture((int)m_eSkill[2]);
+
+                transform.position = new Vector3(40.0f, 0.0f, 80.0f);
             }
 
-            transform.position = new Vector3(-19.0f, 0.0f, 20.0f);
             SetAttackFalse();
             m_animator.SetBool("Win", false);
             m_animator.SetBool("Die", false);

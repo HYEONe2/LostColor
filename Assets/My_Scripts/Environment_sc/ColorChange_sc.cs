@@ -14,6 +14,7 @@ public class ColorChange_sc : MonoBehaviour
     private Material SkyboxMaterial;
     private Stage_Manager StageManager;
     private GameObject ClearCamera1;
+    private GameObject ClearCamera2;
 
     private Transform[] m_transformArr;
     private STAGE m_Stage = STAGE.STAGE_1;
@@ -30,6 +31,7 @@ public class ColorChange_sc : MonoBehaviour
         SkyboxMaterial = Resources.Load<Material>("Skybox Cubemap Extended Day");
         StageManager = GameObject.Find("StageManager").GetComponent<Stage_Manager>();
         ClearCamera1 = GameObject.Find("ClearCamera1");
+        ClearCamera2 = GameObject.Find("ClearCamera2");
 
         m_fChangeTime = Random.Range(1, 5) * 0.25f;
 
@@ -48,19 +50,12 @@ public class ColorChange_sc : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!ClearCamera1)
-        {
-            ClearCamera1 = GameObject.Find("ClearCamera1");
-            return;
-        }
-
         if (CheckScene())
             return;
 
         if (StayColor())
             return;
 
-        if (ClearCamera1.GetComponent<Camera>().enabled)
             ChangeColor();
     }
 
@@ -96,8 +91,16 @@ public class ColorChange_sc : MonoBehaviour
 
     void ChangeColor()
     {
-        if (m_Stage == CheckStage && TargetInScreen_Direction())
+        if (m_Stage == CheckStage)
         {
+            if (ClearCamera1.GetComponent<Camera>().enabled)
+                if (!TargetInScreen_Direction(0))
+                    return;
+            if (ClearCamera2.GetComponent<Camera>().enabled)
+                if (!TargetInScreen_Direction(1))
+                    return;
+
+
             if (m_Stage == STAGE.STAGE_ENDING)
                 GameObject.Find("CameraManager").GetComponent<CameraManager>().m_bChangeSkyBox = true;
 
@@ -128,14 +131,39 @@ public class ColorChange_sc : MonoBehaviour
             transform.GetComponent<MeshRenderer>().material.color = color;
     }
 
-    bool TargetInScreen_Direction()
+    bool TargetInScreen_Direction(int iCameraNum)
     {
-        // 카메라를 기준으로 타겟의 로컬 좌표를 구한다.
-        Vector3 localTargetPos = ClearCamera1.transform.InverseTransformPoint(transform.position);
-        // 카메라의 전방
-        Vector3 forward = ClearCamera1.transform.TransformDirection(Vector3.forward);
-        // 타겟과 카메라의 바라보는 방향
-        Vector3 toDir = transform.position - ClearCamera1.transform.position;
+        Vector3 localTargetPos = new Vector3(0,0,0);
+        Vector3 forward = new Vector3(0,0,0);
+        Vector3 toDir = new Vector3(0,0,0);
+
+        switch (iCameraNum)
+        {
+            case 0:
+                {
+                    // 카메라를 기준으로 타겟의 로컬 좌표를 구한다.
+                    localTargetPos = ClearCamera1.transform.InverseTransformPoint(transform.position);
+                    // 카메라의 전방
+                    forward = ClearCamera1.transform.TransformDirection(Vector3.forward);
+                    // 타겟과 카메라의 바라보는 방향
+                    toDir = transform.position - ClearCamera1.transform.position;
+                }
+                break;
+            case 1:
+                {
+                    localTargetPos = ClearCamera2.transform.InverseTransformPoint(transform.position);
+                    forward = ClearCamera2.transform.TransformDirection(Vector3.forward);
+                    toDir = transform.position - ClearCamera2.transform.position;
+                }
+                break;
+            case 2:
+                {
+
+                }
+                break;
+            default:
+                break;
+        }
 
         // 내적: 0보다 크면 전방 180도 내부에 있다는뜻 0보다 작으면 뒤로 180도에 있다
         float dot = Vector3.Dot(forward, toDir);
@@ -145,8 +173,6 @@ public class ColorChange_sc : MonoBehaviour
             if(m_fTime> m_fChangeTime)
                 return true;
         }
-
-        //Debug.Log(dot);
 
         return false;
     }
