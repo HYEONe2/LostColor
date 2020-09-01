@@ -489,8 +489,7 @@ public class Player_sc : MonoBehaviour
                     m_fSkillCheckTime[1] = 3f;
                 }
                 break;
-            case SKILL.SKILL_POISON:
-                {
+            case SKILL.SKILL_POISON:                {
                     if (m_fSkillCoolTime[1] > 2f)
                     {
                         m_bSkillOnce[1] = false;

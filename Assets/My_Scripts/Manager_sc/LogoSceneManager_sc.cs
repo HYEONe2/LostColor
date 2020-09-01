@@ -13,6 +13,16 @@ public class LogoSceneManager_sc : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        //Android.ver
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+            if (touch.phase == TouchPhase.Ended)
+                LodingSceneManager_sc.LoadScene("MainStage");
+        }
+
+        //Editor.ver
         if (Input.GetMouseButton(0))
             LodingSceneManager_sc.LoadScene("MainStage");
     }

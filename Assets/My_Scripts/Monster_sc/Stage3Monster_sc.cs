@@ -17,7 +17,7 @@ public class Stage3Monster_sc : MonoBehaviour
     //[SerializeField] private GameObject nut;
     [SerializeField] private NavMeshAgent nav;
 
-   // private AudioSource HitSound;
+    private AudioSource HitSound;
 
     public enum CurrentState { idle, walk, attck_1, attack_2, attack_3, hit, dead, end };
     public CurrentState curState = CurrentState.end;
@@ -59,9 +59,9 @@ public class Stage3Monster_sc : MonoBehaviour
         nav = GetComponent<NavMeshAgent>();
         target = GameObject.Find("Player");
 
-        //HitSound = GetComponent<AudioSource>();
-        //HitSound.Stop();
-        //HitSound.playOnAwake = false;
+        HitSound = GetComponent<AudioSource>();
+        HitSound.Stop();
+        HitSound.playOnAwake = false;
 
         StartCoroutine(this.CheackState());
         StartCoroutine(this.CheckStateForAction());
@@ -225,18 +225,18 @@ public class Stage3Monster_sc : MonoBehaviour
         bIsAttack = false;
 
     }
-    //public void DamageAttack()
-    //{
-    //    if (!bIsHit)
-    //    {
-    //        HitSound.Play();
-    //        bIsHit = true;
-    //    }
-    //}
-    //public void FalseHit()
-    //{
-    //    HitSound.Stop();
-    //    m_animator.SetBool("Hit", false);
-    //    bIsHit = false;
-    //}
+    public void DamageAttack()
+    {
+        if (!bIsHit)
+        {
+            HitSound.Play();
+            bIsHit = true;
+        }
+    }
+    public void FalseHit()
+    {
+        HitSound.Stop();
+        m_animator.SetBool("Hit", false);
+        bIsHit = false;
+    }
 }
