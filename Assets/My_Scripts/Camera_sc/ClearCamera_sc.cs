@@ -6,6 +6,9 @@ public class ClearCamera_sc : MonoBehaviour
 {
     private CameraManager CameraMgrScript;
 
+    public bool bEndingClearCamera = false;
+    Vector3 vEndingClearRoot;
+
     private float m_Speed = 4f;
     Vector3 vOriginDir;
 
@@ -13,6 +16,9 @@ public class ClearCamera_sc : MonoBehaviour
     void Start()
     {
         CameraMgrScript = GameObject.Find("CameraManager").GetComponent<CameraManager>();
+
+        if (bEndingClearCamera)
+            vEndingClearRoot = GameObject.Find("EndingClearRoot").transform.position;
     }
 
     // Update is called once per frame
@@ -29,7 +35,10 @@ public class ClearCamera_sc : MonoBehaviour
         while (fTimer < fMaxTime)
         {
             fTimer += Time.deltaTime;
-            transform.Rotate(Vector3.up * Time.deltaTime * m_Speed);
+            if (bEndingClearCamera)
+                transform.RotateAround(vEndingClearRoot, Vector3.up, Time.deltaTime * m_Speed * 2f);
+            else
+                transform.Rotate(Vector3.up * Time.deltaTime * m_Speed);
 
             yield return null;
         }

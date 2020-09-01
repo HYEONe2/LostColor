@@ -73,6 +73,11 @@ public class LodingSceneManager_sc : MonoBehaviour
                             if (!StageManager.stage2_open)
                                 CameraManager.ClearCamera2On();
                         }
+                        else if(curScene == "Stage_3")
+                        {
+                            if (!StageManager.stage3_open)
+                                CameraManager.ClearCamera3On();
+                        }
                     }
                 }
             }

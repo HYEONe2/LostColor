@@ -729,7 +729,7 @@ public class Player_sc : MonoBehaviour
         {
             if(StageManager.stage1_open && !StageManager.stage2_open && !StageManager.stage3_open)
             {
-                transform.position = new Vector3(-19.0f, 0.0f, 20.0f);
+                transform.position = new Vector3(19.0f, 0.0f, 20.0f);
             }
             else if (!StageManager.stage1_open && StageManager.stage2_open && !StageManager.stage3_open)
             {
@@ -750,7 +750,7 @@ public class Player_sc : MonoBehaviour
                 GameObject.Find("SecondAttack").GetComponent<SkillUI_sc>().SetTexture((int)m_eSkill[1]);
                 GameObject.Find("ThirdAttack").GetComponent<SkillUI_sc>().SetTexture((int)m_eSkill[2]);
 
-                transform.position = new Vector3(40.0f, 0.0f, 80.0f);
+                transform.position = new Vector3(48.0f, 5.0f, 90.0f);
             }
 
             SetAttackFalse();
