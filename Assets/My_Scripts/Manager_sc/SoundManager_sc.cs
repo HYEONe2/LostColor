@@ -39,8 +39,21 @@ public class SoundManager_sc : MonoBehaviour
             return;
 
         curScene = nextScene;
-
-        if (curScene == "MainStage")
+        
+         if (!StageManager.stage1_open && !StageManager.stage2_open && !StageManager.stage3_open)
+        {
+            if (curScene == "Loading_Scene")
+            {
+                SoundAudio.Stop();
+            }
+            else
+            {
+                SoundAudio.clip = Sound[2];
+                SoundAudio.Play();
+            }
+               
+        }
+        else if (curScene == "MainStage")
         {
             SoundAudio.clip = Sound[0];
             SoundAudio.Play();
@@ -50,10 +63,9 @@ public class SoundManager_sc : MonoBehaviour
             SoundAudio.clip = Sound[1];
             SoundAudio.Play();
         }
-        else if (!StageManager.stage1_open && !StageManager.stage2_open && !StageManager.stage3_open)
+        else if(curScene == "Loading_Scene")
         {
-            SoundAudio.clip = Sound[2];
-            SoundAudio.Play();
+            SoundAudio.Stop();
         }
         else
         {

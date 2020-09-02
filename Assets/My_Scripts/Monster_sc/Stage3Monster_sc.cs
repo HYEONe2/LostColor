@@ -200,6 +200,8 @@ public class Stage3Monster_sc : MonoBehaviour
             return;
         bBombCreate = true;
         Instantiate(bomb, LeftHand.transform.position, gameObject.transform.rotation);
+        bIsAttack = true;
+
     }
 
     public void FalseBomb()
@@ -216,6 +218,8 @@ public class Stage3Monster_sc : MonoBehaviour
         //    return;
         bSmokeCreate = true;
         Instantiate(smoke, LookPos.transform.position, Quaternion.identity);
+        bIsAttack = true;
+
     }
 
     public void FalseSmoke()

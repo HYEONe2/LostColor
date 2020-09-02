@@ -177,7 +177,7 @@ public class Monster_sc : MonoBehaviour
             m_animator.SetBool("NutAttack", false);
             m_animator.SetBool("NutAttack", false);
             m_animator.SetBool("Hit", true);
-            --iHp;
+            
         }
     }
 
@@ -243,6 +243,7 @@ public class Monster_sc : MonoBehaviour
         {
             HitSound.Play();
             bIsHit = true;
+            --iHp;
         }
     }
     public void FalseHit()
