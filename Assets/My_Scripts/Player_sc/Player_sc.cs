@@ -73,6 +73,7 @@ public class Player_sc : MonoBehaviour
     public void SetTriggerStop(bool bStop) { m_bTriggerStop = bStop; }
 
     // Dead 제어
+    bool m_bDead = false;
     bool m_bDamaged = false;
     float m_fDamageTime = 0;
     float fDeadCheckTime = 0;
@@ -131,6 +132,8 @@ public class Player_sc : MonoBehaviour
         Sound.Add(Resources.Load<AudioClip>("Sound/Player/ThunderSound"));
         Sound.Add(Resources.Load<AudioClip>("Sound/Player/NutsSound"));
         Sound.Add(Resources.Load<AudioClip>("Sound/Player/WindSound"));
+
+        transform.position = new Vector3(19.0f, 0.0f, 20.0f);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -213,6 +216,7 @@ public class Player_sc : MonoBehaviour
         // 죽음 처리
         if (m_Hp <= 0)
         {
+            m_bDead = true;
             m_animator.SetBool("Die", true);
             fDeadCheckTime += Time.deltaTime;
         }
@@ -726,22 +730,28 @@ public class Player_sc : MonoBehaviour
     {
         if (bPosInit)
         {
-            if(StageManager.stage1_open && !StageManager.stage2_open && !StageManager.stage3_open)
+            if (StageManager.stage1_open && !StageManager.stage2_open && !StageManager.stage3_open)
             {
-                transform.position = new Vector3(19.0f, 0.0f, 20.0f);
+                transform.position = StageManager.paticle1.GetComponent<Transform>().position;
             }
             else if (!StageManager.stage1_open && StageManager.stage2_open && !StageManager.stage3_open)
             {
                 GameObject.Find("FirstAttack").GetComponent<SkillUI_sc>().SetTexture((int)m_eSkill[0]);
 
-                transform.position = new Vector3(-19.0f, 0.0f, 20.0f);
+                if(m_bDead)
+                    transform.position = StageManager.paticle2.GetComponent<Transform>().position;
+                else
+                    transform.position = StageManager.paticle1.GetComponent<Transform>().position;
             }
             else if (!StageManager.stage1_open && !StageManager.stage2_open && StageManager.stage3_open)
             {
                 GameObject.Find("FirstAttack").GetComponent<SkillUI_sc>().SetTexture((int)m_eSkill[0]);
                 GameObject.Find("SecondAttack").GetComponent<SkillUI_sc>().SetTexture((int)m_eSkill[1]);
 
-                transform.position = new Vector3(34.0f, 0.0f, 43.0f);
+                if (m_bDead)
+                    transform.position = StageManager.paticle3.GetComponent<Transform>().position;
+                else
+                    transform.position = StageManager.paticle2.GetComponent<Transform>().position;
             }
             else if(!StageManager.stage1_open && !StageManager.stage2_open && !StageManager.stage3_open)
             {
@@ -749,13 +759,14 @@ public class Player_sc : MonoBehaviour
                 GameObject.Find("SecondAttack").GetComponent<SkillUI_sc>().SetTexture((int)m_eSkill[1]);
                 GameObject.Find("ThirdAttack").GetComponent<SkillUI_sc>().SetTexture((int)m_eSkill[2]);
 
-                transform.position = new Vector3(48.0f, 5.0f, 90.0f);
+                transform.position = StageManager.paticle3.GetComponent<Transform>().position;
             }
 
             SetAttackFalse();
             m_animator.SetBool("Win", false);
             m_animator.SetBool("Die", false);
             bPosInit = false;
+            m_bDead = false;
         }
     }
 

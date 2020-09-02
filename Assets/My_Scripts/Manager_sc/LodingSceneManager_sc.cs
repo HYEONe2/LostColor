@@ -15,7 +15,7 @@ public class LodingSceneManager_sc : MonoBehaviour
     Image progressBar;
 
     CameraManager CameraManager;
-    Stage_Manager StageManager;
+    static Stage_Manager StageManager;
 
     private void Start()
     {
@@ -24,12 +24,13 @@ public class LodingSceneManager_sc : MonoBehaviour
 
         if(GameObject.Find("CameraManager"))
             CameraManager = GameObject.Find("CameraManager").GetComponent<CameraManager>();
-        if (!StageManager)
-            StageManager = GameObject.Find("StageManager").GetComponent<Stage_Manager>();
     }
 
     public static void LoadScene(string sceneName)
     {
+        if (curScene == "MainStage" && !StageManager)
+            StageManager = GameObject.Find("StageManager").GetComponent<Stage_Manager>();
+
         curScene = SceneManager.GetActiveScene().name;
         nextScene = sceneName;
         SceneManager.LoadScene("Loading_Scene");
