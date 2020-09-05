@@ -9,11 +9,12 @@ public class Nut_sc : MonoBehaviour
     Vector3 vDir;
 
     public bool m_bPlayerUse = false;
+    Vector3 dir;
 
     //private Vector3 CameraDir;
     float fSpeed = 5.0f;
 
-   // [SerializeField] private GameObject Blood;
+    [SerializeField] private GameObject Blood;
 
     // Start is called before the first frame update
     void Start()
@@ -25,8 +26,8 @@ public class Nut_sc : MonoBehaviour
 
         if (m_bPlayerUse)
         {
-            Vector3 dir = GameObject.Find("MainCamera").transform.forward;
-            transform.position = new Vector3(TargetPos.x + dir.x * 3f, TargetPos.y + 1f, TargetPos.z + dir.z * 3f);
+            dir = GameObject.Find("MainCamera").transform.forward;
+            transform.Rotate(new Vector3(0, 0, 3));
         }
     }
 
@@ -34,13 +35,24 @@ public class Nut_sc : MonoBehaviour
     void Update()
     {
         if (m_bPlayerUse)
-        {
-            Vector3 dir = GameObject.Find("MainCamera").transform.forward;
-            gameObject.transform.position += dir * Time.deltaTime * fSpeed;
-        }
+            gameObject.transform.position += dir * Time.deltaTime * fSpeed * 1.5f;
         else
             gameObject.transform.position += vDir * Time.deltaTime * fSpeed;      
+
         //Vector3 vPlayerTrans = Target.transform.position; ;
         //float fDist = (TargetPos - gameObject.transform.position).magnitude;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (m_bPlayerUse)
+        {
+            if (other.gameObject.CompareTag("Boss"))
+            {
+                Vector3 OriginPos = gameObject.transform.position;
+                Instantiate(Blood, OriginPos, Quaternion.identity);
+                gameObject.SetActive(false);
+            }
+        }
     }
 }

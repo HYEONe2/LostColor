@@ -13,10 +13,11 @@ public class RockAttack_sc : MonoBehaviour
     [SerializeField] private GameObject Blood;
 
     public static bool bIsMove = true;
-    public bool m_bPlayerUse = false;
     private bool bIsPlay = false;
 
+    public bool m_bPlayerUse = false;
     private GameObject Monster;
+    Vector3 dir;
 
     // Start is called before the first frame update
     void Start()
@@ -29,6 +30,8 @@ public class RockAttack_sc : MonoBehaviour
         if (m_bPlayerUse)
         {
             Monster = GameObject.FindWithTag("Boss");
+            dir = GameObject.Find("MainCamera").transform.forward;
+
             if (Monster)
                 TargetPos = Monster.transform.position;
         }
@@ -47,12 +50,15 @@ public class RockAttack_sc : MonoBehaviour
         {
             if (!Monster)
             {
-                Vector3 dir = GameObject.Find("MainCamera").transform.forward;
-                gameObject.transform.position += dir * Time.deltaTime * 10f;
+                gameObject.transform.position += dir * Time.deltaTime * 20f;
+                transform.Rotate(new Vector3(0, 0, 3));
             }
             else
             {
-                transform.position = Vector3.MoveTowards(transform.position, TargetPos, 0.5f);
+                if ((transform.position-Monster.transform.position).magnitude < 6f)
+                    transform.position = Vector3.MoveTowards(transform.position, TargetPos, 10f * Time.deltaTime);
+                else
+                    gameObject.transform.position += dir * Time.deltaTime * 20f;
                 transform.Rotate(new Vector3(0, 0, 3));
             }
         }
@@ -75,14 +81,26 @@ public class RockAttack_sc : MonoBehaviour
             }
         }
     }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if(m_bPlayerUse)
         {
-            Vector3 OriginPos = gameObject.transform.position;
-            Instantiate(Blood, OriginPos, Quaternion.identity);
-            gameObject.SetActive(false);
+            if (other.gameObject.CompareTag("Boss"))
+            {
+                Vector3 OriginPos = gameObject.transform.position;
+                Instantiate(Blood, OriginPos, Quaternion.identity);
+                gameObject.SetActive(false);
+            }
         }
-
+        else
+        {
+            if (other.gameObject.CompareTag("Player"))
+            {
+                Vector3 OriginPos = gameObject.transform.position;
+                Instantiate(Blood, OriginPos, Quaternion.identity);
+                gameObject.SetActive(false);
+            }
+        }
     }
 }

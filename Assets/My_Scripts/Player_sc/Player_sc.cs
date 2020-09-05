@@ -733,15 +733,22 @@ public class Player_sc : MonoBehaviour
             if (StageManager.stage1_open && !StageManager.stage2_open && !StageManager.stage3_open)
             {
                 transform.position = StageManager.paticle1.GetComponent<Transform>().position;
+                transform.forward = -StageManager.paticle1.GetComponent<Transform>().right;
             }
             else if (!StageManager.stage1_open && StageManager.stage2_open && !StageManager.stage3_open)
             {
                 GameObject.Find("FirstAttack").GetComponent<SkillUI_sc>().SetTexture((int)m_eSkill[0]);
 
-                if(m_bDead)
+                if (m_bDead)
+                {
                     transform.position = StageManager.paticle2.GetComponent<Transform>().position;
+                    transform.forward = StageManager.paticle2.GetComponent<Transform>().forward;
+                }
                 else
+                {
                     transform.position = StageManager.paticle1.GetComponent<Transform>().position;
+                    transform.forward = StageManager.paticle1.GetComponent<Transform>().right;
+                }
             }
             else if (!StageManager.stage1_open && !StageManager.stage2_open && StageManager.stage3_open)
             {
@@ -749,9 +756,15 @@ public class Player_sc : MonoBehaviour
                 GameObject.Find("SecondAttack").GetComponent<SkillUI_sc>().SetTexture((int)m_eSkill[1]);
 
                 if (m_bDead)
+                {
                     transform.position = StageManager.paticle3.GetComponent<Transform>().position;
+                    transform.forward = -StageManager.paticle3.GetComponent<Transform>().forward;
+                }
                 else
+                {
                     transform.position = StageManager.paticle2.GetComponent<Transform>().position;
+                    transform.forward = -StageManager.paticle2.GetComponent<Transform>().forward;
+                }
             }
             else if(!StageManager.stage1_open && !StageManager.stage2_open && !StageManager.stage3_open)
             {
@@ -760,6 +773,7 @@ public class Player_sc : MonoBehaviour
                 GameObject.Find("ThirdAttack").GetComponent<SkillUI_sc>().SetTexture((int)m_eSkill[2]);
 
                 transform.position = StageManager.paticle3.GetComponent<Transform>().position;
+                transform.forward = StageManager.paticle3.GetComponent<Transform>().forward;
             }
 
             SetAttackFalse();

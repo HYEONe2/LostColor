@@ -151,12 +151,19 @@ public class SkillMgr_Sc : MonoBehaviour
         PlayerPos = PlayerTrans.position;
 
         Vector3 dir = GameObject.Find("MainCamera").transform.forward;
-        NutObj = Instantiate(Nut, new Vector3(PlayerPos.x + dir.x * 3f, PlayerPos.y + 1.5f, PlayerPos.z + dir.z * 3f), Quaternion.identity);
-        NutObj.GetComponent<Nut_sc>().m_bPlayerUse = true;
+        //NutObj = Instantiate(Nut, new Vector3(PlayerPos.x + dir.x * 3f, PlayerPos.y + 1.5f, PlayerPos.z + dir.z * 3f), Quaternion.identity);
+        //NutObj.GetComponent<Nut_sc>().m_bPlayerUse = true;
 
-        Transform[] ChildNuts = NutObj.GetComponentsInChildren<Transform>();
-        for (int i = 1; i < ChildNuts.Length; ++i)
-            ChildNuts[i].gameObject.GetComponent<Nut_Attack_sc>().m_bPlayerUse = true;
+        //Transform[] ChildNuts = NutObj.GetComponentsInChildren<Transform>();
+        //for (int i = 1; i < ChildNuts.Length; ++i)
+        //    ChildNuts[i].gameObject.GetComponent<Nut_Attack_sc>().m_bPlayerUse = true;
+
+        Vector3 rightDir = PlayerTrans.right;
+        for (int i = 0; i < 3; ++i)
+        {
+            NutObj = Instantiate(Nut, new Vector3(PlayerPos.x + dir.x * 2f + rightDir.x * 1.3f * (-1 + i), PlayerPos.y + 1f, PlayerPos.z + dir.z * 2f + rightDir.z * 1.3f * (-1 + i)), Quaternion.identity);
+            NutObj.GetComponent<Nut_sc>().m_bPlayerUse = true;
+        }
     }
 
     public void CreateRock()

@@ -8,6 +8,8 @@ public class CloudAttack_sc : MonoBehaviour
     Vector3 TargetPos;
 
     public bool m_bPlayerUse = false;
+    Vector3 dir;
+
     private GameObject Monster;
     [SerializeField] private GameObject rain;
     [SerializeField] private Collider Coll;
@@ -27,7 +29,10 @@ public class CloudAttack_sc : MonoBehaviour
             if (Monster)
                 TargetPos = new Vector3(Monster.transform.position.x, Monster.transform.position.y + 7.0f, Monster.transform.position.z);
             else
+            {
+                dir = GameObject.Find("MainCamera").transform.forward;
                 transform.position = TargetPos;
+            }
         }
     }
 
@@ -40,7 +45,6 @@ public class CloudAttack_sc : MonoBehaviour
         {
             if (!Monster)
             {
-                Vector3 dir = GameObject.Find("MainCamera").transform.forward;
                 gameObject.transform.position += dir * Time.deltaTime * 10f;
             }
             else

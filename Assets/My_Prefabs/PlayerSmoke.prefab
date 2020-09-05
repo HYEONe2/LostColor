@@ -72,6 +72,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Smoke02
       objectReference: {fileID: 0}
+    - target: {fileID: 1984553849942408, guid: 0f137b5c393c941479490a54310bf733, type: 3}
+      propertyPath: m_TagString
+      value: PlayerWeapon
+      objectReference: {fileID: 0}
     - target: {fileID: 4618108090775102, guid: 0f137b5c393c941479490a54310bf733, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

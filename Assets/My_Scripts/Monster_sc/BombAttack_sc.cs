@@ -12,6 +12,7 @@ public class BombAttack_sc : MonoBehaviour
     [SerializeField] private GameObject Effect;
 
     public bool m_bPlayerUse = false;
+    Vector3 dir;
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +20,9 @@ public class BombAttack_sc : MonoBehaviour
         Target = GameObject.Find("Player");
         TargetPos = Target.transform.position;
         Destroy(gameObject, 2.5f);
+
+        if(m_bPlayerUse)
+            dir = GameObject.Find("MainCamera").transform.forward;
     }
 
     // Update is called once per frame
@@ -26,7 +30,6 @@ public class BombAttack_sc : MonoBehaviour
     {
         if(m_bPlayerUse)
         {
-            Vector3 dir = GameObject.Find("MainCamera").transform.forward;
             gameObject.transform.position += dir * Time.deltaTime * 10f;
         }
         else

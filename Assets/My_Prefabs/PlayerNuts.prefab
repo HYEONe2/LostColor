@@ -63,7 +63,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!136 &1176625884
+--- !u!136 &4762799961079116219
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -266,13 +266,8 @@ PrefabInstance:
       propertyPath: m_TagString
       value: PlayerWeapon
       objectReference: {fileID: 0}
-    - target: {fileID: 5834492076161039415, guid: e063034e6e0d2df4eb49cf852579f2e9,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents:
-    - {fileID: 5772480244270290951, guid: e063034e6e0d2df4eb49cf852579f2e9, type: 3}
+    - {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: e063034e6e0d2df4eb49cf852579f2e9, type: 3}
 --- !u!1 &6537625929240481585 stripped
 GameObject:
@@ -372,11 +367,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: PlayerWeapon
-      objectReference: {fileID: 0}
-    - target: {fileID: 5834492076161039415, guid: e063034e6e0d2df4eb49cf852579f2e9,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5772480244270290951, guid: e063034e6e0d2df4eb49cf852579f2e9, type: 3}
@@ -479,11 +469,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: PlayerWeapon
-      objectReference: {fileID: 0}
-    - target: {fileID: 5834492076161039415, guid: e063034e6e0d2df4eb49cf852579f2e9,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5772480244270290951, guid: e063034e6e0d2df4eb49cf852579f2e9, type: 3}
